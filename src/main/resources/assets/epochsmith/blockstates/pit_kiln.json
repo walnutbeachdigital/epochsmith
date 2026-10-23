@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "lit=false": { "model": "epochsmith:block/pit_kiln" },
+    "lit=true": { "model": "epochsmith:block/pit_kiln_lit" }
+  }
+}

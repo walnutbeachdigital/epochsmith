@@ -50,5 +50,12 @@
   "item.epochsmith.flint_pickaxe": "Flint Pickaxe",
   "item.epochsmith.flint_axe": "Flint Axe",
   "item.epochsmith.flint_shovel": "Flint Shovel",
-  "message.epochsmith.knapping.unknown": "You don't know how to knap yet. Pick up some flint first."
+  "message.epochsmith.knapping.unknown": "You don't know how to knap yet. Pick up some flint first.",
+  "block.epochsmith.pit_kiln": "Pit Kiln",
+  "message.epochsmith.kiln.unknown": "You don't know how to use a kiln yet. Pick up some flint first.",
+  "message.epochsmith.kiln.burning": "The kiln is burning. Wait for the fire to die down.",
+  "message.epochsmith.kiln.more_sticks": "You need at least %s sticks to light the kiln.",
+  "message.epochsmith.kiln.empty": "Load clay or logs into the kiln first.",
+  "message.epochsmith.kiln.full": "The kiln is full, or holds something else. Empty it with a bare hand.",
+  "message.epochsmith.kiln.lit": "The kiln is lit. The batch will be fired in about 20 seconds."
 }
