@@ -213,5 +213,11 @@
   "block.epochsmith.electric_lamp": "Electric Lamp",
   "item.epochsmith.light_bulb": "Light Bulb",
   "message.epochsmith.dynamo.status": "Dynamo: turning force %s, making %s energy per tick. Stored %s / %s.",
-  "message.epochsmith.battery.status": "Battery Bank: %s / %s energy."
+  "message.epochsmith.battery.status": "Battery Bank: %s / %s energy.",
+  "block.epochsmith.arc_furnace": "Electric Arc Furnace",
+  "message.epochsmith.arc_furnace.unknown": "You don't know how to run an arc furnace yet. Reach the Electrical era first.",
+  "message.epochsmith.arc_furnace.busy": "Something else is in the furnace. Sneak and right-click with an empty hand to take it out.",
+  "message.epochsmith.arc_furnace.status": "Arc Furnace: %s to smelt. %s",
+  "message.epochsmith.arc_furnace.powered": "Powered.",
+  "message.epochsmith.arc_furnace.unpowered": "No power: connect copper wire from a dynamo or battery."
 }

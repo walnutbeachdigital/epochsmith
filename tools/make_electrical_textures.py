@@ -118,6 +118,51 @@ LIGHT_BULB = [
     ".......OO.......",
 ]
 
+REFRACTORY = [(196, 192, 184, 255), (180, 176, 168, 255)]
+
+
+def arc_side():
+    """Pale refractory brick with a copper bus bar across the middle."""
+    px = []
+    for y in range(16):
+        row = []
+        for x in range(16):
+            offset = 4 if (y // 4) % 2 else 0
+            if 6 <= y <= 8:
+                row.append(COPPER[3] if y == 6 else COPPER[1])
+            elif y % 4 == 3 or (x + offset) % 8 == 7:
+                row.append((140, 136, 130, 255))
+            else:
+                row.append(REFRACTORY[((x + offset) // 8 + y // 4) % 2])
+        px.append(row)
+    return px
+
+
+def arc_front(lit):
+    """An iron door with a viewing slot; white-blue arc light when running."""
+    px = [[IRON for _ in range(16)] for _ in range(16)]
+    for i in range(16):
+        px[0][i] = px[i][0] = IRON_LIGHT
+        px[15][i] = px[i][15] = IRON_DARK
+    hot = [(255, 255, 255, 255), (200, 230, 255, 255), (140, 190, 255, 255)]
+    for y in range(5, 11):
+        for x in range(3, 13):
+            if y in (5, 10) or x in (3, 12):
+                px[y][x] = IRON_DARK
+            else:
+                px[y][x] = hot[(x * 3 + y) % 3] if lit else (24, 24, 30, 255)
+    return px
+
+
+def arc_top():
+    px = arc_side()
+    for (cx, cy) in ((4, 8), (8, 4), (12, 8)):
+        for y in range(cy - 1, cy + 2):
+            for x in range(cx - 1, cx + 2):
+                px[y][x] = (40, 40, 44, 255) if (x, y) != (cx, cy) else (90, 90, 96, 255)
+    return px
+
+
 root = "src/main/resources/assets/epochsmith/textures"
 write_png(f"{root}/block/copper_wire.png", wire())
 write_png(f"{root}/block/dynamo_side.png", dynamo_side())
@@ -128,4 +173,8 @@ write_png(f"{root}/block/battery_top.png", battery_top())
 write_png(f"{root}/block/electric_lamp.png", lamp(False))
 write_png(f"{root}/block/electric_lamp_on.png", lamp(True))
 write_png(f"{root}/item/light_bulb.png", from_map(LIGHT_BULB, BULB))
+write_png(f"{root}/block/arc_furnace_side.png", arc_side())
+write_png(f"{root}/block/arc_furnace_top.png", arc_top())
+write_png(f"{root}/block/arc_furnace_front.png", arc_front(False))
+write_png(f"{root}/block/arc_furnace_front_on.png", arc_front(True))
 print("electrical textures written")

@@ -18,6 +18,7 @@
     "epochsmith:dynamo",
     "epochsmith:copper_wire",
     "epochsmith:battery",
-    "epochsmith:electric_lamp"
+    "epochsmith:electric_lamp",
+    "epochsmith:arc_furnace"
   ]
 }

@@ -1,6 +1,7 @@
 package com.walnutbeachdigital.epochsmith.block;
 
 import com.walnutbeachdigital.epochsmith.Epochsmith;
+import com.walnutbeachdigital.epochsmith.electric.ArcFurnaceBlock;
 import com.walnutbeachdigital.epochsmith.electric.BatteryBlock;
 import com.walnutbeachdigital.epochsmith.electric.CopperWireBlock;
 import com.walnutbeachdigital.epochsmith.electric.DynamoBlock;
@@ -255,6 +256,11 @@ public final class ModBlocks {
                     .strength(1.0F).sound(SoundType.GLASS)
                     .lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 15 : 0)));
     public static final DeferredItem<BlockItem> ELECTRIC_LAMP_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("electric_lamp", ELECTRIC_LAMP);
+
+    /** The Electrical era's smelter: electric, very fast, smelts anything. */
+    public static final DeferredBlock<ArcFurnaceBlock> ARC_FURNACE = Epochsmith.BLOCKS.register("arc_furnace",
+            () -> new ArcFurnaceBlock(metal().lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 15 : 0)));
+    public static final DeferredItem<BlockItem> ARC_FURNACE_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("arc_furnace", ARC_FURNACE);
 
     /** Called from the main mod class so this file loads before blocks are registered. */
     public static void init() {

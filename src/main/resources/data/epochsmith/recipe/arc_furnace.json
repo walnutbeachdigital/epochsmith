@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "S": { "item": "epochsmith:steel_ingot" },
+    "K": { "item": "epochsmith:coke" },
+    "W": { "item": "epochsmith:copper_wire" },
+    "F": { "item": "epochsmith:steam_blast_furnace" }
+  },
+  "pattern": [ "SKS", "WFW", "SKS" ],
+  "result": { "count": 1, "id": "epochsmith:arc_furnace" }
+}

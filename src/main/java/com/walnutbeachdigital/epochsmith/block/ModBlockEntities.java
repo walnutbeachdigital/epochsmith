@@ -2,6 +2,7 @@ package com.walnutbeachdigital.epochsmith.block;
 
 import com.walnutbeachdigital.epochsmith.Epochsmith;
 
+import com.walnutbeachdigital.epochsmith.electric.ArcFurnaceBlockEntity;
 import com.walnutbeachdigital.epochsmith.electric.BatteryBlockEntity;
 import com.walnutbeachdigital.epochsmith.electric.DynamoBlockEntity;
 import com.walnutbeachdigital.epochsmith.electric.ElectricLampBlockEntity;
@@ -106,6 +107,10 @@ public final class ModBlockEntities {
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<ElectricLampBlockEntity>> ELECTRIC_LAMP =
             BLOCK_ENTITIES.register("electric_lamp",
                     () -> BlockEntityType.Builder.of(ElectricLampBlockEntity::new, ModBlocks.ELECTRIC_LAMP.get()).build(null));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<ArcFurnaceBlockEntity>> ARC_FURNACE =
+            BLOCK_ENTITIES.register("arc_furnace",
+                    () -> BlockEntityType.Builder.of(ArcFurnaceBlockEntity::new, ModBlocks.ARC_FURNACE.get()).build(null));
 
     private ModBlockEntities() {
     }
