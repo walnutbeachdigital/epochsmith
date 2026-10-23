@@ -14,6 +14,10 @@
     "epochsmith:steam_engine",
     "epochsmith:lathe",
     "epochsmith:steam_blast_furnace",
-    "epochsmith:strongbox"
+    "epochsmith:strongbox",
+    "epochsmith:dynamo",
+    "epochsmith:copper_wire",
+    "epochsmith:battery",
+    "epochsmith:electric_lamp"
   ]
 }

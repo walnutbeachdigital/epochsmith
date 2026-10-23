@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "lit=false": {
+      "model": "epochsmith:block/electric_lamp"
+    },
+    "lit=true": {
+      "model": "epochsmith:block/electric_lamp_on"
+    }
+  }
+}

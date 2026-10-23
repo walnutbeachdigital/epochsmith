@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": { "S": { "item": "epochsmith:steel_ingot" }, "W": { "item": "epochsmith:copper_wire" }, "A": { "item": "epochsmith:axle" } },
+  "pattern": ["SWS", "WAW", "SWS"],
+  "result": { "count": 1, "id": "epochsmith:dynamo" }
+}

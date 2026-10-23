@@ -113,6 +113,9 @@ public final class ModItems {
     public static final DeferredItem<Item> PRESSURE_GAUGE = Epochsmith.ITEMS.registerSimpleItem("pressure_gauge");
     public static final DeferredItem<Item> STEAM_PISTON = Epochsmith.ITEMS.registerSimpleItem("steam_piston");
 
+    /** A glass bulb with a carbon (coke) filament. Goes into electric lamps. */
+    public static final DeferredItem<Item> LIGHT_BULB = Epochsmith.ITEMS.registerSimpleItem("light_bulb");
+
     // ---- Bronze and Iron era: bronze tools (attack stats match iron's) ----
 
     public static final DeferredItem<SwordItem> BRONZE_SWORD = Epochsmith.ITEMS.register("bronze_sword",

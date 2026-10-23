@@ -206,5 +206,12 @@
   "container.epochsmith.strongbox": "Steel Strongbox",
   "message.epochsmith.strongbox.not_yours": "This strongbox belongs to %s and is locked.",
   "message.epochsmith.strongbox.locked": "Strongbox locked. Only you can open or break it.",
-  "message.epochsmith.strongbox.unlocked": "Strongbox unlocked. Anyone can open it now."
+  "message.epochsmith.strongbox.unlocked": "Strongbox unlocked. Anyone can open it now.",
+  "block.epochsmith.dynamo": "Dynamo",
+  "block.epochsmith.copper_wire": "Copper Wire",
+  "block.epochsmith.battery": "Battery Bank",
+  "block.epochsmith.electric_lamp": "Electric Lamp",
+  "item.epochsmith.light_bulb": "Light Bulb",
+  "message.epochsmith.dynamo.status": "Dynamo: turning force %s, making %s energy per tick. Stored %s / %s.",
+  "message.epochsmith.battery.status": "Battery Bank: %s / %s energy."
 }

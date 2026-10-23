@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "side": "epochsmith:block/battery_side_1",
+    "end": "epochsmith:block/battery_top"
+  }
+}

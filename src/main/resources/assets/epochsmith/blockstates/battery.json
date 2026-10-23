@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "charge=0": {
+      "model": "epochsmith:block/battery_0"
+    },
+    "charge=1": {
+      "model": "epochsmith:block/battery_1"
+    },
+    "charge=2": {
+      "model": "epochsmith:block/battery_2"
+    },
+    "charge=3": {
+      "model": "epochsmith:block/battery_3"
+    },
+    "charge=4": {
+      "model": "epochsmith:block/battery_4"
+    }
+  }
+}

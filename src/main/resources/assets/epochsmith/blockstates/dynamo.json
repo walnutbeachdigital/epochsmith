@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "active=false": {
+      "model": "epochsmith:block/dynamo"
+    },
+    "active=true": {
+      "model": "epochsmith:block/dynamo"
+    }
+  }
+}

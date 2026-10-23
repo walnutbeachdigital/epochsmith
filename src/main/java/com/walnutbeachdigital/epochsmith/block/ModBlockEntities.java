@@ -2,6 +2,9 @@ package com.walnutbeachdigital.epochsmith.block;
 
 import com.walnutbeachdigital.epochsmith.Epochsmith;
 
+import com.walnutbeachdigital.epochsmith.electric.BatteryBlockEntity;
+import com.walnutbeachdigital.epochsmith.electric.DynamoBlockEntity;
+import com.walnutbeachdigital.epochsmith.electric.ElectricLampBlockEntity;
 import com.walnutbeachdigital.epochsmith.power.KineticBlockEntity;
 import com.walnutbeachdigital.epochsmith.steam.BlastFurnaceBlockEntity;
 import com.walnutbeachdigital.epochsmith.steam.BoilerBlockEntity;
@@ -91,6 +94,18 @@ public final class ModBlockEntities {
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<StrongboxBlockEntity>> STRONGBOX =
             BLOCK_ENTITIES.register("strongbox",
                     () -> BlockEntityType.Builder.of(StrongboxBlockEntity::new, ModBlocks.STRONGBOX.get()).build(null));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<DynamoBlockEntity>> DYNAMO =
+            BLOCK_ENTITIES.register("dynamo",
+                    () -> BlockEntityType.Builder.of(DynamoBlockEntity::new, ModBlocks.DYNAMO.get()).build(null));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<BatteryBlockEntity>> BATTERY =
+            BLOCK_ENTITIES.register("battery",
+                    () -> BlockEntityType.Builder.of(BatteryBlockEntity::new, ModBlocks.BATTERY.get()).build(null));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<ElectricLampBlockEntity>> ELECTRIC_LAMP =
+            BLOCK_ENTITIES.register("electric_lamp",
+                    () -> BlockEntityType.Builder.of(ElectricLampBlockEntity::new, ModBlocks.ELECTRIC_LAMP.get()).build(null));
 
     private ModBlockEntities() {
     }

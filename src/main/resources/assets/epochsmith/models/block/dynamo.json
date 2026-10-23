@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "side": "epochsmith:block/dynamo_side",
+    "top": "epochsmith:block/dynamo_top",
+    "bottom": "epochsmith:block/dynamo_top"
+  }
+}

@@ -1,6 +1,10 @@
 package com.walnutbeachdigital.epochsmith.block;
 
 import com.walnutbeachdigital.epochsmith.Epochsmith;
+import com.walnutbeachdigital.epochsmith.electric.BatteryBlock;
+import com.walnutbeachdigital.epochsmith.electric.CopperWireBlock;
+import com.walnutbeachdigital.epochsmith.electric.DynamoBlock;
+import com.walnutbeachdigital.epochsmith.electric.ElectricLampBlock;
 import com.walnutbeachdigital.epochsmith.power.AxleBlock;
 import com.walnutbeachdigital.epochsmith.power.GearboxBlock;
 import com.walnutbeachdigital.epochsmith.power.HandCrankBlock;
@@ -226,6 +230,31 @@ public final class ModBlocks {
             () -> new StrongboxBlock(BlockBehaviour.Properties.of().mapColor(MapColor.METAL)
                     .requiresCorrectToolForDrops().strength(5.0F, 1200.0F).sound(SoundType.NETHERITE_BLOCK)));
     public static final DeferredItem<BlockItem> STRONGBOX_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("strongbox", STRONGBOX);
+
+    // ---- Electrical era ----
+
+    /** Rotation in, electricity out. */
+    public static final DeferredBlock<DynamoBlock> DYNAMO = Epochsmith.BLOCKS.register("dynamo",
+            () -> new DynamoBlock(metal()));
+    public static final DeferredItem<BlockItem> DYNAMO_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("dynamo", DYNAMO);
+
+    /** Carries electricity; joins up on its own. */
+    public static final DeferredBlock<CopperWireBlock> COPPER_WIRE = Epochsmith.BLOCKS.register("copper_wire",
+            () -> new CopperWireBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_ORANGE)
+                    .strength(0.5F).sound(SoundType.WOOL).noOcclusion()));
+    public static final DeferredItem<BlockItem> COPPER_WIRE_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("copper_wire", COPPER_WIRE);
+
+    /** Stores 200,000 energy. */
+    public static final DeferredBlock<BatteryBlock> BATTERY = Epochsmith.BLOCKS.register("battery",
+            () -> new BatteryBlock(metal()));
+    public static final DeferredItem<BlockItem> BATTERY_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("battery", BATTERY);
+
+    /** Full-brightness electric light. The Electrical era's signature invention. */
+    public static final DeferredBlock<ElectricLampBlock> ELECTRIC_LAMP = Epochsmith.BLOCKS.register("electric_lamp",
+            () -> new ElectricLampBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_YELLOW)
+                    .strength(1.0F).sound(SoundType.GLASS)
+                    .lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 15 : 0)));
+    public static final DeferredItem<BlockItem> ELECTRIC_LAMP_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("electric_lamp", ELECTRIC_LAMP);
 
     /** Called from the main mod class so this file loads before blocks are registered. */
     public static void init() {

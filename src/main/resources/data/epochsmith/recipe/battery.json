@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": { "S": { "item": "epochsmith:steel_ingot" }, "C": { "item": "minecraft:copper_ingot" }, "G": { "item": "minecraft:glass" }, "R": { "item": "minecraft:redstone_block" } },
+  "pattern": ["SCS", "GRG", "SCS"],
+  "result": { "count": 1, "id": "epochsmith:battery" }
+}
