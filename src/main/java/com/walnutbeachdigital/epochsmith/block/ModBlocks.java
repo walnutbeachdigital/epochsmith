@@ -1,6 +1,7 @@
 package com.walnutbeachdigital.epochsmith.block;
 
 import com.walnutbeachdigital.epochsmith.Epochsmith;
+import com.walnutbeachdigital.epochsmith.information.ComputerCoreBlock;
 import com.walnutbeachdigital.epochsmith.information.FabricatorBlock;
 import com.walnutbeachdigital.epochsmith.information.SolarPanelBlock;
 import com.walnutbeachdigital.epochsmith.electric.ArcFurnaceBlock;
@@ -280,6 +281,11 @@ public final class ModBlocks {
     public static final DeferredBlock<FabricatorBlock> FABRICATOR = Epochsmith.BLOCKS.register("circuit_fabricator",
             () -> new FabricatorBlock(metal().lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 10 : 0)));
     public static final DeferredItem<BlockItem> FABRICATOR_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("circuit_fabricator", FABRICATOR);
+
+    /** The Information era's signature invention. Booting one up unlocks the Future era. */
+    public static final DeferredBlock<ComputerCoreBlock> COMPUTER_CORE = Epochsmith.BLOCKS.register("computer_core",
+            () -> new ComputerCoreBlock(metal().lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 7 : 0)));
+    public static final DeferredItem<BlockItem> COMPUTER_CORE_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("computer_core", COMPUTER_CORE);
 
     /** Called from the main mod class so this file loads before blocks are registered. */
     public static void init() {

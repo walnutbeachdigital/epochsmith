@@ -96,3 +96,34 @@ write_png(f"{root}/block/fabricator_front.png", fabricator_front(False))
 write_png(f"{root}/block/fabricator_front_on.png", fabricator_front(True))
 write_png(f"{root}/block/solar_panel_top.png", solar_top())
 print("information textures written")
+
+
+def core_side(on):
+    """A server rack: dark steel with rows of status lights."""
+    px = [[(48, 52, 60, 255) if (x + y) % 4 else (40, 44, 52, 255) for x in range(16)] for y in range(16)]
+    for i in range(16):
+        px[0][i] = px[i][0] = (90, 96, 108, 255)
+        px[15][i] = px[i][15] = (24, 26, 32, 255)
+    colors = [(80, 230, 120, 255), (90, 170, 255, 255), (255, 190, 70, 255)]
+    for row, y in enumerate((3, 7, 11)):
+        for x in range(2, 14):
+            px[y][x] = (28, 30, 36, 255)
+            px[y + 1][x] = (60, 64, 74, 255)
+        for x in (3, 5, 7):
+            lit = on and (x + row) % 3 != 0
+            px[y][x] = colors[(x + row) % 3] if lit else (70, 74, 82, 255)
+    return px
+
+
+def core_top():
+    px = [[(60, 64, 74, 255) for _ in range(16)] for _ in range(16)]
+    for y in range(2, 14, 3):
+        for x in range(2, 14):
+            px[y][x] = (24, 26, 32, 255)
+    return px
+
+
+write_png(f"{root}/block/computer_core_side.png", core_side(False))
+write_png(f"{root}/block/computer_core_side_on.png", core_side(True))
+write_png(f"{root}/block/computer_core_top.png", core_top())
+print("computer core textures written")

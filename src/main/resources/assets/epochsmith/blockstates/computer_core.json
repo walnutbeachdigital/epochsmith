@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "lit=false": {
+      "model": "epochsmith:block/computer_core"
+    },
+    "lit=true": {
+      "model": "epochsmith:block/computer_core_on"
+    }
+  }
+}

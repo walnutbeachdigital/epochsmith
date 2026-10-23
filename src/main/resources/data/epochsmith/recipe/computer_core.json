@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "I": {
+      "item": "epochsmith:steel_ingot"
+    },
+    "C": {
+      "item": "epochsmith:circuit_board"
+    },
+    "B": {
+      "item": "epochsmith:battery"
+    },
+    "G": {
+      "item": "minecraft:glass_pane"
+    }
+  },
+  "pattern": [
+    "ICI",
+    "CBC",
+    "IGI"
+  ],
+  "result": {
+    "count": 1,
+    "id": "epochsmith:computer_core"
+  }
+}

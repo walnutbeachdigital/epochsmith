@@ -243,5 +243,9 @@
   "message.epochsmith.fabricator.unknown": "You don't know how to etch circuits yet. Reach the Information era first.",
   "message.epochsmith.fabricator.busy": "Something else is in the fabricator. Sneak and right-click with an empty hand to take it out.",
   "message.epochsmith.fabricator.working": "Circuit Fabricator: etching, %s silicon left.",
-  "message.epochsmith.fabricator.idle": "Circuit Fabricator: %s silicon loaded. No power: connect copper wire from a generator or battery."
+  "message.epochsmith.fabricator.idle": "Circuit Fabricator: %s silicon loaded. No power: connect copper wire from a generator or battery.",
+  "block.epochsmith.computer_core": "Computer Core",
+  "message.epochsmith.computer_core.booting": "Computer Core: booting, %s%%. Connect copper wire from a generator or battery.",
+  "message.epochsmith.computer_core.online": "Computer Core: online.",
+  "message.epochsmith.computer_core.offline": "Computer Core: offline. No power."
 }

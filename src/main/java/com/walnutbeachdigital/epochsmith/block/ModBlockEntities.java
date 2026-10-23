@@ -1,6 +1,7 @@
 package com.walnutbeachdigital.epochsmith.block;
 
 import com.walnutbeachdigital.epochsmith.Epochsmith;
+import com.walnutbeachdigital.epochsmith.information.ComputerCoreBlockEntity;
 import com.walnutbeachdigital.epochsmith.information.FabricatorBlockEntity;
 import com.walnutbeachdigital.epochsmith.information.SolarPanelBlockEntity;
 
@@ -126,6 +127,10 @@ public final class ModBlockEntities {
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<FabricatorBlockEntity>> FABRICATOR =
             BLOCK_ENTITIES.register("circuit_fabricator",
                     () -> BlockEntityType.Builder.of(FabricatorBlockEntity::new, ModBlocks.FABRICATOR.get()).build(null));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<ComputerCoreBlockEntity>> COMPUTER_CORE =
+            BLOCK_ENTITIES.register("computer_core",
+                    () -> BlockEntityType.Builder.of(ComputerCoreBlockEntity::new, ModBlocks.COMPUTER_CORE.get()).build(null));
 
     private ModBlockEntities() {
     }
