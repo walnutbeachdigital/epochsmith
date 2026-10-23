@@ -1,4 +1,4 @@
-package com.walnutbeachdigital.epochsmith.steam;
+package com.walnutbeachdigital.epochsmith.item;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
@@ -6,13 +6,15 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.walnutbeachdigital.epochsmith.Epochsmith;
-import com.walnutbeachdigital.epochsmith.item.PneumaticAxeItem;
-import com.walnutbeachdigital.epochsmith.item.SteamBootsItem;
-import com.walnutbeachdigital.epochsmith.item.SteamDrillItem;
-import com.walnutbeachdigital.epochsmith.item.SteamPowered;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -26,20 +28,24 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
 /**
- * The special powers of steam gear:
- *  - Steam Drill: mines a 3x3 square facing the side you hit (1 steam per extra block).
- *  - Pneumatic Axe: fells every connected log, up to 64 (1 steam per extra log).
+ * The special powers of steam and electric gear:
+ *  - Steam Drill / Electric Drill: mine a 3x3 square facing the side you hit (1 power per extra block).
+ *  - Pneumatic Axe / Chainsaw: fell every connected log, up to 64 (1 power per extra log).
  *  - Steam Boots: Speed while they hold steam (1 steam per second of sprinting).
- * Sneaking switches the drill and axe back to one block at a time.
+ *  - Coil Chestplate: shocks melee attackers for 4 damage (5 charge per shock).
+ * Sneaking switches the drills and axes back to one block at a time.
  */
 @EventBusSubscriber(modid = Epochsmith.MODID)
-public final class SteamToolEvents {
+public final class PoweredToolEvents {
 
     private static final int MAX_TREE = 64;
+    private static final int SHOCK_COST = 5;
+    private static final float SHOCK_DAMAGE = 4.0F;
     /** Stops the extra blocks we break from setting this off again. */
     private static boolean breaking = false;
 
@@ -49,12 +55,12 @@ public final class SteamToolEvents {
             return;
         }
         ItemStack tool = player.getMainHandItem();
-        if (SteamPowered.getSteam(tool) <= 0) {
+        if (!PoweredTools.hasPower(tool)) {
             return;
         }
-        if (tool.getItem() instanceof SteamDrillItem) {
+        if (tool.getItem() instanceof PoweredTools.AreaDrill) {
             drill(player, tool, event.getPos());
-        } else if (tool.getItem() instanceof PneumaticAxeItem && event.getState().is(BlockTags.LOGS)) {
+        } else if (tool.getItem() instanceof PoweredTools.TreeFeller && event.getState().is(BlockTags.LOGS)) {
             fellTree(player, tool, event.getPos());
         }
     }
@@ -82,7 +88,7 @@ public final class SteamToolEvents {
                 if (state.isAir() || hardness < 0 || hardness > centerHardness + 2.0F || !tool.isCorrectToolForDrops(state)) {
                     continue;
                 }
-                if (tool.isEmpty() || !SteamPowered.use(tool, 1)) {
+                if (tool.isEmpty() || !PoweredTools.usePower(tool)) {
                     return;
                 }
                 breakAsPlayer(player, pos);
@@ -105,7 +111,7 @@ public final class SteamToolEvents {
                 }
                 BlockPos log = next.immutable();
                 seen.add(log);
-                if (tool.isEmpty() || !SteamPowered.use(tool, 1)) {
+                if (tool.isEmpty() || !PoweredTools.usePower(tool)) {
                     return;
                 }
                 breakAsPlayer(player, log);
@@ -150,6 +156,32 @@ public final class SteamToolEvents {
         player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 40, 0, false, false, true));
     }
 
-    private SteamToolEvents() {
+    /** Coil chestplate: shock whoever hits the wearer in melee. */
+    @SubscribeEvent
+    public static void onHurt(LivingIncomingDamageEvent event) {
+        LivingEntity victim = event.getEntity();
+        if (victim.level().isClientSide()) {
+            return;
+        }
+        ItemStack chest = victim.getItemBySlot(EquipmentSlot.CHEST);
+        if (!(chest.getItem() instanceof CoilChestplateItem)) {
+            return;
+        }
+        Entity direct = event.getSource().getDirectEntity();
+        if (!(direct instanceof LivingEntity attacker) || direct != event.getSource().getEntity() || attacker == victim) {
+            return;
+        }
+        if (!ElectricPowered.use(chest, SHOCK_COST)) {
+            return;
+        }
+        attacker.hurt(victim.damageSources().thorns(victim), SHOCK_DAMAGE);
+        if (victim.level() instanceof ServerLevel server) {
+            server.sendParticles(ParticleTypes.ELECTRIC_SPARK, attacker.getX(), attacker.getY() + attacker.getBbHeight() / 2,
+                    attacker.getZ(), 12, 0.3, 0.4, 0.3, 0.2);
+        }
+        victim.level().playSound(null, victim.blockPosition(), SoundEvents.COPPER_BULB_TURN_ON, SoundSource.PLAYERS, 1.0F, 1.6F);
+    }
+
+    private PoweredToolEvents() {
     }
 }

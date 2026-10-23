@@ -11,9 +11,9 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.block.Block;
 
 /**
- * Digs anything a pickaxe or shovel can. With steam it mines 3x3 (see SteamToolEvents).
+ * Digs anything a pickaxe or shovel can. With steam it mines 3x3 (see PoweredToolEvents).
  */
-public class SteamDrillItem extends DiggerItem implements SteamPowered {
+public class SteamDrillItem extends DiggerItem implements SteamPowered, PoweredTools.AreaDrill {
 
     public SteamDrillItem(Tier tier, TagKey<Block> blocks, Properties properties) {
         super(tier, blocks, properties);

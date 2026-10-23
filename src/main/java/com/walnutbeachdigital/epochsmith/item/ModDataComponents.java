@@ -20,6 +20,11 @@ public final class ModDataComponents {
             COMPONENTS.registerComponentType("steam",
                     builder -> builder.persistent(Codec.INT).networkSynchronized(ByteBufCodecs.VAR_INT));
 
+    /** How much electric charge an electric tool or coil chestplate holds. */
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<Integer>> CHARGE =
+            COMPONENTS.registerComponentType("charge",
+                    builder -> builder.persistent(Codec.INT).networkSynchronized(ByteBufCodecs.VAR_INT));
+
     private ModDataComponents() {
     }
 }

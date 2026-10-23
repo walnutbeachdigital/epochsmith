@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": { "W": { "item": "epochsmith:copper_wire" }, "B": { "item": "epochsmith:battery" }, "H": { "item": "epochsmith:steam_chestplate" } },
+  "pattern": ["WBW", "WHW", "WWW"],
+  "result": { "count": 1, "id": "epochsmith:coil_chestplate" }
+}

@@ -5,7 +5,15 @@ import javax.annotation.Nullable;
 import com.mojang.serialization.MapCodec;
 import com.walnutbeachdigital.epochsmith.block.ModBlockEntities;
 
+import com.walnutbeachdigital.epochsmith.item.ElectricPowered;
+
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -61,6 +69,27 @@ public class BatteryBlock extends BaseEntityBlock implements ElectricConnectable
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
         return level.isClientSide() ? null
                 : createTickerHelper(type, ModBlockEntities.BATTERY.get(), BatteryBlockEntity::serverTick);
+    }
+
+    /** Right-click with an electric tool or coil chestplate to recharge it from the bank. */
+    @Override
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
+                                              Player player, InteractionHand hand, BlockHitResult hit) {
+        if (!(stack.getItem() instanceof ElectricPowered)) {
+            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        }
+        if (!level.isClientSide() && level.getBlockEntity(pos) instanceof BatteryBlockEntity battery) {
+            int missing = ElectricPowered.MAX_CHARGE - ElectricPowered.getCharge(stack);
+            int energy = battery.getEnergy().take(missing * ElectricPowered.ENERGY_PER_CHARGE);
+            int added = energy / ElectricPowered.ENERGY_PER_CHARGE;
+            if (added > 0) {
+                ElectricPowered.setCharge(stack, ElectricPowered.getCharge(stack) + added);
+                level.playSound(null, pos, SoundEvents.COPPER_BULB_TURN_ON, SoundSource.BLOCKS, 0.8F, 1.2F);
+            }
+            player.displayClientMessage(Component.translatable("message.epochsmith.battery.charged",
+                    ElectricPowered.getCharge(stack), ElectricPowered.MAX_CHARGE), true);
+        }
+        return ItemInteractionResult.sidedSuccess(level.isClientSide());
     }
 
     @Override

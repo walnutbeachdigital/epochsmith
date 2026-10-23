@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": { "S": { "item": "epochsmith:steel_ingot" }, "W": { "item": "epochsmith:copper_wire" }, "A": { "item": "epochsmith:pneumatic_axe" }, "B": { "item": "epochsmith:battery" } },
+  "pattern": ["SSW", " AS", "B  "],
+  "result": { "count": 1, "id": "epochsmith:chainsaw" }
+}

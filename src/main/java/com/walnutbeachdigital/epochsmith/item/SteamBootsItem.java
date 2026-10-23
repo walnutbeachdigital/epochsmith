@@ -10,7 +10,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 
 /**
- * Riveted steam boots: give Speed while they hold steam (see SteamToolEvents).
+ * Riveted steam boots: give Speed while they hold steam (see PoweredToolEvents).
  */
 public class SteamBootsItem extends ArmorItem implements SteamPowered {
 

@@ -163,6 +163,59 @@ def arc_top():
     return px
 
 
+ELEC = {"O": (30, 22, 18, 255), "D": (60, 40, 30, 255), "M": (96, 64, 46, 255), "H": (214, 136, 92, 255),
+        "S": (190, 196, 206, 255), "s": (120, 128, 140, 255), "R": (170, 40, 34, 255), "r": (120, 28, 24, 255),
+        "W": (120, 86, 48, 255), "w": (84, 58, 32, 255), "G": (176, 96, 58, 255)}
+
+ELECTRIC_DRILL = [
+    "................",
+    "..OOOOOO........",
+    "..OHHMMDO.......",
+    "..OHMMMDOOO.....",
+    "..OMMMMDOSsO....",
+    "..ODDDDDOsSsO...",
+    "...OOODOOOsSsO..",
+    ".....ODO...OsSO.",
+    ".....ODO....OsO.",
+    ".....ODO.....O..",
+    "....OOHOO.......",
+    "....ODDDO.......",
+    ".....OOO........",
+]
+
+CHAINSAW = [
+    "................",
+    "........OOOOOOO.",
+    ".......OsSsSsSsO",
+    "..OOOOOOSOOOOOsO",
+    ".ORRRRROsO....SO",
+    ".ORrRrROSOOOOOsO",
+    ".ORRRRROsSsSsSsO",
+    ".OrrrrrOOOOOOOO.",
+    "..OOODO.........",
+    "....ODO.........",
+    "....OOO.........",
+]
+
+
+def coil_layer(skip_hat):
+    """Dark plates wound with bands of copper coil."""
+    px = []
+    for y in range(32):
+        row = []
+        for x in range(64):
+            if skip_hat and x >= 32 and y < 16:
+                row.append((0, 0, 0, 0))
+            elif y % 6 in (0, 1, 2):
+                row.append(COPPER[3] if (x + y) % 3 == 0 else COPPER[1 + (y % 2)])
+            elif y % 6 == 3:
+                row.append((24, 18, 16, 255))
+            else:
+                row.append(BAKELITE_LIGHT if x % 8 else BAKELITE)
+        px.append(row)
+    return px
+
+
 root = "src/main/resources/assets/epochsmith/textures"
 write_png(f"{root}/block/copper_wire.png", wire())
 write_png(f"{root}/block/dynamo_side.png", dynamo_side())
@@ -177,4 +230,13 @@ write_png(f"{root}/block/arc_furnace_side.png", arc_side())
 write_png(f"{root}/block/arc_furnace_top.png", arc_top())
 write_png(f"{root}/block/arc_furnace_front.png", arc_front(False))
 write_png(f"{root}/block/arc_furnace_front_on.png", arc_front(True))
+import make_bronze_gear_textures as gear
+COIL = {"O": (30, 22, 18, 255), "D": (126, 66, 40, 255), "M": (176, 96, 58, 255), "H": (232, 172, 128, 255),
+        "W": (120, 86, 48, 255), "w": (84, 58, 32, 255)}
+for piece in ("helmet", "chestplate", "leggings", "boots"):
+    write_png(f"{root}/item/coil_{piece}.png", from_map(gear.ICONS[piece], COIL))
+write_png(f"{root}/item/electric_drill.png", from_map(ELECTRIC_DRILL, ELEC))
+write_png(f"{root}/item/chainsaw.png", from_map(CHAINSAW, ELEC))
+write_png(f"{root}/models/armor/coil_layer_1.png", coil_layer(True))
+write_png(f"{root}/models/armor/coil_layer_2.png", coil_layer(False))
 print("electrical textures written")

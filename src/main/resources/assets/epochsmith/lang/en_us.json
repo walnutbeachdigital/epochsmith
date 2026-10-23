@@ -219,5 +219,17 @@
   "message.epochsmith.arc_furnace.busy": "Something else is in the furnace. Sneak and right-click with an empty hand to take it out.",
   "message.epochsmith.arc_furnace.status": "Arc Furnace: %s to smelt. %s",
   "message.epochsmith.arc_furnace.powered": "Powered.",
-  "message.epochsmith.arc_furnace.unpowered": "No power: connect copper wire from a dynamo or battery."
+  "message.epochsmith.arc_furnace.unpowered": "No power: connect copper wire from a dynamo or battery.",
+  "item.epochsmith.electric_drill": "Electric Drill",
+  "item.epochsmith.chainsaw": "Chainsaw",
+  "item.epochsmith.coil_helmet": "Coil Helmet",
+  "item.epochsmith.coil_chestplate": "Coil Chestplate",
+  "item.epochsmith.coil_leggings": "Coil Leggings",
+  "item.epochsmith.coil_boots": "Coil Boots",
+  "tooltip.epochsmith.charge": "Charge: %s / %s",
+  "tooltip.epochsmith.charge_recharge": "Recharge by right-clicking a Battery Bank",
+  "tooltip.epochsmith.electric_drill": "Mines 3x3 and digs faster while charged. Sneak for one block.",
+  "tooltip.epochsmith.chainsaw": "Fells whole trees and cuts faster while charged. Sneak for one log.",
+  "tooltip.epochsmith.coil_chestplate": "Shocks anything that hits you in melee while charged.",
+  "message.epochsmith.battery.charged": "Charged: %s / %s"
 }

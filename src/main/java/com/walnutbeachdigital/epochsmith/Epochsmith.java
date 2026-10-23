@@ -150,6 +150,12 @@ public class Epochsmith {
                 output.accept(ModItems.LIGHT_BULB.get());
                 output.accept(ModBlocks.ELECTRIC_LAMP_ITEM.get());
                 output.accept(ModBlocks.ARC_FURNACE_ITEM.get());
+                output.accept(ModItems.ELECTRIC_DRILL.get());
+                output.accept(ModItems.CHAINSAW.get());
+                output.accept(ModItems.COIL_HELMET.get());
+                output.accept(ModItems.COIL_CHESTPLATE.get());
+                output.accept(ModItems.COIL_LEGGINGS.get());
+                output.accept(ModItems.COIL_BOOTS.get());
                 output.accept(EXAMPLE_ITEM.get());// Add the example item to the tab. For your own tabs, this method is preferred over the event
             }).build());
 

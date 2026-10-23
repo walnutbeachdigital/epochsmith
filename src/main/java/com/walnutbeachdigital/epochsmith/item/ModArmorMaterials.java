@@ -103,6 +103,26 @@ public final class ModArmorMaterials {
                     2.0F,
                     0.0F));
 
+    /**
+     * Coil armor: diamond-level protection (total 20), 2.5 toughness, a little knockback resistance.
+     * Repaired with copper ingots.
+     */
+    public static final DeferredHolder<ArmorMaterial, ArmorMaterial> COIL = ARMOR_MATERIALS.register("coil",
+            () -> new ArmorMaterial(
+                    Util.make(new EnumMap<>(ArmorItem.Type.class), defense -> {
+                        defense.put(ArmorItem.Type.BOOTS, 3);
+                        defense.put(ArmorItem.Type.LEGGINGS, 6);
+                        defense.put(ArmorItem.Type.CHESTPLATE, 8);
+                        defense.put(ArmorItem.Type.HELMET, 3);
+                        defense.put(ArmorItem.Type.BODY, 8);
+                    }),
+                    15,
+                    SoundEvents.ARMOR_EQUIP_IRON,
+                    () -> Ingredient.of(Items.COPPER_INGOT),
+                    List.of(new ArmorMaterial.Layer(ResourceLocation.fromNamespaceAndPath(Epochsmith.MODID, "coil"))),
+                    2.5F,
+                    0.05F));
+
     private ModArmorMaterials() {
     }
 }

@@ -61,6 +61,18 @@ public final class ModTiers {
             10,
             () -> Ingredient.of(ModItems.STEEL_INGOT.get()));
 
+    /**
+     * Electric tools: diamond level with more durability (1800) and speed (10).
+     * Repaired with steel ingots.
+     */
+    public static final Tier ELECTRIC = new SimpleTier(
+            BlockTags.INCORRECT_FOR_DIAMOND_TOOL,
+            1800,
+            10.0F,
+            3.5F,
+            14,
+            () -> Ingredient.of(ModItems.STEEL_INGOT.get()));
+
     private ModTiers() {
     }
 }

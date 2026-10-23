@@ -222,6 +222,31 @@ public final class ModItems {
             () -> new SteamBootsItem(ModArmorMaterials.STEAM, new Item.Properties()
                     .durability(ArmorItem.Type.BOOTS.getDurability(STEAM_ARMOR_DURABILITY))));
 
+    // ---- Electrical era: electric tools and coil armor ----
+
+    public static final DeferredItem<ElectricDrillItem> ELECTRIC_DRILL = Epochsmith.ITEMS.register("electric_drill",
+            () -> new ElectricDrillItem(ModTiers.ELECTRIC, HAND_DRILL_MINEABLE, new Item.Properties()
+                    .attributes(DiggerItem.createAttributes(ModTiers.ELECTRIC, 1.0F, -2.8F))));
+    public static final DeferredItem<ChainsawItem> CHAINSAW = Epochsmith.ITEMS.register("chainsaw",
+            () -> new ChainsawItem(ModTiers.ELECTRIC, new Item.Properties()
+                    .attributes(AxeItem.createAttributes(ModTiers.ELECTRIC, 5.0F, -3.0F))));
+
+    private static final int COIL_DURABILITY = 32;
+
+    public static final DeferredItem<ArmorItem> COIL_HELMET = Epochsmith.ITEMS.register("coil_helmet",
+            () -> new ArmorItem(ModArmorMaterials.COIL, ArmorItem.Type.HELMET, new Item.Properties()
+                    .durability(ArmorItem.Type.HELMET.getDurability(COIL_DURABILITY))));
+    /** Shocks melee attackers while charged. */
+    public static final DeferredItem<CoilChestplateItem> COIL_CHESTPLATE = Epochsmith.ITEMS.register("coil_chestplate",
+            () -> new CoilChestplateItem(ModArmorMaterials.COIL, new Item.Properties()
+                    .durability(ArmorItem.Type.CHESTPLATE.getDurability(COIL_DURABILITY))));
+    public static final DeferredItem<ArmorItem> COIL_LEGGINGS = Epochsmith.ITEMS.register("coil_leggings",
+            () -> new ArmorItem(ModArmorMaterials.COIL, ArmorItem.Type.LEGGINGS, new Item.Properties()
+                    .durability(ArmorItem.Type.LEGGINGS.getDurability(COIL_DURABILITY))));
+    public static final DeferredItem<ArmorItem> COIL_BOOTS = Epochsmith.ITEMS.register("coil_boots",
+            () -> new ArmorItem(ModArmorMaterials.COIL, ArmorItem.Type.BOOTS, new Item.Properties()
+                    .durability(ArmorItem.Type.BOOTS.getDurability(COIL_DURABILITY))));
+
     /** Called from the main mod class so this file loads before items are registered. */
     public static void init() {
     }

@@ -11,6 +11,10 @@
     "epochsmith:steam_helmet",
     "epochsmith:steam_chestplate",
     "epochsmith:steam_leggings",
-    "epochsmith:steam_boots"
+    "epochsmith:steam_boots",
+    "epochsmith:coil_helmet",
+    "epochsmith:coil_chestplate",
+    "epochsmith:coil_leggings",
+    "epochsmith:coil_boots"
   ]
 }

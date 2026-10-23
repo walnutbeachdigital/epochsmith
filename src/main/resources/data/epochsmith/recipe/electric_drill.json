@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": { "S": { "item": "epochsmith:steel_ingot" }, "W": { "item": "epochsmith:copper_wire" }, "D": { "item": "epochsmith:steam_drill" }, "B": { "item": "epochsmith:battery" } },
+  "pattern": ["SSW", " DS", "B  "],
+  "result": { "count": 1, "id": "epochsmith:electric_drill" }
+}

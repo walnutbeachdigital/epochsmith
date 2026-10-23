@@ -9,9 +9,9 @@ import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.TooltipFlag;
 
 /**
- * An axe that, with steam, fells a whole tree at once (see SteamToolEvents).
+ * An axe that, with steam, fells a whole tree at once (see PoweredToolEvents).
  */
-public class PneumaticAxeItem extends AxeItem implements SteamPowered {
+public class PneumaticAxeItem extends AxeItem implements SteamPowered, PoweredTools.TreeFeller {
 
     public PneumaticAxeItem(Tier tier, Properties properties) {
         super(tier, properties);
