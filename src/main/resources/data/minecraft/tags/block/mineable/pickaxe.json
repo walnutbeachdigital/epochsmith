@@ -23,6 +23,7 @@
     "epochsmith:sorting_cabinet",
     "epochsmith:solar_panel",
     "epochsmith:circuit_fabricator",
-    "epochsmith:computer_core"
+    "epochsmith:computer_core",
+    "epochsmith:induction_furnace"
   ]
 }

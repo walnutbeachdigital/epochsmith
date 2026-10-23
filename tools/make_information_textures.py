@@ -127,3 +127,35 @@ write_png(f"{root}/block/computer_core_side.png", core_side(False))
 write_png(f"{root}/block/computer_core_side_on.png", core_side(True))
 write_png(f"{root}/block/computer_core_top.png", core_top())
 print("computer core textures written")
+
+
+def induction_side():
+    """Brushed steel with a copper coil band."""
+    px = [[(150, 156, 166, 255) if (x * 3 + y) % 7 else (138, 144, 154, 255) for x in range(16)] for y in range(16)]
+    for i in range(16):
+        px[0][i] = px[i][0] = (190, 196, 206, 255)
+        px[15][i] = px[i][15] = (90, 96, 106, 255)
+    for y in range(5, 11):
+        for x in range(1, 15):
+            px[y][x] = (200, 120, 70, 255) if y % 2 else (160, 90, 50, 255)
+    return px
+
+
+def induction_front(on):
+    px = induction_side()
+    for y in range(3, 13):
+        for x in range(4, 12):
+            edge = y in (3, 12) or x in (4, 11)
+            if edge:
+                px[y][x] = (60, 64, 72, 255)
+            elif on:
+                px[y][x] = (255, 200, 90, 255) if (x + y) % 3 else (255, 140, 50, 255)
+            else:
+                px[y][x] = (40, 30, 30, 255)
+    return px
+
+
+write_png(f"{root}/block/induction_furnace_side.png", induction_side())
+write_png(f"{root}/block/induction_furnace_front.png", induction_front(False))
+write_png(f"{root}/block/induction_furnace_front_on.png", induction_front(True))
+print("induction furnace textures written")

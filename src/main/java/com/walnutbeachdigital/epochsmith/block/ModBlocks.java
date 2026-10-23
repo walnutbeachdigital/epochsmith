@@ -3,6 +3,7 @@ package com.walnutbeachdigital.epochsmith.block;
 import com.walnutbeachdigital.epochsmith.Epochsmith;
 import com.walnutbeachdigital.epochsmith.information.ComputerCoreBlock;
 import com.walnutbeachdigital.epochsmith.information.FabricatorBlock;
+import com.walnutbeachdigital.epochsmith.information.InductionFurnaceBlock;
 import com.walnutbeachdigital.epochsmith.information.SolarPanelBlock;
 import com.walnutbeachdigital.epochsmith.electric.ArcFurnaceBlock;
 import com.walnutbeachdigital.epochsmith.electric.BatteryBlock;
@@ -286,6 +287,11 @@ public final class ModBlocks {
     public static final DeferredBlock<ComputerCoreBlock> COMPUTER_CORE = Epochsmith.BLOCKS.register("computer_core",
             () -> new ComputerCoreBlock(metal().lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 7 : 0)));
     public static final DeferredItem<BlockItem> COMPUTER_CORE_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("computer_core", COMPUTER_CORE);
+
+    /** The Information era's smelter: batch smelting, fully automatable. */
+    public static final DeferredBlock<InductionFurnaceBlock> INDUCTION_FURNACE = Epochsmith.BLOCKS.register("induction_furnace",
+            () -> new InductionFurnaceBlock(metal().lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 13 : 0)));
+    public static final DeferredItem<BlockItem> INDUCTION_FURNACE_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("induction_furnace", INDUCTION_FURNACE);
 
     /** Called from the main mod class so this file loads before blocks are registered. */
     public static void init() {

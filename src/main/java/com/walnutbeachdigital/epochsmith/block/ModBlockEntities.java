@@ -3,6 +3,7 @@ package com.walnutbeachdigital.epochsmith.block;
 import com.walnutbeachdigital.epochsmith.Epochsmith;
 import com.walnutbeachdigital.epochsmith.information.ComputerCoreBlockEntity;
 import com.walnutbeachdigital.epochsmith.information.FabricatorBlockEntity;
+import com.walnutbeachdigital.epochsmith.information.InductionFurnaceBlockEntity;
 import com.walnutbeachdigital.epochsmith.information.SolarPanelBlockEntity;
 
 import com.walnutbeachdigital.epochsmith.electric.ArcFurnaceBlockEntity;
@@ -131,6 +132,10 @@ public final class ModBlockEntities {
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<ComputerCoreBlockEntity>> COMPUTER_CORE =
             BLOCK_ENTITIES.register("computer_core",
                     () -> BlockEntityType.Builder.of(ComputerCoreBlockEntity::new, ModBlocks.COMPUTER_CORE.get()).build(null));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<InductionFurnaceBlockEntity>> INDUCTION_FURNACE =
+            BLOCK_ENTITIES.register("induction_furnace",
+                    () -> BlockEntityType.Builder.of(InductionFurnaceBlockEntity::new, ModBlocks.INDUCTION_FURNACE.get()).build(null));
 
     private ModBlockEntities() {
     }

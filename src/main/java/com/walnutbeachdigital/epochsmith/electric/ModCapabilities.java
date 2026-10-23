@@ -26,6 +26,9 @@ public final class ModCapabilities {
         // Hoppers and item pipes can feed (and empty) the sorting cabinet
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ModBlockEntities.SORTING_CABINET.get(),
                 (cabinet, side) -> cabinet.getHandler());
+        // Hoppers and pipes feed the induction furnace and pull its results
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ModBlockEntities.INDUCTION_FURNACE.get(),
+                (furnace, side) -> furnace.getAutomation());
     }
 
     private ModCapabilities() {

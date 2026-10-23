@@ -52,20 +52,11 @@ public class Epochsmith {
     // Create a Deferred Register to hold CreativeModeTabs which will all be registered under the "epochsmith" namespace
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
 
-    // Creates a new Block with the id "epochsmith:example_block", combining the namespace and path
-    public static final DeferredBlock<Block> EXAMPLE_BLOCK = BLOCKS.registerSimpleBlock("example_block", BlockBehaviour.Properties.of().mapColor(MapColor.STONE));
-    // Creates a new BlockItem with the id "epochsmith:example_block", combining the namespace and path
-    public static final DeferredItem<BlockItem> EXAMPLE_BLOCK_ITEM = ITEMS.registerSimpleBlockItem("example_block", EXAMPLE_BLOCK);
-
-    // Creates a new food item with the id "epochsmith:example_id", nutrition 1 and saturation 2
-    public static final DeferredItem<Item> EXAMPLE_ITEM = ITEMS.registerSimpleItem("example_item", new Item.Properties().food(new FoodProperties.Builder()
-            .alwaysEdible().nutrition(1).saturationModifier(2f).build()));
-
-    // Creates a creative tab with the id "epochsmith:example_tab" for the example item, that is placed after the combat tab
-    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> EXAMPLE_TAB = CREATIVE_MODE_TABS.register("example_tab", () -> CreativeModeTab.builder()
+    // The Epochsmith creative tab, placed after the combat tab
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> EPOCHSMITH_TAB = CREATIVE_MODE_TABS.register("epochsmith", () -> CreativeModeTab.builder()
             .title(Component.translatable("itemGroup.epochsmith")) //The language key for the title of your CreativeModeTab
             .withTabsBefore(CreativeModeTabs.COMBAT)
-            .icon(() -> EXAMPLE_ITEM.get().getDefaultInstance())
+            .icon(() -> ModItems.CHRONICLE.get().getDefaultInstance())
             .displayItems((parameters, output) -> {
                 output.accept(ModItems.CHRONICLE.get());
                 output.accept(ModBlocks.KNAPPING_STONE_ITEM.get());
@@ -163,7 +154,7 @@ public class Epochsmith {
                 output.accept(ModBlocks.SOLAR_PANEL_ITEM.get());
                 output.accept(ModBlocks.FABRICATOR_ITEM.get());
                 output.accept(ModBlocks.COMPUTER_CORE_ITEM.get());
-                output.accept(EXAMPLE_ITEM.get());// Add the example item to the tab. For your own tabs, this method is preferred over the event
+                output.accept(ModBlocks.INDUCTION_FURNACE_ITEM.get());
             }).build());
 
     // The constructor for the mod class is the first code that is run when your mod is loaded.
@@ -212,11 +203,8 @@ public class Epochsmith {
         Config.ITEM_STRINGS.get().forEach((item) -> LOGGER.info("ITEM >> {}", item));
     }
 
-    // Add the example block item to the building blocks tab
+    // Epochsmith items all live in their own tab, so nothing is added to vanilla tabs
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
-        if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
-            event.accept(EXAMPLE_BLOCK_ITEM);
-        }
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call
