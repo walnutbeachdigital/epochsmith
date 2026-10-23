@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "lit=false": {
+      "model": "epochsmith:block/data_vault"
+    },
+    "lit=true": {
+      "model": "epochsmith:block/data_vault_on"
+    }
+  }
+}

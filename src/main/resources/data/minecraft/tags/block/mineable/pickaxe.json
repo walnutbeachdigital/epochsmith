@@ -24,6 +24,7 @@
     "epochsmith:solar_panel",
     "epochsmith:circuit_fabricator",
     "epochsmith:computer_core",
-    "epochsmith:induction_furnace"
+    "epochsmith:induction_furnace",
+    "epochsmith:data_vault"
   ]
 }

@@ -159,3 +159,36 @@ write_png(f"{root}/block/induction_furnace_side.png", induction_side())
 write_png(f"{root}/block/induction_furnace_front.png", induction_front(False))
 write_png(f"{root}/block/induction_furnace_front_on.png", induction_front(True))
 print("induction furnace textures written")
+
+
+def vault_side(on):
+    """Stacked drive bays, each with an activity light."""
+    px = [[(36, 40, 48, 255) for _ in range(16)] for _ in range(16)]
+    for i in range(16):
+        px[0][i] = px[i][0] = (80, 86, 98, 255)
+        px[15][i] = px[i][15] = (20, 22, 28, 255)
+    for bay, y in enumerate((2, 6, 10)):
+        for yy in range(y, y + 3):
+            for x in range(2, 14):
+                px[yy][x] = (58, 64, 76, 255) if yy == y else (48, 52, 62, 255)
+        for x in range(4, 10):
+            px[y + 1][x] = (28, 30, 36, 255)
+        lit = (90, 200, 255, 255) if on else (60, 66, 76, 255)
+        px[y + 1][12] = lit if (bay != 1 or not on) else (120, 255, 150, 255)
+    return px
+
+
+def vault_top():
+    px = [[(70, 76, 88, 255) for _ in range(16)] for _ in range(16)]
+    for i in range(16):
+        px[0][i] = px[i][0] = px[15][i] = px[i][15] = (40, 44, 52, 255)
+    for y in range(4, 12):
+        for x in range(4, 12):
+            px[y][x] = (58, 120, 200, 255) if (x + y) % 2 else (50, 100, 170, 255)
+    return px
+
+
+write_png(f"{root}/block/data_vault_side.png", vault_side(False))
+write_png(f"{root}/block/data_vault_side_on.png", vault_side(True))
+write_png(f"{root}/block/data_vault_top.png", vault_top())
+print("data vault textures written")

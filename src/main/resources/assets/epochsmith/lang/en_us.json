@@ -251,5 +251,13 @@
   "message.epochsmith.induction_furnace.busy": "The induction furnace is full. Collect what's done, or use four kinds of input at most.",
   "message.epochsmith.induction_furnace.status": "Induction Furnace: %s to smelt, %s done. %s",
   "message.epochsmith.induction_furnace.ok": "Powered.",
-  "message.epochsmith.induction_furnace.unpowered": "No power: connect copper wire from a generator or battery."
+  "message.epochsmith.induction_furnace.unpowered": "No power: connect copper wire from a generator or battery.",
+  "block.epochsmith.data_vault": "Data Vault",
+  "screen.epochsmith.data_vault": "Data Vault Terminal",
+  "screen.epochsmith.data_vault.search": "Search...",
+  "screen.epochsmith.data_vault.status": "%s / %s items, %s / %s kinds",
+  "message.epochsmith.data_vault.status": "Data Vault: %s / %s items, %s / %s kinds.",
+  "message.epochsmith.data_vault.unknown": "You don't know how to use a data vault yet. Reach the Information era first.",
+  "message.epochsmith.data_vault.unpowered": "The terminal has no power: connect copper wire from a generator or battery.",
+  "message.epochsmith.data_vault.full": "The data vault is full."
 }

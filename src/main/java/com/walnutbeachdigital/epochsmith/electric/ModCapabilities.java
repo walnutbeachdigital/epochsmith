@@ -29,6 +29,8 @@ public final class ModCapabilities {
         // Hoppers and pipes feed the induction furnace and pull its results
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ModBlockEntities.INDUCTION_FURNACE.get(),
                 (furnace, side) -> furnace.getAutomation());
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ModBlockEntities.DATA_VAULT.get(),
+                (vault, side) -> vault.getAutomation());
     }
 
     private ModCapabilities() {

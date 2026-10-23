@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "I": {
+      "item": "epochsmith:steel_ingot"
+    },
+    "C": {
+      "item": "epochsmith:circuit_board"
+    },
+    "S": {
+      "item": "epochsmith:sorting_cabinet"
+    },
+    "G": {
+      "item": "minecraft:glass_pane"
+    }
+  },
+  "pattern": [
+    "ICI",
+    "GSG",
+    "ICI"
+  ],
+  "result": {
+    "count": 1,
+    "id": "epochsmith:data_vault"
+  }
+}

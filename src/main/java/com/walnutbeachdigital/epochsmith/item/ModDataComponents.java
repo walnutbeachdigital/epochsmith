@@ -5,6 +5,7 @@ import com.walnutbeachdigital.epochsmith.Epochsmith;
 
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.world.item.component.CustomData;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -24,6 +25,11 @@ public final class ModDataComponents {
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<Integer>> CHARGE =
             COMPONENTS.registerComponentType("charge",
                     builder -> builder.persistent(Codec.INT).networkSynchronized(ByteBufCodecs.VAR_INT));
+
+    /** Everything stored in a data vault, kept on the vault item when it's broken and picked up. */
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<CustomData>> VAULT_CONTENTS =
+            COMPONENTS.registerComponentType("vault_contents",
+                    builder -> builder.persistent(CustomData.CODEC).networkSynchronized(CustomData.STREAM_CODEC));
 
     private ModDataComponents() {
     }

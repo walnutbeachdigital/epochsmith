@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "side": "epochsmith:block/data_vault_side_on",
+    "end": "epochsmith:block/data_vault_top"
+  }
+}

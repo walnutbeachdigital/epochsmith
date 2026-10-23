@@ -2,6 +2,7 @@ package com.walnutbeachdigital.epochsmith.block;
 
 import com.walnutbeachdigital.epochsmith.Epochsmith;
 import com.walnutbeachdigital.epochsmith.information.ComputerCoreBlock;
+import com.walnutbeachdigital.epochsmith.information.DataVaultBlock;
 import com.walnutbeachdigital.epochsmith.information.FabricatorBlock;
 import com.walnutbeachdigital.epochsmith.information.InductionFurnaceBlock;
 import com.walnutbeachdigital.epochsmith.information.SolarPanelBlock;
@@ -292,6 +293,12 @@ public final class ModBlocks {
     public static final DeferredBlock<InductionFurnaceBlock> INDUCTION_FURNACE = Epochsmith.BLOCKS.register("induction_furnace",
             () -> new InductionFurnaceBlock(metal().lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 13 : 0)));
     public static final DeferredItem<BlockItem> INDUCTION_FURNACE_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("induction_furnace", INDUCTION_FURNACE);
+
+    /** The Information era's storage: 65,536 items as data, with a searchable terminal. */
+    public static final DeferredBlock<DataVaultBlock> DATA_VAULT = Epochsmith.BLOCKS.register("data_vault",
+            () -> new DataVaultBlock(metal().lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 5 : 0)));
+    public static final DeferredItem<BlockItem> DATA_VAULT_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("data_vault", DATA_VAULT,
+            new Item.Properties().stacksTo(1));
 
     /** Called from the main mod class so this file loads before blocks are registered. */
     public static void init() {
