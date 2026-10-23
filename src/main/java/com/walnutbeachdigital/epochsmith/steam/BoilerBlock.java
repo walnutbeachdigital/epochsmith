@@ -6,6 +6,7 @@ import com.mojang.serialization.MapCodec;
 import com.walnutbeachdigital.epochsmith.block.ModBlockEntities;
 import com.walnutbeachdigital.epochsmith.era.Era;
 import com.walnutbeachdigital.epochsmith.era.EraManager;
+import com.walnutbeachdigital.epochsmith.item.SteamPowered;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -90,7 +91,8 @@ public class BoilerBlock extends BaseEntityBlock implements SteamConnectable {
                                               Player player, InteractionHand hand, BlockHitResult hit) {
         boolean isFuel = BoilerBlockEntity.burnTimeFor(stack) > 0;
         boolean isWater = stack.is(Items.WATER_BUCKET);
-        if (!isFuel && !isWater) {
+        boolean isSteamItem = stack.getItem() instanceof SteamPowered;
+        if (!isFuel && !isWater && !isSteamItem) {
             return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         }
         if (level.isClientSide() || !(level.getBlockEntity(pos) instanceof BoilerBlockEntity boiler)) {
@@ -98,6 +100,14 @@ public class BoilerBlock extends BaseEntityBlock implements SteamConnectable {
         }
         if (!EraManager.hasReached(player, Era.INDUSTRIAL)) {
             player.displayClientMessage(Component.translatable("message.epochsmith.boiler.unknown"), true);
+        } else if (isSteamItem) {
+            if (boiler.chargeItem()) {
+                SteamPowered.setSteam(stack, SteamPowered.MAX_STEAM);
+                level.playSound(null, pos, SoundEvents.BREWING_STAND_BREW, SoundSource.BLOCKS, 0.8F, 1.4F);
+                player.displayClientMessage(Component.translatable("message.epochsmith.boiler.charged"), true);
+            } else {
+                player.displayClientMessage(Component.translatable("message.epochsmith.boiler.cannot_charge"), true);
+            }
         } else if (isWater) {
             if (boiler.addBucket()) {
                 if (!player.getAbilities().instabuild) {

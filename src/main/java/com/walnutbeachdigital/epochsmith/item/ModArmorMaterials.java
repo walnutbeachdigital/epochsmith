@@ -83,6 +83,26 @@ public final class ModArmorMaterials {
                     1.0F,
                     0.0F));
 
+    /**
+     * Riveted steam armor: diamond-level protection (total 20) with 2 toughness.
+     * Repaired with steel ingots.
+     */
+    public static final DeferredHolder<ArmorMaterial, ArmorMaterial> STEAM = ARMOR_MATERIALS.register("steam",
+            () -> new ArmorMaterial(
+                    Util.make(new EnumMap<>(ArmorItem.Type.class), defense -> {
+                        defense.put(ArmorItem.Type.BOOTS, 3);
+                        defense.put(ArmorItem.Type.LEGGINGS, 6);
+                        defense.put(ArmorItem.Type.CHESTPLATE, 8);
+                        defense.put(ArmorItem.Type.HELMET, 3);
+                        defense.put(ArmorItem.Type.BODY, 8);
+                    }),
+                    10,
+                    SoundEvents.ARMOR_EQUIP_IRON,
+                    () -> Ingredient.of(ModItems.STEEL_INGOT.get()),
+                    List.of(new ArmorMaterial.Layer(ResourceLocation.fromNamespaceAndPath(Epochsmith.MODID, "steam"))),
+                    2.0F,
+                    0.0F));
+
     private ModArmorMaterials() {
     }
 }

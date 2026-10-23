@@ -75,6 +75,16 @@ public class BoilerBlockEntity extends BlockEntity {
         return true;
     }
 
+    /** Fills a steam tool from the boiler, using one bucket of water. Only works while boiling. */
+    public boolean chargeItem() {
+        if (!isProducing() || water < BUCKET) {
+            return false;
+        }
+        water -= BUCKET;
+        setChanged();
+        return true;
+    }
+
     public Component describe() {
         return Component.translatable("message.epochsmith.boiler.status",
                 water / 100 / 10.0F, burnTicks / 20, Component.translatable(isProducing()

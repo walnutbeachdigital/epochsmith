@@ -176,6 +176,64 @@ def pressure_gauge():
     return px
 
 
+# Iron with brass trim, for steam gear
+STEAM_GEAR = {"O": (36, 36, 40, 255), "D": (84, 88, 96, 255), "M": (124, 128, 136, 255), "H": (210, 170, 84, 255),
+              "G": (196, 156, 72, 255), "W": (120, 86, 48, 255), "w": (84, 58, 32, 255)}
+
+STEAM_DRILL = [
+    "................",
+    "..OOOOO.........",
+    "..OHHMDO........",
+    "..OHMMDOOO......",
+    "..OMGMDOHMO.....",
+    "..ODDDDOMMDO....",
+    "...OOOOOOMMDO...",
+    ".......OWOOMDO..",
+    ".......OWO.OMDO.",
+    ".......OWO..OHO.",
+    "......OOWOO..O..",
+    "......OWWWO.....",
+    ".......OOO......",
+]
+
+PNEUMATIC_AXE = [
+    "................",
+    "..........OO....",
+    "........OOHMO...",
+    ".......OHMMMDO..",
+    "......OOHMMMDO..",
+    ".....OGOOMMDO...",
+    "....OGGO.OOO....",
+    "...OGGO.........",
+    "..OWWO..........",
+    "..OWO...........",
+    ".OWO............",
+    ".OO.............",
+]
+
+
+def steam_armor_layer(skip_hat):
+    """Iron plates held by brass bands and rows of rivets."""
+    px = []
+    for y in range(32):
+        row = []
+        for x in range(64):
+            if skip_hat and x >= 32 and y < 16:
+                row.append((0, 0, 0, 0))
+                continue
+            if y % 8 in (0, 1):
+                c = STEAM_GEAR["H"] if y % 8 == 0 else STEAM_GEAR["G"]
+            elif y % 8 == 3 and x % 4 == 1:
+                c = (190, 194, 200, 255)
+            elif x % 8 == 7:
+                c = STEAM_GEAR["O"]
+            else:
+                c = STEAM_GEAR["M"] if (x // 8 + y // 8) % 2 else STEAM_GEAR["D"]
+            row.append(c)
+        px.append(row)
+    return px
+
+
 root = "src/main/resources/assets/epochsmith/textures"
 write_png(f"{root}/item/coke.png", from_map(COKE_LUMP, COKE))
 write_png(f"{root}/block/boiler_side.png", riveted(3))
@@ -188,4 +246,11 @@ write_png(f"{root}/block/flywheel.png", flywheel())
 write_png(f"{root}/item/rivets.png", from_map(RIVETS, WROUGHT))
 write_png(f"{root}/item/steam_piston.png", from_map(STEAM_PISTON, STEEL))
 write_png(f"{root}/item/pressure_gauge.png", pressure_gauge())
+import make_bronze_gear_textures as gear  # reuse the shared armor icon shapes
+for piece in ("helmet", "chestplate", "leggings", "boots"):
+    write_png(f"{root}/item/steam_{piece}.png", from_map(gear.ICONS[piece], STEAM_GEAR))
+write_png(f"{root}/item/steam_drill.png", from_map(STEAM_DRILL, STEAM_GEAR))
+write_png(f"{root}/item/pneumatic_axe.png", from_map(PNEUMATIC_AXE, STEAM_GEAR))
+write_png(f"{root}/models/armor/steam_layer_1.png", steam_armor_layer(True))
+write_png(f"{root}/models/armor/steam_layer_2.png", steam_armor_layer(False))
 print("industrial textures written")

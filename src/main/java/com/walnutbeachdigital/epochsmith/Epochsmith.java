@@ -6,6 +6,7 @@ import com.walnutbeachdigital.epochsmith.era.EraAttachments;
 import com.walnutbeachdigital.epochsmith.block.ModBlockEntities;
 import com.walnutbeachdigital.epochsmith.block.ModBlocks;
 import com.walnutbeachdigital.epochsmith.item.ModArmorMaterials;
+import com.walnutbeachdigital.epochsmith.item.ModDataComponents;
 import com.walnutbeachdigital.epochsmith.item.ModItems;
 
 import com.mojang.logging.LogUtils;
@@ -136,6 +137,12 @@ public class Epochsmith {
                 output.accept(ModItems.PRESSURE_GAUGE.get());
                 output.accept(ModItems.STEAM_PISTON.get());
                 output.accept(ModBlocks.STEAM_BLAST_FURNACE_ITEM.get());
+                output.accept(ModItems.STEAM_DRILL.get());
+                output.accept(ModItems.PNEUMATIC_AXE.get());
+                output.accept(ModItems.STEAM_HELMET.get());
+                output.accept(ModItems.STEAM_CHESTPLATE.get());
+                output.accept(ModItems.STEAM_LEGGINGS.get());
+                output.accept(ModItems.STEAM_BOOTS.get());
                 output.accept(EXAMPLE_ITEM.get());// Add the example item to the tab. For your own tabs, this method is preferred over the event
             }).build());
 
@@ -148,6 +155,7 @@ public class Epochsmith {
         // Register the Deferred Register to the mod event bus so blocks get registered
         // Load Epochsmith's block list (and their block items) before anything registers
         ModArmorMaterials.ARMOR_MATERIALS.register(modEventBus);
+        ModDataComponents.COMPONENTS.register(modEventBus);
         ModBlocks.init();
         BLOCKS.register(modEventBus);
         ModBlockEntities.BLOCK_ENTITIES.register(modEventBus);

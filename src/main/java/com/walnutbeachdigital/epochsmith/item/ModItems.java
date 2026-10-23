@@ -192,6 +192,33 @@ public final class ModItems {
             () -> new ArmorItem(ModArmorMaterials.KNIGHT, ArmorItem.Type.BOOTS, new Item.Properties()
                     .durability(ArmorItem.Type.BOOTS.getDurability(KNIGHT_DURABILITY))));
 
+    // ---- Industrial era: steam tools and riveted steam armor ----
+
+    /** Mines 3x3 with steam. Digs anything a pickaxe or shovel can. */
+    public static final DeferredItem<SteamDrillItem> STEAM_DRILL = Epochsmith.ITEMS.register("steam_drill",
+            () -> new SteamDrillItem(ModTiers.STEAM, HAND_DRILL_MINEABLE, new Item.Properties()
+                    .attributes(DiggerItem.createAttributes(ModTiers.STEAM, 1.0F, -2.8F))));
+    /** Fells whole trees with steam. */
+    public static final DeferredItem<PneumaticAxeItem> PNEUMATIC_AXE = Epochsmith.ITEMS.register("pneumatic_axe",
+            () -> new PneumaticAxeItem(ModTiers.STEAM, new Item.Properties()
+                    .attributes(AxeItem.createAttributes(ModTiers.STEAM, 5.0F, -3.0F))));
+
+    private static final int STEAM_ARMOR_DURABILITY = 30;
+
+    public static final DeferredItem<ArmorItem> STEAM_HELMET = Epochsmith.ITEMS.register("steam_helmet",
+            () -> new ArmorItem(ModArmorMaterials.STEAM, ArmorItem.Type.HELMET, new Item.Properties()
+                    .durability(ArmorItem.Type.HELMET.getDurability(STEAM_ARMOR_DURABILITY))));
+    public static final DeferredItem<ArmorItem> STEAM_CHESTPLATE = Epochsmith.ITEMS.register("steam_chestplate",
+            () -> new ArmorItem(ModArmorMaterials.STEAM, ArmorItem.Type.CHESTPLATE, new Item.Properties()
+                    .durability(ArmorItem.Type.CHESTPLATE.getDurability(STEAM_ARMOR_DURABILITY))));
+    public static final DeferredItem<ArmorItem> STEAM_LEGGINGS = Epochsmith.ITEMS.register("steam_leggings",
+            () -> new ArmorItem(ModArmorMaterials.STEAM, ArmorItem.Type.LEGGINGS, new Item.Properties()
+                    .durability(ArmorItem.Type.LEGGINGS.getDurability(STEAM_ARMOR_DURABILITY))));
+    /** Give Speed while they hold steam. */
+    public static final DeferredItem<SteamBootsItem> STEAM_BOOTS = Epochsmith.ITEMS.register("steam_boots",
+            () -> new SteamBootsItem(ModArmorMaterials.STEAM, new Item.Properties()
+                    .durability(ArmorItem.Type.BOOTS.getDurability(STEAM_ARMOR_DURABILITY))));
+
     /** Called from the main mod class so this file loads before items are registered. */
     public static void init() {
     }

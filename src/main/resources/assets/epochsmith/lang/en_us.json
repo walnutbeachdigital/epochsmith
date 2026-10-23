@@ -188,5 +188,18 @@
   "message.epochsmith.blast_furnace.busy": "Something else is in the furnace. Sneak and right-click with an empty hand to take it out.",
   "message.epochsmith.blast_furnace.status": "Blast Furnace: %s to smelt, %s heat. %s",
   "message.epochsmith.blast_furnace.steam_on": "Steam connected.",
-  "message.epochsmith.blast_furnace.steam_off": "No steam: connect a working boiler with steam pipes."
+  "message.epochsmith.blast_furnace.steam_off": "No steam: connect a working boiler with steam pipes.",
+  "item.epochsmith.steam_drill": "Steam Drill",
+  "item.epochsmith.pneumatic_axe": "Pneumatic Axe",
+  "item.epochsmith.steam_helmet": "Riveted Steam Helmet",
+  "item.epochsmith.steam_chestplate": "Riveted Steam Chestplate",
+  "item.epochsmith.steam_leggings": "Riveted Steam Leggings",
+  "item.epochsmith.steam_boots": "Riveted Steam Boots",
+  "tooltip.epochsmith.steam": "Steam: %s / %s",
+  "tooltip.epochsmith.steam_recharge": "Recharge by right-clicking a working boiler",
+  "tooltip.epochsmith.steam_drill": "Mines 3x3 with steam. Sneak for one block.",
+  "tooltip.epochsmith.pneumatic_axe": "Fells whole trees with steam. Sneak for one log.",
+  "tooltip.epochsmith.steam_boots": "Speed while they hold steam. Uses steam only while sprinting.",
+  "message.epochsmith.boiler.charged": "Recharged with steam.",
+  "message.epochsmith.boiler.cannot_charge": "The boiler needs to be making steam and hold at least 1 bucket of water."
 }

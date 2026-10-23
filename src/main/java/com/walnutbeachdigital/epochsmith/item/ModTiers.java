@@ -49,6 +49,18 @@ public final class ModTiers {
             12,
             () -> Ingredient.of(ModItems.STEEL_INGOT.get()));
 
+    /**
+     * Steam-driven tools: diamond level. Mines everything diamond can (including obsidian),
+     * durability 1200, speed 9. Repaired with steel ingots.
+     */
+    public static final Tier STEAM = new SimpleTier(
+            BlockTags.INCORRECT_FOR_DIAMOND_TOOL,
+            1200,
+            9.0F,
+            3.0F,
+            10,
+            () -> Ingredient.of(ModItems.STEEL_INGOT.get()));
+
     private ModTiers() {
     }
 }
