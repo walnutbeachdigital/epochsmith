@@ -160,6 +160,15 @@ public final class ModBlocks {
                     .lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 14 : 0)));
     public static final DeferredItem<BlockItem> FORGE_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("forge", FORGE);
 
+    /** The Mechanical era's signature invention: reads the sky, unlocks the Industrial era. */
+    public static final DeferredBlock<GearTrainBlock> GEAR_TRAIN = Epochsmith.BLOCKS.register("gear_train",
+            () -> new GearTrainBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.TERRACOTTA_ORANGE)
+                    .requiresCorrectToolForDrops()
+                    .strength(3.0F)
+                    .sound(SoundType.COPPER)));
+    public static final DeferredItem<BlockItem> GEAR_TRAIN_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("gear_train", GEAR_TRAIN);
+
     /** Called from the main mod class so this file loads before blocks are registered. */
     public static void init() {
     }

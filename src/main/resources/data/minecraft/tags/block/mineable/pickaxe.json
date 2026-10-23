@@ -6,6 +6,7 @@
     "epochsmith:bloomery",
     "epochsmith:stone_anvil",
     "epochsmith:millstone",
-    "epochsmith:forge"
+    "epochsmith:forge",
+    "epochsmith:gear_train"
   ]
 }

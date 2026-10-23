@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "P": { "item": "epochsmith:bronze_plate" },
+    "G": { "item": "epochsmith:iron_gear" },
+    "W": { "item": "epochsmith:wooden_gear" },
+    "C": { "item": "minecraft:clock" }
+  },
+  "pattern": [ "PGP", "WCW", "PGP" ],
+  "result": { "count": 1, "id": "epochsmith:gear_train" }
+}

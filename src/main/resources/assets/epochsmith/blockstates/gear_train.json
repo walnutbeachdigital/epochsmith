@@ -1,0 +1,34 @@
+{
+  "variants": {
+    "facing=north,running=false": {
+      "model": "epochsmith:block/gear_train"
+    },
+    "facing=north,running=true": {
+      "model": "epochsmith:block/gear_train_running"
+    },
+    "facing=east,running=false": {
+      "model": "epochsmith:block/gear_train",
+      "y": 90
+    },
+    "facing=east,running=true": {
+      "model": "epochsmith:block/gear_train_running",
+      "y": 90
+    },
+    "facing=south,running=false": {
+      "model": "epochsmith:block/gear_train",
+      "y": 180
+    },
+    "facing=south,running=true": {
+      "model": "epochsmith:block/gear_train_running",
+      "y": 180
+    },
+    "facing=west,running=false": {
+      "model": "epochsmith:block/gear_train",
+      "y": 270
+    },
+    "facing=west,running=true": {
+      "model": "epochsmith:block/gear_train_running",
+      "y": 270
+    }
+  }
+}

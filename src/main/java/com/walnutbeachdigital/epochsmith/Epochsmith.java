@@ -114,6 +114,7 @@ public class Epochsmith {
                 output.accept(ModItems.IRON_GEAR.get());
                 output.accept(ModBlocks.FORGE_ITEM.get());
                 output.accept(ModItems.STEEL_INGOT.get());
+                output.accept(ModBlocks.GEAR_TRAIN_ITEM.get());
                 output.accept(EXAMPLE_ITEM.get());// Add the example item to the tab. For your own tabs, this method is preferred over the event
             }).build());
 
