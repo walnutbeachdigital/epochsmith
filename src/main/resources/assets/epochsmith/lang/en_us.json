@@ -116,5 +116,11 @@
   "item.epochsmith.iron_gear": "Iron Gear",
   "message.epochsmith.bench.unknown": "You don't know joinery yet. Reach the Mechanical era first.",
   "message.epochsmith.bench.busy": "Something else is on the bench. Sneak and right-click with an empty hand to take it off.",
-  "message.epochsmith.bench.empty": "Put planks, logs or wrought iron on the bench first."
+  "message.epochsmith.bench.empty": "Put planks, logs or wrought iron on the bench first.",
+  "block.epochsmith.forge": "Water-Driven Forge",
+  "item.epochsmith.steel_ingot": "Crucible Steel Ingot",
+  "message.epochsmith.forge.unknown": "You don't know how to run a forge yet. Reach the Mechanical era first.",
+  "message.epochsmith.forge.hot": "The forge can't hold any more fuel.",
+  "message.epochsmith.forge.busy": "Something else is in the forge. Sneak and right-click with an empty hand to take it out.",
+  "message.epochsmith.forge.status": "Forge: %s to smelt, %s heat, turning force %s (needs 4)"
 }

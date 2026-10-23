@@ -1,8 +1,9 @@
 """Draws placeholder art for the Mechanical era. Run from the project root:
     python3 tools/make_mechanical_textures.py"""
-from pixelart import write_png, from_map
+from pixelart import write_png, from_map, INGOT
 
 WOOD = {"O": (62, 40, 20, 255), "D": (120, 84, 48, 255), "M": (160, 118, 70, 255), "H": (196, 156, 102, 255)}
+STEEL = {"O": (40, 46, 58, 255), "D": (104, 116, 134, 255), "M": (150, 164, 182, 255), "H": (206, 218, 232, 255)}
 IRON = {"O": (35, 38, 44, 255), "D": (80, 86, 96, 255), "M": (110, 116, 126, 255), "H": (150, 156, 166, 255)}
 
 # A cog with eight teeth and a hole in the middle
@@ -43,4 +44,5 @@ root = "src/main/resources/assets/epochsmith/textures"
 write_png(f"{root}/item/wooden_gear.png", from_map(GEAR, WOOD))
 write_png(f"{root}/item/iron_gear.png", from_map(GEAR, IRON))
 write_png(f"{root}/block/gearbox.png", gearbox_face())
+write_png(f"{root}/item/steel_ingot.png", from_map(INGOT, STEEL))
 print("mechanical textures written")

@@ -95,6 +95,9 @@ public final class ModItems {
     public static final DeferredItem<Item> WOODEN_GEAR = Epochsmith.ITEMS.registerSimpleItem("wooden_gear");
     public static final DeferredItem<Item> IRON_GEAR = Epochsmith.ITEMS.registerSimpleItem("iron_gear");
 
+    /** Wrought iron refined in the forge. The Mechanical era's metal. */
+    public static final DeferredItem<Item> STEEL_INGOT = Epochsmith.ITEMS.registerSimpleItem("steel_ingot");
+
     // ---- Bronze and Iron era: bronze tools (attack stats match iron's) ----
 
     public static final DeferredItem<SwordItem> BRONZE_SWORD = Epochsmith.ITEMS.register("bronze_sword",

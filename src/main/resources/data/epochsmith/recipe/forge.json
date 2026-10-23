@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": { "item": "minecraft:bricks" },
+    "L": { "item": "minecraft:leather" },
+    "G": { "item": "epochsmith:iron_gear" },
+    "F": { "item": "epochsmith:bloomery" }
+  },
+  "pattern": [ "LGL", "BFB", "BBB" ],
+  "result": { "count": 1, "id": "epochsmith:forge" }
+}

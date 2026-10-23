@@ -149,6 +149,17 @@ public final class ModBlocks {
                     .sound(SoundType.WOOD).noOcclusion()));
     public static final DeferredItem<BlockItem> JOINERS_BENCH_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("joiners_bench", JOINERS_BENCH);
 
+    /** The Mechanical era's smelter: powered bellows, extra ore, and crucible steel. */
+    public static final DeferredBlock<ForgeBlock> FORGE = Epochsmith.BLOCKS.register("forge",
+            () -> new ForgeBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_RED)
+                    .requiresCorrectToolForDrops()
+                    .strength(3.5F)
+                    .sound(SoundType.STONE)
+                    .noOcclusion()
+                    .lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 14 : 0)));
+    public static final DeferredItem<BlockItem> FORGE_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("forge", FORGE);
+
     /** Called from the main mod class so this file loads before blocks are registered. */
     public static void init() {
     }
