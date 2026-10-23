@@ -3,6 +3,7 @@ package com.walnutbeachdigital.epochsmith.block;
 import com.walnutbeachdigital.epochsmith.Epochsmith;
 
 import com.walnutbeachdigital.epochsmith.power.KineticBlockEntity;
+import com.walnutbeachdigital.epochsmith.steam.BlastFurnaceBlockEntity;
 import com.walnutbeachdigital.epochsmith.steam.BoilerBlockEntity;
 import com.walnutbeachdigital.epochsmith.steam.CokeOvenBlockEntity;
 import com.walnutbeachdigital.epochsmith.steam.LatheBlockEntity;
@@ -82,6 +83,10 @@ public final class ModBlockEntities {
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<LatheBlockEntity>> LATHE =
             BLOCK_ENTITIES.register("lathe",
                     () -> BlockEntityType.Builder.of(LatheBlockEntity::new, ModBlocks.LATHE.get()).build(null));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<BlastFurnaceBlockEntity>> BLAST_FURNACE =
+            BLOCK_ENTITIES.register("steam_blast_furnace",
+                    () -> BlockEntityType.Builder.of(BlastFurnaceBlockEntity::new, ModBlocks.STEAM_BLAST_FURNACE.get()).build(null));
 
     private ModBlockEntities() {
     }

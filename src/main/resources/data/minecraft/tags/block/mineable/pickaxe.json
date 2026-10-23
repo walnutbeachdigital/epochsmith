@@ -12,6 +12,7 @@
     "epochsmith:boiler",
     "epochsmith:steam_pipe",
     "epochsmith:steam_engine",
-    "epochsmith:lathe"
+    "epochsmith:lathe",
+    "epochsmith:steam_blast_furnace"
   ]
 }

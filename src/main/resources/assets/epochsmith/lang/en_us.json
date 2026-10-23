@@ -182,5 +182,11 @@
   "message.epochsmith.lathe.unknown": "You don't know how to run a lathe yet. Reach the Industrial era first.",
   "message.epochsmith.lathe.busy": "Something else is on the lathe. Sneak and right-click with an empty hand to take it off.",
   "message.epochsmith.lathe.status": "Lathe: %s pieces left, running on steam.",
-  "message.epochsmith.lathe.no_steam": "Lathe: %s pieces waiting, but no steam. Connect a working boiler with steam pipes."
+  "message.epochsmith.lathe.no_steam": "Lathe: %s pieces waiting, but no steam. Connect a working boiler with steam pipes.",
+  "block.epochsmith.steam_blast_furnace": "Steam Blast Furnace",
+  "message.epochsmith.blast_furnace.unknown": "You don't know how to run a blast furnace yet. Reach the Industrial era first.",
+  "message.epochsmith.blast_furnace.busy": "Something else is in the furnace. Sneak and right-click with an empty hand to take it out.",
+  "message.epochsmith.blast_furnace.status": "Blast Furnace: %s to smelt, %s heat. %s",
+  "message.epochsmith.blast_furnace.steam_on": "Steam connected.",
+  "message.epochsmith.blast_furnace.steam_off": "No steam: connect a working boiler with steam pipes."
 }

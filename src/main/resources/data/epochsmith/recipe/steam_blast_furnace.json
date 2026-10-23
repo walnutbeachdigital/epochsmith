@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "S": { "item": "epochsmith:steel_ingot" },
+    "G": { "item": "epochsmith:pressure_gauge" },
+    "B": { "item": "minecraft:blast_furnace" },
+    "R": { "item": "epochsmith:rivets" }
+  },
+  "pattern": [ "SGS", "SBS", "RRR" ],
+  "result": { "count": 1, "id": "epochsmith:steam_blast_furnace" }
+}

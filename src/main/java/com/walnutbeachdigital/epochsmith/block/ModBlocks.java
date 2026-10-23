@@ -6,6 +6,7 @@ import com.walnutbeachdigital.epochsmith.power.GearboxBlock;
 import com.walnutbeachdigital.epochsmith.power.HandCrankBlock;
 import com.walnutbeachdigital.epochsmith.power.WaterWheelBlock;
 import com.walnutbeachdigital.epochsmith.power.WindmillBlock;
+import com.walnutbeachdigital.epochsmith.steam.BlastFurnaceBlock;
 import com.walnutbeachdigital.epochsmith.steam.BoilerBlock;
 import com.walnutbeachdigital.epochsmith.steam.CokeOvenBlock;
 import com.walnutbeachdigital.epochsmith.steam.LatheBlock;
@@ -213,6 +214,12 @@ public final class ModBlocks {
     public static final DeferredBlock<LatheBlock> LATHE = Epochsmith.BLOCKS.register("lathe",
             () -> new LatheBlock(metal().noOcclusion()));
     public static final DeferredItem<BlockItem> LATHE_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("lathe", LATHE);
+
+    /** The Industrial era's smelter: steam blast and coke, 2 ingots per ore, steel from iron. */
+    public static final DeferredBlock<BlastFurnaceBlock> STEAM_BLAST_FURNACE = Epochsmith.BLOCKS.register("steam_blast_furnace",
+            () -> new BlastFurnaceBlock(metal().lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 14 : 0)));
+    public static final DeferredItem<BlockItem> STEAM_BLAST_FURNACE_ITEM =
+            Epochsmith.ITEMS.registerSimpleBlockItem("steam_blast_furnace", STEAM_BLAST_FURNACE);
 
     /** Called from the main mod class so this file loads before blocks are registered. */
     public static void init() {

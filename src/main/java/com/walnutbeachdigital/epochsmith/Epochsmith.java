@@ -135,6 +135,7 @@ public class Epochsmith {
                 output.accept(ModItems.RIVETS.get());
                 output.accept(ModItems.PRESSURE_GAUGE.get());
                 output.accept(ModItems.STEAM_PISTON.get());
+                output.accept(ModBlocks.STEAM_BLAST_FURNACE_ITEM.get());
                 output.accept(EXAMPLE_ITEM.get());// Add the example item to the tab. For your own tabs, this method is preferred over the event
             }).build());
 
