@@ -2,6 +2,9 @@ package com.walnutbeachdigital.epochsmith;
 
 import org.slf4j.Logger;
 
+import com.walnutbeachdigital.epochsmith.era.EraAttachments;
+import com.walnutbeachdigital.epochsmith.item.ModItems;
+
 import com.mojang.logging.LogUtils;
 
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -60,6 +63,7 @@ public class Epochsmith {
             .withTabsBefore(CreativeModeTabs.COMBAT)
             .icon(() -> EXAMPLE_ITEM.get().getDefaultInstance())
             .displayItems((parameters, output) -> {
+                output.accept(ModItems.CHRONICLE.get());
                 output.accept(EXAMPLE_ITEM.get());// Add the example item to the tab. For your own tabs, this method is preferred over the event
             }).build());
 
@@ -71,10 +75,13 @@ public class Epochsmith {
 
         // Register the Deferred Register to the mod event bus so blocks get registered
         BLOCKS.register(modEventBus);
-        // Register the Deferred Register to the mod event bus so items get registered
+        // Load Epochsmith's item list, then register all items
+        ModItems.init();
         ITEMS.register(modEventBus);
         // Register the Deferred Register to the mod event bus so tabs get registered
         CREATIVE_MODE_TABS.register(modEventBus);
+        // Register the data Epochsmith saves on each player (their current era)
+        EraAttachments.ATTACHMENT_TYPES.register(modEventBus);
 
         // Register ourselves for server and other game events we are interested in.
         // Note that this is necessary if and only if we want *this* class (Epochsmith) to respond directly to events.
