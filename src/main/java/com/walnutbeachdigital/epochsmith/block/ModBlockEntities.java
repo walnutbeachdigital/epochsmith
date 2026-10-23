@@ -1,6 +1,8 @@
 package com.walnutbeachdigital.epochsmith.block;
 
 import com.walnutbeachdigital.epochsmith.Epochsmith;
+import com.walnutbeachdigital.epochsmith.information.FabricatorBlockEntity;
+import com.walnutbeachdigital.epochsmith.information.SolarPanelBlockEntity;
 
 import com.walnutbeachdigital.epochsmith.electric.ArcFurnaceBlockEntity;
 import com.walnutbeachdigital.epochsmith.electric.BatteryBlockEntity;
@@ -116,6 +118,14 @@ public final class ModBlockEntities {
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<SortingCabinetBlockEntity>> SORTING_CABINET =
             BLOCK_ENTITIES.register("sorting_cabinet",
                     () -> BlockEntityType.Builder.of(SortingCabinetBlockEntity::new, ModBlocks.SORTING_CABINET.get()).build(null));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<SolarPanelBlockEntity>> SOLAR_PANEL =
+            BLOCK_ENTITIES.register("solar_panel",
+                    () -> BlockEntityType.Builder.of(SolarPanelBlockEntity::new, ModBlocks.SOLAR_PANEL.get()).build(null));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<FabricatorBlockEntity>> FABRICATOR =
+            BLOCK_ENTITIES.register("circuit_fabricator",
+                    () -> BlockEntityType.Builder.of(FabricatorBlockEntity::new, ModBlocks.FABRICATOR.get()).build(null));
 
     private ModBlockEntities() {
     }

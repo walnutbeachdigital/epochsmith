@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "T": {
+      "item": "epochsmith:transistor"
+    },
+    "W": {
+      "item": "epochsmith:copper_wire"
+    },
+    "G": {
+      "item": "minecraft:green_dye"
+    },
+    "N": {
+      "item": "minecraft:gold_nugget"
+    }
+  },
+  "pattern": [
+    "NWN",
+    "TGT",
+    "NWN"
+  ],
+  "result": {
+    "count": 1,
+    "id": "epochsmith:circuit_board"
+  }
+}

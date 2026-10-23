@@ -56,6 +56,7 @@ public class ArcFurnaceBlockEntity extends BlockEntity {
         if (stack.is(Items.RAW_GOLD)) return new ItemStack(Items.GOLD_INGOT, 2);
         if (stack.is(ModItems.RAW_TIN.get())) return new ItemStack(ModItems.TIN_INGOT.get(), 2);
         if (stack.is(Items.IRON_INGOT)) return new ItemStack(ModItems.STEEL_INGOT.get());
+        if (stack.is(Items.SAND)) return new ItemStack(ModItems.SILICON.get());
         Optional<RecipeHolder<SmeltingRecipe>> recipe = level.getRecipeManager()
                 .getRecipeFor(RecipeType.SMELTING, new SingleRecipeInput(stack.copyWithCount(1)), level);
         return recipe.map(holder -> holder.value().getResultItem(level.registryAccess()).copy()).orElse(ItemStack.EMPTY);

@@ -20,6 +20,8 @@
     "epochsmith:battery",
     "epochsmith:electric_lamp",
     "epochsmith:arc_furnace",
-    "epochsmith:sorting_cabinet"
+    "epochsmith:sorting_cabinet",
+    "epochsmith:solar_panel",
+    "epochsmith:circuit_fabricator"
   ]
 }

@@ -1,6 +1,8 @@
 package com.walnutbeachdigital.epochsmith.block;
 
 import com.walnutbeachdigital.epochsmith.Epochsmith;
+import com.walnutbeachdigital.epochsmith.information.FabricatorBlock;
+import com.walnutbeachdigital.epochsmith.information.SolarPanelBlock;
 import com.walnutbeachdigital.epochsmith.electric.ArcFurnaceBlock;
 import com.walnutbeachdigital.epochsmith.electric.BatteryBlock;
 import com.walnutbeachdigital.epochsmith.electric.CopperWireBlock;
@@ -267,6 +269,17 @@ public final class ModBlocks {
     public static final DeferredBlock<SortingCabinetBlock> SORTING_CABINET = Epochsmith.BLOCKS.register("sorting_cabinet",
             () -> new SortingCabinetBlock(metal()));
     public static final DeferredItem<BlockItem> SORTING_CABINET_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("sorting_cabinet", SORTING_CABINET);
+
+    // ---- Information era
+    /** Free power from sunlight. */
+    public static final DeferredBlock<SolarPanelBlock> SOLAR_PANEL = Epochsmith.BLOCKS.register("solar_panel",
+            () -> new SolarPanelBlock(metal().noOcclusion()));
+    public static final DeferredItem<BlockItem> SOLAR_PANEL_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("solar_panel", SOLAR_PANEL);
+
+    /** Etches silicon into transistors. */
+    public static final DeferredBlock<FabricatorBlock> FABRICATOR = Epochsmith.BLOCKS.register("circuit_fabricator",
+            () -> new FabricatorBlock(metal().lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 10 : 0)));
+    public static final DeferredItem<BlockItem> FABRICATOR_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("circuit_fabricator", FABRICATOR);
 
     /** Called from the main mod class so this file loads before blocks are registered. */
     public static void init() {

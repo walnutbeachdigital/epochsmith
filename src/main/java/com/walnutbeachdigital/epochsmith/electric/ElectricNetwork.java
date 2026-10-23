@@ -12,8 +12,8 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
 
 /**
- * Follows copper wire from a machine to find every dynamo and battery it can draw from.
- * Dynamos come first in the list, so machines use fresh power before stored power.
+ * Follows copper wire from a machine to find every generator (dynamo, solar panel) and battery
+ * it can draw from. Generators come first in the list, so machines use fresh power before stored power.
  */
 public final class ElectricNetwork {
 
@@ -22,7 +22,7 @@ public final class ElectricNetwork {
     public static List<BlockPos> findSources(Level level, BlockPos start) {
         Set<BlockPos> seen = new HashSet<>();
         Deque<BlockPos> queue = new ArrayDeque<>();
-        List<BlockPos> dynamos = new ArrayList<>();
+        List<BlockPos> generators = new ArrayList<>();
         List<BlockPos> batteries = new ArrayList<>();
         seen.add(start);
         enqueueNeighbours(level, start, seen, queue);
@@ -30,21 +30,21 @@ public final class ElectricNetwork {
             BlockPos pos = queue.poll();
             if (level.getBlockState(pos).getBlock() instanceof CopperWireBlock) {
                 enqueueNeighbours(level, pos, seen, queue);
-            } else if (level.getBlockEntity(pos) instanceof DynamoBlockEntity) {
-                dynamos.add(pos);
             } else if (level.getBlockEntity(pos) instanceof BatteryBlockEntity) {
                 batteries.add(pos);
+            } else if (level.getBlockEntity(pos) instanceof EnergySource) {
+                generators.add(pos);
             }
         }
-        dynamos.addAll(batteries);
-        return dynamos;
+        generators.addAll(batteries);
+        return generators;
     }
 
     /**
      * Draws energy from a list of sources (as found above), in order, until 'amount' is met.
      * Returns how much was drawn.
      */
-    public static int draw(Level level, List<BlockPos> sources, int amount, boolean dynamosOnly) {
+    public static int draw(Level level, List<BlockPos> sources, int amount, boolean generatorsOnly) {
         int drawn = 0;
         for (BlockPos pos : sources) {
             if (drawn >= amount) {
@@ -53,7 +53,7 @@ public final class ElectricNetwork {
             if (!(level.getBlockEntity(pos) instanceof EnergySource source)) {
                 continue;
             }
-            if (dynamosOnly && !(source instanceof DynamoBlockEntity)) {
+            if (generatorsOnly && source instanceof BatteryBlockEntity) {
                 continue;
             }
             drawn += source.drawEnergy(amount - drawn);

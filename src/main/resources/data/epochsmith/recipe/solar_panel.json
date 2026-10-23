@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "G": {
+      "item": "minecraft:glass"
+    },
+    "S": {
+      "item": "epochsmith:silicon"
+    },
+    "W": {
+      "item": "epochsmith:copper_wire"
+    },
+    "I": {
+      "item": "epochsmith:steel_ingot"
+    }
+  },
+  "pattern": [
+    "GGG",
+    "SSS",
+    "IWI"
+  ],
+  "result": {
+    "count": 1,
+    "id": "epochsmith:solar_panel"
+  }
+}

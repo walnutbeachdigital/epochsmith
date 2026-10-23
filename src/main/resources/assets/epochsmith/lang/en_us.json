@@ -233,5 +233,15 @@
   "tooltip.epochsmith.coil_chestplate": "Shocks anything that hits you in melee while charged.",
   "message.epochsmith.battery.charged": "Charged: %s / %s",
   "block.epochsmith.sorting_cabinet": "Sorting Cabinet",
-  "message.epochsmith.cabinet.unknown": "You don't know how to use a sorting cabinet yet. Reach the Electrical era first."
+  "message.epochsmith.cabinet.unknown": "You don't know how to use a sorting cabinet yet. Reach the Electrical era first.",
+  "item.epochsmith.silicon": "Silicon",
+  "item.epochsmith.transistor": "Transistor",
+  "item.epochsmith.circuit_board": "Circuit Board",
+  "block.epochsmith.solar_panel": "Solar Panel",
+  "block.epochsmith.circuit_fabricator": "Circuit Fabricator",
+  "message.epochsmith.solar.status": "Solar Panel: making %s energy per tick, %s stored.",
+  "message.epochsmith.fabricator.unknown": "You don't know how to etch circuits yet. Reach the Information era first.",
+  "message.epochsmith.fabricator.busy": "Something else is in the fabricator. Sneak and right-click with an empty hand to take it out.",
+  "message.epochsmith.fabricator.working": "Circuit Fabricator: etching, %s silicon left.",
+  "message.epochsmith.fabricator.idle": "Circuit Fabricator: %s silicon loaded. No power: connect copper wire from a generator or battery."
 }

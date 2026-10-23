@@ -247,6 +247,13 @@ public final class ModItems {
             () -> new ArmorItem(ModArmorMaterials.COIL, ArmorItem.Type.BOOTS, new Item.Properties()
                     .durability(ArmorItem.Type.BOOTS.getDurability(COIL_DURABILITY))));
 
+    // ---- Information era: components
+    /** Sand melted in the electric arc furnace. */
+    public static final DeferredItem<Item> SILICON = Epochsmith.ITEMS.registerSimpleItem("silicon");
+    /** Etched from silicon in the circuit fabricator. */
+    public static final DeferredItem<Item> TRANSISTOR = Epochsmith.ITEMS.registerSimpleItem("transistor");
+    public static final DeferredItem<Item> CIRCUIT_BOARD = Epochsmith.ITEMS.registerSimpleItem("circuit_board");
+
     /** Called from the main mod class so this file loads before items are registered. */
     public static void init() {
     }

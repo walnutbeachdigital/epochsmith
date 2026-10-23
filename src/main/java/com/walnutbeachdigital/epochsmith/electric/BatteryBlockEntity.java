@@ -14,7 +14,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
 /**
- * Stores 200,000 energy. Charges itself from dynamos on its wires (up to 1,024 per tick),
+ * Stores 200,000 energy. Charges itself from generators (dynamos, solar panels) on its wires (up to 1,024 per tick),
  * and machines draw from it when the dynamos can't keep up. Shows its charge on its sides.
  */
 public class BatteryBlockEntity extends BlockEntity implements EnergySource {

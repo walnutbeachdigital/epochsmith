@@ -157,6 +157,11 @@ public class Epochsmith {
                 output.accept(ModItems.COIL_LEGGINGS.get());
                 output.accept(ModItems.COIL_BOOTS.get());
                 output.accept(ModBlocks.SORTING_CABINET_ITEM.get());
+                output.accept(ModItems.SILICON.get());
+                output.accept(ModItems.TRANSISTOR.get());
+                output.accept(ModItems.CIRCUIT_BOARD.get());
+                output.accept(ModBlocks.SOLAR_PANEL_ITEM.get());
+                output.accept(ModBlocks.FABRICATOR_ITEM.get());
                 output.accept(EXAMPLE_ITEM.get());// Add the example item to the tab. For your own tabs, this method is preferred over the event
             }).build());
 
