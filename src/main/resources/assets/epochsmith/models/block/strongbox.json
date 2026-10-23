@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "front": "epochsmith:block/strongbox_front",
+    "side": "epochsmith:block/strongbox_side",
+    "top": "epochsmith:block/strongbox_side"
+  }
+}

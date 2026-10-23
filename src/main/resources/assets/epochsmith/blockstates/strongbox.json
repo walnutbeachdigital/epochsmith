@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "epochsmith:block/strongbox"
+    },
+    "facing=east": {
+      "model": "epochsmith:block/strongbox",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "epochsmith:block/strongbox",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "epochsmith:block/strongbox",
+      "y": 270
+    }
+  }
+}

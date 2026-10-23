@@ -234,6 +234,36 @@ def steam_armor_layer(skip_hat):
     return px
 
 
+STEEL_PLATE = [(150, 164, 182, 255), (138, 152, 170, 255)]
+
+
+def strongbox_side():
+    """Brushed steel with a dark frame and corner rivets."""
+    px = [[STEEL_PLATE[(x + y) % 2] for x in range(16)] for y in range(16)]
+    for i in range(16):
+        px[0][i] = px[i][0] = (206, 218, 232, 255)
+        px[15][i] = px[i][15] = (40, 46, 58, 255)
+    for (x, y) in ((2, 2), (13, 2), (2, 13), (13, 13)):
+        px[y][x] = (230, 236, 244, 255)
+    return px
+
+
+def strongbox_front():
+    """The side plate with a brass combination dial and a handle."""
+    import math
+    px = strongbox_side()
+    for y in range(16):
+        for x in range(16):
+            d = math.hypot(x - 7.5, y - 6.5)
+            if d <= 3.6:
+                px[y][x] = BRASS if d > 2.6 else (232, 196, 120, 255)
+    px[6][7] = px[6][8] = (60, 50, 40, 255)
+    for x in range(5, 11):
+        px[12][x] = (60, 64, 72, 255)
+    px[11][5] = px[11][10] = (60, 64, 72, 255)
+    return px
+
+
 root = "src/main/resources/assets/epochsmith/textures"
 write_png(f"{root}/item/coke.png", from_map(COKE_LUMP, COKE))
 write_png(f"{root}/block/boiler_side.png", riveted(3))
@@ -253,4 +283,6 @@ write_png(f"{root}/item/steam_drill.png", from_map(STEAM_DRILL, STEAM_GEAR))
 write_png(f"{root}/item/pneumatic_axe.png", from_map(PNEUMATIC_AXE, STEAM_GEAR))
 write_png(f"{root}/models/armor/steam_layer_1.png", steam_armor_layer(True))
 write_png(f"{root}/models/armor/steam_layer_2.png", steam_armor_layer(False))
+write_png(f"{root}/block/strongbox_side.png", strongbox_side())
+write_png(f"{root}/block/strongbox_front.png", strongbox_front())
 print("industrial textures written")

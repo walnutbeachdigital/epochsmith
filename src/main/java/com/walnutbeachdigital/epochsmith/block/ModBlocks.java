@@ -221,6 +221,12 @@ public final class ModBlocks {
     public static final DeferredItem<BlockItem> STEAM_BLAST_FURNACE_ITEM =
             Epochsmith.ITEMS.registerSimpleBlockItem("steam_blast_furnace", STEAM_BLAST_FURNACE);
 
+    /** The Industrial era's storage: 54 slots, locked to its owner, blast-proof, hopper-proof. */
+    public static final DeferredBlock<StrongboxBlock> STRONGBOX = Epochsmith.BLOCKS.register("strongbox",
+            () -> new StrongboxBlock(BlockBehaviour.Properties.of().mapColor(MapColor.METAL)
+                    .requiresCorrectToolForDrops().strength(5.0F, 1200.0F).sound(SoundType.NETHERITE_BLOCK)));
+    public static final DeferredItem<BlockItem> STRONGBOX_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("strongbox", STRONGBOX);
+
     /** Called from the main mod class so this file loads before blocks are registered. */
     public static void init() {
     }

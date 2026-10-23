@@ -143,6 +143,7 @@ public class Epochsmith {
                 output.accept(ModItems.STEAM_CHESTPLATE.get());
                 output.accept(ModItems.STEAM_LEGGINGS.get());
                 output.accept(ModItems.STEAM_BOOTS.get());
+                output.accept(ModBlocks.STRONGBOX_ITEM.get());
                 output.accept(EXAMPLE_ITEM.get());// Add the example item to the tab. For your own tabs, this method is preferred over the event
             }).build());
 

@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "S": { "item": "epochsmith:steel_ingot" },
+    "R": { "item": "epochsmith:rivets" },
+    "C": { "item": "epochsmith:banded_crate" },
+    "G": { "item": "epochsmith:pressure_gauge" }
+  },
+  "pattern": [ "SRS", "SCS", "SGS" ],
+  "result": { "count": 1, "id": "epochsmith:strongbox" }
+}

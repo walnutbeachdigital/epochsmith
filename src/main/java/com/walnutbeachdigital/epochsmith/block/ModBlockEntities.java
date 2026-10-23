@@ -88,6 +88,10 @@ public final class ModBlockEntities {
             BLOCK_ENTITIES.register("steam_blast_furnace",
                     () -> BlockEntityType.Builder.of(BlastFurnaceBlockEntity::new, ModBlocks.STEAM_BLAST_FURNACE.get()).build(null));
 
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<StrongboxBlockEntity>> STRONGBOX =
+            BLOCK_ENTITIES.register("strongbox",
+                    () -> BlockEntityType.Builder.of(StrongboxBlockEntity::new, ModBlocks.STRONGBOX.get()).build(null));
+
     private ModBlockEntities() {
     }
 }

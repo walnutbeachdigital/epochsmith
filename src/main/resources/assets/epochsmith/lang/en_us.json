@@ -201,5 +201,10 @@
   "tooltip.epochsmith.pneumatic_axe": "Fells whole trees with steam. Sneak for one log.",
   "tooltip.epochsmith.steam_boots": "Speed while they hold steam. Uses steam only while sprinting.",
   "message.epochsmith.boiler.charged": "Recharged with steam.",
-  "message.epochsmith.boiler.cannot_charge": "The boiler needs to be making steam and hold at least 1 bucket of water."
+  "message.epochsmith.boiler.cannot_charge": "The boiler needs to be making steam and hold at least 1 bucket of water.",
+  "block.epochsmith.strongbox": "Steel Strongbox",
+  "container.epochsmith.strongbox": "Steel Strongbox",
+  "message.epochsmith.strongbox.not_yours": "This strongbox belongs to %s and is locked.",
+  "message.epochsmith.strongbox.locked": "Strongbox locked. Only you can open or break it.",
+  "message.epochsmith.strongbox.unlocked": "Strongbox unlocked. Anyone can open it now."
 }
