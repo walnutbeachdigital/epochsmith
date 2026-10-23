@@ -1,0 +1,13 @@
+{
+  "itemGroup.epochsmith": "Epochsmith",
+  "block.epochsmith.example_block": "Example Block",
+  "item.epochsmith.example_item": "Example Item",
+
+  "epochsmith.configuration.title": "Epochsmith Configs",
+  "epochsmith.configuration.section.epochsmith.common.toml": "Epochsmith Configs",
+  "epochsmith.configuration.section.epochsmith.common.toml.title": "Epochsmith Configs",
+  "epochsmith.configuration.items": "Item List",
+  "epochsmith.configuration.logDirtBlock": "Log Dirt Block",
+  "epochsmith.configuration.magicNumberIntroduction": "Magic Number Text",
+  "epochsmith.configuration.magicNumber": "Magic Number"
+}

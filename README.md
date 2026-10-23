@@ -1,25 +1,45 @@
+# Epochsmith
 
-Installation information
-=======
+Build your way through the ages of invention, from flint to fusion.
 
-This template repository can be directly cloned to get you started with a new
-mod. Simply create a new repository cloned from this one, by following the
-instructions provided by [GitHub](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template).
+Epochsmith is a Minecraft tech mod that walks you through human history one era at a time. Start by knapping flint and firing clay, work your way through bronze, gears, steam, electricity and computers, and finish with a speculative look at what technology might become. Each era unlocks when you build its signature invention, and an in-game journal tells the real story behind each discovery.
 
-Once you have your clone, simply open the repository in the IDE of your choice. The usual recommendation for an IDE is either IntelliJ IDEA or Eclipse.
+Epochsmith runs alongside vanilla as an optional tech tree. Nothing in vanilla is locked or removed.
 
-If at any point you are missing libraries in your IDE, or you've run into problems you can
-run `gradlew --refresh-dependencies` to refresh the local cache. `gradlew clean` to reset everything 
-{this does not affect your code} and then start the process again.
+## Status
 
-Mapping Names:
-============
-By default, the MDK is configured to use the official mapping names from Mojang for methods and fields 
-in the Minecraft codebase. These names are covered by a specific license. All modders should be aware of this
-license. For the latest license text, refer to the mapping file itself, or the reference copy here:
-https://github.com/NeoForged/NeoForm/blob/main/Mojang.md
+Early development. Nothing is released yet. Version 0.1 will add the Primitive era.
 
-Additional Resources: 
-==========
-Community Documentation: https://docs.neoforged.net/  
-NeoForged Discord: https://discord.neoforged.net/
+## The eras
+
+1. Primitive
+2. Bronze and Iron
+3. Mechanical
+4. Industrial
+5. Electrical
+6. Information
+7. Future (speculative)
+
+## Details
+
+- Minecraft 1.21.1
+- NeoForge
+- Java 21
+
+## Building from source
+
+```
+./gradlew build
+```
+
+The built jar ends up in `build/libs/`. To launch a test client, run `./gradlew runClient`.
+
+## Credits
+
+Made by Matthew Porter. Sister mod to [Hollowmancy](https://github.com/walnutbeachdigital/hollowmancy).
+
+The project template comes from the NeoForged MDK; its license is in `TEMPLATE_LICENSE.txt`.
+
+## License
+
+MIT. See `LICENSE`.
