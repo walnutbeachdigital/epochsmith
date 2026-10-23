@@ -1,3 +1,6 @@
 {
-  "values": [ "epochsmith:flint_axe" ]
+  "values": [
+    "epochsmith:flint_axe",
+    "epochsmith:bronze_axe"
+  ]
 }

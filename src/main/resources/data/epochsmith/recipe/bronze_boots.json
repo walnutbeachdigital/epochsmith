@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": { "P": { "item": "epochsmith:bronze_plate" } },
+  "pattern": ["P P", "P P"],
+  "result": { "count": 1, "id": "epochsmith:bronze_boots" }
+}

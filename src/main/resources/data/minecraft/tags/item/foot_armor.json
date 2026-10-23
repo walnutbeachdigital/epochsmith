@@ -1,3 +1,6 @@
 {
-  "values": [ "epochsmith:hide_boots" ]
+  "values": [
+    "epochsmith:hide_boots",
+    "epochsmith:bronze_boots"
+  ]
 }

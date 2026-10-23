@@ -5,7 +5,7 @@ TRANSPARENT = (0, 0, 0, 0)
 
 
 def write_png(path, px):
-    """Writes a 16x16 grid of (r, g, b, a) pixels to a PNG file."""
+    """Writes a grid of (r, g, b, a) pixels (rows of equal length) to a PNG file."""
     raw = b"".join(b"\x00" + bytes(c for p in row for c in p) for row in px)
 
     def chunk(kind, data):
@@ -13,7 +13,7 @@ def write_png(path, px):
 
     with open(path, "wb") as f:
         f.write(b"\x89PNG\r\n\x1a\n"
-                + chunk(b"IHDR", struct.pack(">IIBBBBB", 16, 16, 8, 6, 0, 0, 0))
+                + chunk(b"IHDR", struct.pack(">IIBBBBB", len(px[0]), len(px), 8, 6, 0, 0, 0))
                 + chunk(b"IDAT", zlib.compress(raw, 9))
                 + chunk(b"IEND", b""))
 

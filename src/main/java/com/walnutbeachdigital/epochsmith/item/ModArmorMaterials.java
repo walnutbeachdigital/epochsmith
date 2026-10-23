@@ -43,6 +43,26 @@ public final class ModArmorMaterials {
                     0.0F,
                     0.0F));
 
+    /**
+     * Bronze lamellar: as protective as iron (total 15) and easier to enchant (12, iron 9).
+     * Repaired with bronze ingots. Uses Epochsmith's own armor texture.
+     */
+    public static final DeferredHolder<ArmorMaterial, ArmorMaterial> BRONZE = ARMOR_MATERIALS.register("bronze",
+            () -> new ArmorMaterial(
+                    Util.make(new EnumMap<>(ArmorItem.Type.class), defense -> {
+                        defense.put(ArmorItem.Type.BOOTS, 2);
+                        defense.put(ArmorItem.Type.LEGGINGS, 5);
+                        defense.put(ArmorItem.Type.CHESTPLATE, 6);
+                        defense.put(ArmorItem.Type.HELMET, 2);
+                        defense.put(ArmorItem.Type.BODY, 5);
+                    }),
+                    12,
+                    SoundEvents.ARMOR_EQUIP_IRON,
+                    () -> Ingredient.of(ModItems.BRONZE_INGOT.get()),
+                    List.of(new ArmorMaterial.Layer(ResourceLocation.fromNamespaceAndPath(Epochsmith.MODID, "bronze"))),
+                    0.0F,
+                    0.0F));
+
     private ModArmorMaterials() {
     }
 }

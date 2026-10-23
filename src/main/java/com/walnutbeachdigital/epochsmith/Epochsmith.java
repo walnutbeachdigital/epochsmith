@@ -92,6 +92,15 @@ public class Epochsmith {
                 output.accept(ModItems.SMITHS_HAMMER.get());
                 output.accept(ModItems.BRONZE_PLATE.get());
                 output.accept(ModItems.WROUGHT_IRON_INGOT.get());
+                output.accept(ModItems.BRONZE_SWORD.get());
+                output.accept(ModItems.BRONZE_PICKAXE.get());
+                output.accept(ModItems.BRONZE_AXE.get());
+                output.accept(ModItems.BRONZE_SHOVEL.get());
+                output.accept(ModItems.BRONZE_HOE.get());
+                output.accept(ModItems.BRONZE_HELMET.get());
+                output.accept(ModItems.BRONZE_CHESTPLATE.get());
+                output.accept(ModItems.BRONZE_LEGGINGS.get());
+                output.accept(ModItems.BRONZE_BOOTS.get());
                 output.accept(EXAMPLE_ITEM.get());// Add the example item to the tab. For your own tabs, this method is preferred over the event
             }).build());
 

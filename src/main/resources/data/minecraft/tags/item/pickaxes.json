@@ -1,3 +1,6 @@
 {
-  "values": [ "epochsmith:flint_pickaxe" ]
+  "values": [
+    "epochsmith:flint_pickaxe",
+    "epochsmith:bronze_pickaxe"
+  ]
 }

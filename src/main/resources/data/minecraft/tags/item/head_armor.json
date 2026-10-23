@@ -1,3 +1,6 @@
 {
-  "values": [ "epochsmith:hide_helmet" ]
+  "values": [
+    "epochsmith:hide_helmet",
+    "epochsmith:bronze_helmet"
+  ]
 }

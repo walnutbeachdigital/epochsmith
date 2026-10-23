@@ -1,3 +1,6 @@
 {
-  "values": [ "epochsmith:hide_chestplate" ]
+  "values": [
+    "epochsmith:hide_chestplate",
+    "epochsmith:bronze_chestplate"
+  ]
 }

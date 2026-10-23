@@ -1,3 +1,6 @@
 {
-  "values": [ "epochsmith:flint_shovel" ]
+  "values": [
+    "epochsmith:flint_shovel",
+    "epochsmith:bronze_shovel"
+  ]
 }

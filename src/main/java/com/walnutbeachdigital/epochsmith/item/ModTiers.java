@@ -23,6 +23,19 @@ public final class ModTiers {
             10,
             () -> Ingredient.of(ModItems.FLINT_BLADE.get()));
 
+    /**
+     * Bronze: close to iron. Mines everything iron can (including diamond).
+     * Durability 220 (iron 250), speed 6 like iron, and easier to enchant (16, iron 14).
+     * Repaired with bronze ingots.
+     */
+    public static final Tier BRONZE = new SimpleTier(
+            BlockTags.INCORRECT_FOR_IRON_TOOL,
+            220,
+            6.0F,
+            2.0F,
+            16,
+            () -> Ingredient.of(ModItems.BRONZE_INGOT.get()));
+
     private ModTiers() {
     }
 }

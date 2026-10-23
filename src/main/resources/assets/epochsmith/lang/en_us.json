@@ -88,5 +88,14 @@
   "item.epochsmith.wrought_iron_ingot": "Wrought Iron Ingot",
   "message.epochsmith.anvil.unknown": "You don't know how to smith yet. Fire your first batch in a pit kiln.",
   "message.epochsmith.anvil.busy": "Something else is on the anvil. Take it off with an empty hand.",
-  "message.epochsmith.anvil.empty": "Put bronze ingots or an iron bloom on the anvil first."
+  "message.epochsmith.anvil.empty": "Put bronze ingots or an iron bloom on the anvil first.",
+  "item.epochsmith.bronze_sword": "Bronze Sword",
+  "item.epochsmith.bronze_pickaxe": "Bronze Pickaxe",
+  "item.epochsmith.bronze_axe": "Bronze Axe",
+  "item.epochsmith.bronze_shovel": "Bronze Shovel",
+  "item.epochsmith.bronze_hoe": "Bronze Hoe",
+  "item.epochsmith.bronze_helmet": "Bronze Lamellar Helm",
+  "item.epochsmith.bronze_chestplate": "Bronze Lamellar Cuirass",
+  "item.epochsmith.bronze_leggings": "Bronze Lamellar Greaves",
+  "item.epochsmith.bronze_boots": "Bronze Lamellar Boots"
 }

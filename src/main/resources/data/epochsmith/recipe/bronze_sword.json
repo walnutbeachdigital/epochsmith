@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": { "P": { "item": "epochsmith:bronze_plate" }, "S": { "item": "minecraft:stick" } },
+  "pattern": ["P", "P", "S"],
+  "result": { "count": 1, "id": "epochsmith:bronze_sword" }
+}

@@ -4,6 +4,7 @@ import com.walnutbeachdigital.epochsmith.Epochsmith;
 
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.AxeItem;
+import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.PickaxeItem;
 import net.minecraft.world.item.ShovelItem;
@@ -84,6 +85,41 @@ public final class ModItems {
     public static final DeferredItem<ArmorItem> HIDE_BOOTS = Epochsmith.ITEMS.register("hide_boots",
             () -> new ArmorItem(ModArmorMaterials.HIDE, ArmorItem.Type.BOOTS, new Item.Properties()
                     .durability(ArmorItem.Type.BOOTS.getDurability(HIDE_DURABILITY))));
+
+    // ---- Bronze and Iron era: bronze tools (attack stats match iron's) ----
+
+    public static final DeferredItem<SwordItem> BRONZE_SWORD = Epochsmith.ITEMS.register("bronze_sword",
+            () -> new SwordItem(ModTiers.BRONZE, new Item.Properties()
+                    .attributes(SwordItem.createAttributes(ModTiers.BRONZE, 3, -2.4F))));
+    public static final DeferredItem<PickaxeItem> BRONZE_PICKAXE = Epochsmith.ITEMS.register("bronze_pickaxe",
+            () -> new PickaxeItem(ModTiers.BRONZE, new Item.Properties()
+                    .attributes(PickaxeItem.createAttributes(ModTiers.BRONZE, 1.0F, -2.8F))));
+    public static final DeferredItem<AxeItem> BRONZE_AXE = Epochsmith.ITEMS.register("bronze_axe",
+            () -> new AxeItem(ModTiers.BRONZE, new Item.Properties()
+                    .attributes(AxeItem.createAttributes(ModTiers.BRONZE, 6.0F, -3.1F))));
+    public static final DeferredItem<ShovelItem> BRONZE_SHOVEL = Epochsmith.ITEMS.register("bronze_shovel",
+            () -> new ShovelItem(ModTiers.BRONZE, new Item.Properties()
+                    .attributes(ShovelItem.createAttributes(ModTiers.BRONZE, 1.5F, -3.0F))));
+    public static final DeferredItem<HoeItem> BRONZE_HOE = Epochsmith.ITEMS.register("bronze_hoe",
+            () -> new HoeItem(ModTiers.BRONZE, new Item.Properties()
+                    .attributes(HoeItem.createAttributes(ModTiers.BRONZE, -2.0F, -1.0F))));
+
+    // ---- Bronze and Iron era: bronze lamellar armor (durability a bit under iron) ----
+
+    private static final int BRONZE_DURABILITY = 14;
+
+    public static final DeferredItem<ArmorItem> BRONZE_HELMET = Epochsmith.ITEMS.register("bronze_helmet",
+            () -> new ArmorItem(ModArmorMaterials.BRONZE, ArmorItem.Type.HELMET, new Item.Properties()
+                    .durability(ArmorItem.Type.HELMET.getDurability(BRONZE_DURABILITY))));
+    public static final DeferredItem<ArmorItem> BRONZE_CHESTPLATE = Epochsmith.ITEMS.register("bronze_chestplate",
+            () -> new ArmorItem(ModArmorMaterials.BRONZE, ArmorItem.Type.CHESTPLATE, new Item.Properties()
+                    .durability(ArmorItem.Type.CHESTPLATE.getDurability(BRONZE_DURABILITY))));
+    public static final DeferredItem<ArmorItem> BRONZE_LEGGINGS = Epochsmith.ITEMS.register("bronze_leggings",
+            () -> new ArmorItem(ModArmorMaterials.BRONZE, ArmorItem.Type.LEGGINGS, new Item.Properties()
+                    .durability(ArmorItem.Type.LEGGINGS.getDurability(BRONZE_DURABILITY))));
+    public static final DeferredItem<ArmorItem> BRONZE_BOOTS = Epochsmith.ITEMS.register("bronze_boots",
+            () -> new ArmorItem(ModArmorMaterials.BRONZE, ArmorItem.Type.BOOTS, new Item.Properties()
+                    .durability(ArmorItem.Type.BOOTS.getDurability(BRONZE_DURABILITY))));
 
     /** Called from the main mod class so this file loads before items are registered. */
     public static void init() {
