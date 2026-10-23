@@ -31,6 +31,8 @@ public final class ModCapabilities {
                 (furnace, side) -> furnace.getAutomation());
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ModBlockEntities.DATA_VAULT.get(),
                 (vault, side) -> vault.getAutomation());
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ModBlockEntities.ASSEMBLER.get(),
+                (assembler, side) -> assembler.getAutomation());
     }
 
     private ModCapabilities() {

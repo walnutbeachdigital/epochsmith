@@ -192,3 +192,35 @@ write_png(f"{root}/block/data_vault_side.png", vault_side(False))
 write_png(f"{root}/block/data_vault_side_on.png", vault_side(True))
 write_png(f"{root}/block/data_vault_top.png", vault_top())
 print("data vault textures written")
+
+
+def assembler_side():
+    """Clean-room panels with a yellow-and-black safety stripe."""
+    px = fabricator_side()
+    for x in range(16):
+        for y in (12, 13):
+            px[y][x] = (230, 190, 40, 255) if ((x + y) // 2) % 2 else (30, 30, 34, 255)
+    return px
+
+
+def assembler_front(on):
+    px = assembler_side()
+    for y in range(2, 11):
+        for x in range(2, 14):
+            edge = y in (2, 10) or x in (2, 13)
+            px[y][x] = (110, 116, 126, 255) if edge else (36, 44, 56, 255)
+    arm = (255, 170, 60, 255) if on else (150, 150, 158, 255)
+    for x in range(4, 9):
+        px[5][x] = arm
+    for y in range(5, 9):
+        px[y][8] = arm
+    px[8][7] = px[8][9] = arm
+    if on:
+        px[9][8] = (140, 220, 255, 255)
+    return px
+
+
+write_png(f"{root}/block/assembler_side.png", assembler_side())
+write_png(f"{root}/block/assembler_front.png", assembler_front(False))
+write_png(f"{root}/block/assembler_front_on.png", assembler_front(True))
+print("assembler textures written")

@@ -1,6 +1,7 @@
 package com.walnutbeachdigital.epochsmith.block;
 
 import com.walnutbeachdigital.epochsmith.Epochsmith;
+import com.walnutbeachdigital.epochsmith.information.AssemblerBlock;
 import com.walnutbeachdigital.epochsmith.information.ComputerCoreBlock;
 import com.walnutbeachdigital.epochsmith.information.DataVaultBlock;
 import com.walnutbeachdigital.epochsmith.information.FabricatorBlock;
@@ -299,6 +300,11 @@ public final class ModBlocks {
             () -> new DataVaultBlock(metal().lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 5 : 0)));
     public static final DeferredItem<BlockItem> DATA_VAULT_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("data_vault", DATA_VAULT,
             new Item.Properties().stacksTo(1));
+
+    /** The Information era's crafting: teach it a recipe and it crafts on its own. */
+    public static final DeferredBlock<AssemblerBlock> ASSEMBLER = Epochsmith.BLOCKS.register("automated_assembler",
+            () -> new AssemblerBlock(metal().lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 6 : 0)));
+    public static final DeferredItem<BlockItem> ASSEMBLER_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("automated_assembler", ASSEMBLER);
 
     /** Called from the main mod class so this file loads before blocks are registered. */
     public static void init() {

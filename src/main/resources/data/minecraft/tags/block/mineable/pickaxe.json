@@ -25,6 +25,7 @@
     "epochsmith:circuit_fabricator",
     "epochsmith:computer_core",
     "epochsmith:induction_furnace",
-    "epochsmith:data_vault"
+    "epochsmith:data_vault",
+    "epochsmith:automated_assembler"
   ]
 }

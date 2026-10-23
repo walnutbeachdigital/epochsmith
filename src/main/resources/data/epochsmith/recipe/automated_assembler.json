@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "I": {
+      "item": "epochsmith:steel_ingot"
+    },
+    "C": {
+      "item": "epochsmith:circuit_board"
+    },
+    "P": {
+      "item": "minecraft:piston"
+    },
+    "T": {
+      "item": "minecraft:crafting_table"
+    }
+  },
+  "pattern": [
+    "ICI",
+    "PTP",
+    "ICI"
+  ],
+  "result": {
+    "count": 1,
+    "id": "epochsmith:automated_assembler"
+  }
+}

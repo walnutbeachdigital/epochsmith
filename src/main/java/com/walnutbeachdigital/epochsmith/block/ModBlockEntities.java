@@ -1,6 +1,7 @@
 package com.walnutbeachdigital.epochsmith.block;
 
 import com.walnutbeachdigital.epochsmith.Epochsmith;
+import com.walnutbeachdigital.epochsmith.information.AssemblerBlockEntity;
 import com.walnutbeachdigital.epochsmith.information.ComputerCoreBlockEntity;
 import com.walnutbeachdigital.epochsmith.information.DataVaultBlockEntity;
 import com.walnutbeachdigital.epochsmith.information.FabricatorBlockEntity;
@@ -141,6 +142,10 @@ public final class ModBlockEntities {
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<DataVaultBlockEntity>> DATA_VAULT =
             BLOCK_ENTITIES.register("data_vault",
                     () -> BlockEntityType.Builder.of(DataVaultBlockEntity::new, ModBlocks.DATA_VAULT.get()).build(null));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<AssemblerBlockEntity>> ASSEMBLER =
+            BLOCK_ENTITIES.register("automated_assembler",
+                    () -> BlockEntityType.Builder.of(AssemblerBlockEntity::new, ModBlocks.ASSEMBLER.get()).build(null));
 
     private ModBlockEntities() {
     }

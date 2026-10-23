@@ -1,0 +1,143 @@
+package com.walnutbeachdigital.epochsmith.information;
+
+import javax.annotation.Nullable;
+
+import com.mojang.serialization.MapCodec;
+import com.walnutbeachdigital.epochsmith.block.ModBlockEntities;
+import com.walnutbeachdigital.epochsmith.electric.ElectricConnectable;
+import com.walnutbeachdigital.epochsmith.era.Era;
+import com.walnutbeachdigital.epochsmith.era.EraManager;
+
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.Containers;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.phys.BlockHitResult;
+
+/**
+ * The Information era's crafting machine. Connect copper wire from a generator or battery.
+ *  - Sneak + right-click with an item to teach it that recipe (again to switch between recipes).
+ *  - Right-click with ingredients to load them; hoppers and pipes work too.
+ *  - Empty hand collects what's been made; sneak + empty hand takes the ingredients back and clears the recipe.
+ */
+public class AssemblerBlock extends BaseEntityBlock implements ElectricConnectable {
+
+    public static final MapCodec<AssemblerBlock> CODEC = simpleCodec(AssemblerBlock::new);
+    public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
+    public static final BooleanProperty LIT = BlockStateProperties.LIT;
+
+    public AssemblerBlock(Properties properties) {
+        super(properties);
+        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(LIT, false));
+    }
+
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return CODEC;
+    }
+
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(FACING, LIT);
+    }
+
+    @Override
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
+    }
+
+    @Override
+    protected RenderShape getRenderShape(BlockState state) {
+        return RenderShape.MODEL;
+    }
+
+    @Nullable
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new AssemblerBlockEntity(pos, state);
+    }
+
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+        return level.isClientSide() ? null
+                : createTickerHelper(type, ModBlockEntities.ASSEMBLER.get(), AssemblerBlockEntity::serverTick);
+    }
+
+    @Override
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
+                                              Player player, InteractionHand hand, BlockHitResult hit) {
+        if (!level.isClientSide() && level.getBlockEntity(pos) instanceof AssemblerBlockEntity assembler) {
+            if (!EraManager.hasReached(player, Era.INFORMATION)) {
+                player.displayClientMessage(Component.translatable("message.epochsmith.assembler.unknown"), true);
+            } else if (player.isShiftKeyDown() || !assembler.isProgrammed()) {
+                player.displayClientMessage(assembler.program(stack), true);
+                level.playSound(null, pos, SoundEvents.NOTE_BLOCK_BIT.value(), SoundSource.BLOCKS, 0.5F, 1.2F);
+            } else if (!assembler.accepts(stack)) {
+                player.displayClientMessage(Component.translatable("message.epochsmith.assembler.not_needed",
+                        stack.getHoverName()), true);
+            } else if (assembler.insert(stack)) {
+                level.playSound(null, pos, SoundEvents.CHAIN_PLACE, SoundSource.BLOCKS, 0.6F, 1.0F);
+                player.displayClientMessage(assembler.describe(), true);
+            } else {
+                player.displayClientMessage(Component.translatable("message.epochsmith.assembler.busy"), true);
+            }
+        }
+        return ItemInteractionResult.sidedSuccess(level.isClientSide());
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        if (!level.isClientSide() && level.getBlockEntity(pos) instanceof AssemblerBlockEntity assembler) {
+            java.util.List<ItemStack> taken = player.isShiftKeyDown() ? assembler.reset() : assembler.takeOutputs();
+            for (ItemStack stack : taken) {
+                if (!player.getInventory().add(stack)) {
+                    player.drop(stack, false);
+                }
+            }
+            player.displayClientMessage(assembler.describe(), true);
+        }
+        return InteractionResult.sidedSuccess(level.isClientSide());
+    }
+
+    @Override
+    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
+        if (!state.is(newState.getBlock()) && level.getBlockEntity(pos) instanceof AssemblerBlockEntity assembler) {
+            for (ItemStack stack : assembler.takeEverything()) {
+                Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), stack);
+            }
+        }
+        super.onRemove(state, level, pos, newState, movedByPiston);
+    }
+
+    /** Little sparks from the robotic arms while it works. */
+    @Override
+    public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
+        if (state.getValue(LIT) && random.nextInt(3) == 0) {
+            level.addParticle(ParticleTypes.ELECTRIC_SPARK, pos.getX() + 0.3 + random.nextDouble() * 0.4,
+                    pos.getY() + 1.05, pos.getZ() + 0.3 + random.nextDouble() * 0.4, 0.0, 0.02, 0.0);
+        }
+    }
+}
