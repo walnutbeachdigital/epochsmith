@@ -49,6 +49,26 @@ public final class ModBlocks {
     public static final DeferredItem<BlockItem> WOVEN_BASKET_ITEM =
             Epochsmith.ITEMS.registerSimpleBlockItem("woven_basket", WOVEN_BASKET, new Item.Properties().stacksTo(1));
 
+    // ---- Bronze and Iron era: tin ore ----
+
+    /** Tin ore. Any pickaxe can mine it, including flint (tin was historically easy to gather). */
+    public static final DeferredBlock<net.minecraft.world.level.block.Block> TIN_ORE = Epochsmith.BLOCKS.registerSimpleBlock("tin_ore",
+            BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.STONE)
+                    .requiresCorrectToolForDrops()
+                    .strength(3.0F, 3.0F));
+    public static final DeferredItem<BlockItem> TIN_ORE_ITEM =
+            Epochsmith.ITEMS.registerSimpleBlockItem("tin_ore", TIN_ORE);
+
+    public static final DeferredBlock<net.minecraft.world.level.block.Block> DEEPSLATE_TIN_ORE = Epochsmith.BLOCKS.registerSimpleBlock("deepslate_tin_ore",
+            BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.DEEPSLATE)
+                    .requiresCorrectToolForDrops()
+                    .strength(4.5F, 3.0F)
+                    .sound(SoundType.DEEPSLATE));
+    public static final DeferredItem<BlockItem> DEEPSLATE_TIN_ORE_ITEM =
+            Epochsmith.ITEMS.registerSimpleBlockItem("deepslate_tin_ore", DEEPSLATE_TIN_ORE);
+
     /** Called from the main mod class so this file loads before blocks are registered. */
     public static void init() {
     }

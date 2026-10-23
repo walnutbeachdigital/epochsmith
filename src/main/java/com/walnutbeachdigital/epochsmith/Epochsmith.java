@@ -81,6 +81,10 @@ public class Epochsmith {
                 output.accept(ModItems.HIDE_CHESTPLATE.get());
                 output.accept(ModItems.HIDE_LEGGINGS.get());
                 output.accept(ModItems.HIDE_BOOTS.get());
+                output.accept(ModBlocks.TIN_ORE_ITEM.get());
+                output.accept(ModBlocks.DEEPSLATE_TIN_ORE_ITEM.get());
+                output.accept(ModItems.RAW_TIN.get());
+                output.accept(ModItems.TIN_INGOT.get());
                 output.accept(EXAMPLE_ITEM.get());// Add the example item to the tab. For your own tabs, this method is preferred over the event
             }).build());
 

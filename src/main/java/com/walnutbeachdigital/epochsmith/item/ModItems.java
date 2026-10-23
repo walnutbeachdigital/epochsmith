@@ -48,6 +48,13 @@ public final class ModItems {
             () -> new ShovelItem(ModTiers.FLINT, new Item.Properties()
                     .attributes(ShovelItem.createAttributes(ModTiers.FLINT, 1.5F, -3.0F))));
 
+    // ---- Bronze and Iron era: tin ----
+
+    /** Dropped by tin ore. Smelts into a tin ingot. */
+    public static final DeferredItem<Item> RAW_TIN = Epochsmith.ITEMS.registerSimpleItem("raw_tin");
+    /** Alloyed with copper in the bloomery to make bronze. */
+    public static final DeferredItem<Item> TIN_INGOT = Epochsmith.ITEMS.registerSimpleItem("tin_ingot");
+
     // ---- Primitive era: hide armor (durability a bit above leather) ----
 
     private static final int HIDE_DURABILITY = 6;

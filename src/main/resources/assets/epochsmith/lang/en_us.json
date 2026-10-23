@@ -63,5 +63,9 @@
   "item.epochsmith.hide_helmet": "Hide Cap",
   "item.epochsmith.hide_chestplate": "Hide Tunic",
   "item.epochsmith.hide_leggings": "Hide Leggings",
-  "item.epochsmith.hide_boots": "Hide Boots"
+  "item.epochsmith.hide_boots": "Hide Boots",
+  "block.epochsmith.tin_ore": "Tin Ore",
+  "block.epochsmith.deepslate_tin_ore": "Deepslate Tin Ore",
+  "item.epochsmith.raw_tin": "Raw Tin",
+  "item.epochsmith.tin_ingot": "Tin Ingot"
 }
