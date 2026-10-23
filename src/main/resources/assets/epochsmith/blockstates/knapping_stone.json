@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "strikes=0": { "model": "epochsmith:block/knapping_stone" },
+    "strikes=1": { "model": "epochsmith:block/knapping_stone" },
+    "strikes=2": { "model": "epochsmith:block/knapping_stone" }
+  }
+}

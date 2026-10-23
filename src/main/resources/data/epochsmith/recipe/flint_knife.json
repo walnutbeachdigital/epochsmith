@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    { "item": "epochsmith:flint_blade" },
+    { "item": "minecraft:stick" },
+    { "item": "epochsmith:cordage" }
+  ],
+  "result": { "count": 1, "id": "epochsmith:flint_knife" }
+}

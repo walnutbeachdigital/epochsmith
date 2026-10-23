@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "B": { "item": "epochsmith:flint_blade" },
+    "C": { "item": "epochsmith:cordage" },
+    "S": { "item": "minecraft:stick" }
+  },
+  "pattern": ["BBB", " C ", " S "],
+  "result": { "count": 1, "id": "epochsmith:flint_pickaxe" }
+}

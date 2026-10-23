@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    { "item": "minecraft:cobblestone" },
+    { "item": "minecraft:cobblestone" }
+  ],
+  "result": { "count": 1, "id": "epochsmith:knapping_stone" }
+}

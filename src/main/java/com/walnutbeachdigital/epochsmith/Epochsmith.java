@@ -3,6 +3,7 @@ package com.walnutbeachdigital.epochsmith;
 import org.slf4j.Logger;
 
 import com.walnutbeachdigital.epochsmith.era.EraAttachments;
+import com.walnutbeachdigital.epochsmith.block.ModBlocks;
 import com.walnutbeachdigital.epochsmith.item.ModItems;
 
 import com.mojang.logging.LogUtils;
@@ -64,6 +65,14 @@ public class Epochsmith {
             .icon(() -> EXAMPLE_ITEM.get().getDefaultInstance())
             .displayItems((parameters, output) -> {
                 output.accept(ModItems.CHRONICLE.get());
+                output.accept(ModBlocks.KNAPPING_STONE_ITEM.get());
+                output.accept(ModItems.FLINT_BLADE.get());
+                output.accept(ModItems.PLANT_FIBER.get());
+                output.accept(ModItems.CORDAGE.get());
+                output.accept(ModItems.FLINT_KNIFE.get());
+                output.accept(ModItems.FLINT_PICKAXE.get());
+                output.accept(ModItems.FLINT_AXE.get());
+                output.accept(ModItems.FLINT_SHOVEL.get());
                 output.accept(EXAMPLE_ITEM.get());// Add the example item to the tab. For your own tabs, this method is preferred over the event
             }).build());
 
@@ -74,6 +83,8 @@ public class Epochsmith {
         modEventBus.addListener(this::commonSetup);
 
         // Register the Deferred Register to the mod event bus so blocks get registered
+        // Load Epochsmith's block list (and their block items) before anything registers
+        ModBlocks.init();
         BLOCKS.register(modEventBus);
         // Load Epochsmith's item list, then register all items
         ModItems.init();
