@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": { "L": { "tag": "minecraft:logs" } },
+  "pattern": [ "L", "L" ],
+  "result": { "count": 4, "id": "epochsmith:axle" }
+}

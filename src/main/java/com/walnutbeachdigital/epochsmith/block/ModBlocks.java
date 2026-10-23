@@ -1,6 +1,10 @@
 package com.walnutbeachdigital.epochsmith.block;
 
 import com.walnutbeachdigital.epochsmith.Epochsmith;
+import com.walnutbeachdigital.epochsmith.power.AxleBlock;
+import com.walnutbeachdigital.epochsmith.power.HandCrankBlock;
+import com.walnutbeachdigital.epochsmith.power.WaterWheelBlock;
+import com.walnutbeachdigital.epochsmith.power.WindmillBlock;
 
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -101,6 +105,37 @@ public final class ModBlocks {
     /** Stacks to 16 so a full pit kiln batch of fired amphorae fits in one stack. */
     public static final DeferredItem<BlockItem> AMPHORA_ITEM =
             Epochsmith.ITEMS.registerSimpleBlockItem("amphora", AMPHORA, new Item.Properties().stacksTo(16));
+
+    // ---- Mechanical era: rotation power ----
+
+    private static BlockBehaviour.Properties wooden() {
+        return BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).strength(2.0F).sound(SoundType.WOOD).noOcclusion();
+    }
+
+    /** Carries rotation in a straight line. */
+    public static final DeferredBlock<AxleBlock> AXLE = Epochsmith.BLOCKS.register("axle", () -> new AxleBlock(wooden()));
+    public static final DeferredItem<BlockItem> AXLE_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("axle", AXLE);
+
+    /** Muscle power: right-click to turn. */
+    public static final DeferredBlock<HandCrankBlock> HAND_CRANK = Epochsmith.BLOCKS.register("hand_crank", () -> new HandCrankBlock(wooden()));
+    public static final DeferredItem<BlockItem> HAND_CRANK_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("hand_crank", HAND_CRANK);
+
+    /** Water power: place it touching water. */
+    public static final DeferredBlock<WaterWheelBlock> WATER_WHEEL = Epochsmith.BLOCKS.register("water_wheel", () -> new WaterWheelBlock(wooden()));
+    public static final DeferredItem<BlockItem> WATER_WHEEL_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("water_wheel", WATER_WHEEL);
+
+    /** Wind power: place it high up under open sky. */
+    public static final DeferredBlock<WindmillBlock> WINDMILL = Epochsmith.BLOCKS.register("windmill", () -> new WindmillBlock(wooden()));
+    public static final DeferredItem<BlockItem> WINDMILL_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("windmill", WINDMILL);
+
+    /** Grinds cobblestone, gravel, bones and sugar cane using rotation power. */
+    public static final DeferredBlock<MillstoneBlock> MILLSTONE = Epochsmith.BLOCKS.register("millstone",
+            () -> new MillstoneBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.STONE)
+                    .requiresCorrectToolForDrops()
+                    .strength(2.5F)
+                    .sound(SoundType.STONE)));
+    public static final DeferredItem<BlockItem> MILLSTONE_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("millstone", MILLSTONE);
 
     /** Called from the main mod class so this file loads before blocks are registered. */
     public static void init() {

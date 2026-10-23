@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "active=false": {
+      "model": "epochsmith:block/millstone"
+    },
+    "active=true": {
+      "model": "epochsmith:block/millstone_active"
+    }
+  }
+}

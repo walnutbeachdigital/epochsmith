@@ -100,5 +100,14 @@
   "item.epochsmith.bronze_boots": "Bronze Lamellar Boots",
   "block.epochsmith.amphora": "Clay Amphora",
   "container.epochsmith.amphora": "Clay Amphora",
-  "item.epochsmith.unfired_amphora": "Unfired Amphora"
+  "item.epochsmith.unfired_amphora": "Unfired Amphora",
+  "block.epochsmith.axle": "Axle",
+  "block.epochsmith.hand_crank": "Hand Crank",
+  "block.epochsmith.water_wheel": "Water Wheel",
+  "block.epochsmith.windmill": "Windmill",
+  "block.epochsmith.millstone": "Millstone",
+  "message.epochsmith.millstone.unknown": "You don't know how to work a millstone yet. Reach the Mechanical era first.",
+  "message.epochsmith.millstone.no_power": "The millstone isn't turning. Connect it to a water wheel, windmill or hand crank with axles.",
+  "message.epochsmith.millstone.busy": "Something else is in the millstone. Take it out with an empty hand.",
+  "message.epochsmith.millstone.status": "Millstone: %s left to grind, turning force %s"
 }

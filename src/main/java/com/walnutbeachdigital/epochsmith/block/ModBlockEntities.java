@@ -2,6 +2,8 @@ package com.walnutbeachdigital.epochsmith.block;
 
 import com.walnutbeachdigital.epochsmith.Epochsmith;
 
+import com.walnutbeachdigital.epochsmith.power.KineticBlockEntity;
+
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -33,6 +35,17 @@ public final class ModBlockEntities {
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<AmphoraBlockEntity>> AMPHORA =
             BLOCK_ENTITIES.register("amphora",
                     () -> BlockEntityType.Builder.of(AmphoraBlockEntity::new, ModBlocks.AMPHORA.get()).build(null));
+
+    /** Shared by every spinning block: axles, hand cranks, water wheels and windmills. */
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<KineticBlockEntity>> KINETIC =
+            BLOCK_ENTITIES.register("kinetic",
+                    () -> BlockEntityType.Builder.of(KineticBlockEntity::new,
+                            ModBlocks.AXLE.get(), ModBlocks.HAND_CRANK.get(),
+                            ModBlocks.WATER_WHEEL.get(), ModBlocks.WINDMILL.get()).build(null));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<MillstoneBlockEntity>> MILLSTONE =
+            BLOCK_ENTITIES.register("millstone",
+                    () -> BlockEntityType.Builder.of(MillstoneBlockEntity::new, ModBlocks.MILLSTONE.get()).build(null));
 
     private ModBlockEntities() {
     }

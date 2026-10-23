@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": { "S": { "item": "minecraft:stone" }, "W": { "item": "epochsmith:wrought_iron_ingot" } },
+  "pattern": [ "SSS", "SWS" ],
+  "result": { "count": 1, "id": "epochsmith:millstone" }
+}

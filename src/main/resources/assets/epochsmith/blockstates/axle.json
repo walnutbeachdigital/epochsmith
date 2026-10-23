@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=y": {
+      "model": "epochsmith:block/axle"
+    },
+    "axis=x": {
+      "model": "epochsmith:block/axle",
+      "x": 90,
+      "y": 90
+    },
+    "axis=z": {
+      "model": "epochsmith:block/axle",
+      "x": 90
+    }
+  }
+}

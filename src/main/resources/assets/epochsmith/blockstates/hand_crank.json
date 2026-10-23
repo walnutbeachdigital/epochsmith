@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=y": {
+      "model": "epochsmith:block/hand_crank"
+    },
+    "axis=x": {
+      "model": "epochsmith:block/hand_crank",
+      "x": 90,
+      "y": 90
+    },
+    "axis=z": {
+      "model": "epochsmith:block/hand_crank",
+      "x": 90
+    }
+  }
+}

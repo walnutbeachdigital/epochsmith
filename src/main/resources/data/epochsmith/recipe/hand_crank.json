@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": { "S": { "item": "minecraft:stick" }, "W": { "item": "epochsmith:wrought_iron_ingot" } },
+  "pattern": [ "SS", " S", " W" ],
+  "result": { "count": 1, "id": "epochsmith:hand_crank" }
+}

@@ -1,0 +1,15 @@
+{
+  "variants": {
+    "axis=z": {
+      "model": "epochsmith:block/windmill"
+    },
+    "axis=x": {
+      "model": "epochsmith:block/windmill",
+      "y": 90
+    },
+    "axis=y": {
+      "model": "epochsmith:block/windmill",
+      "x": 90
+    }
+  }
+}

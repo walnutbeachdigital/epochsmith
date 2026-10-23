@@ -1,0 +1,15 @@
+{
+  "variants": {
+    "axis=z": {
+      "model": "epochsmith:block/water_wheel"
+    },
+    "axis=x": {
+      "model": "epochsmith:block/water_wheel",
+      "y": 90
+    },
+    "axis=y": {
+      "model": "epochsmith:block/water_wheel",
+      "x": 90
+    }
+  }
+}
