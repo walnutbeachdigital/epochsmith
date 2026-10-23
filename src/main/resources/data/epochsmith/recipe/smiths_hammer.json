@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "B": { "item": "epochsmith:bronze_ingot" },
+    "C": { "item": "epochsmith:cordage" },
+    "S": { "item": "minecraft:stick" }
+  },
+  "pattern": [ "BCB", " S ", " S " ],
+  "result": { "count": 1, "id": "epochsmith:smiths_hammer" }
+}

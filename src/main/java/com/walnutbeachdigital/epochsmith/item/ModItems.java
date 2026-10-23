@@ -60,6 +60,14 @@ public final class ModItems {
     /** A spongy lump of iron from the bloomery. Hammer it on an anvil to get wrought iron. */
     public static final DeferredItem<Item> IRON_BLOOM = Epochsmith.ITEMS.registerSimpleItem("iron_bloom");
 
+    /** Bronze hammered flat on the anvil. Used for bronze tool heads and armor. */
+    public static final DeferredItem<Item> BRONZE_PLATE = Epochsmith.ITEMS.registerSimpleItem("bronze_plate");
+    /** An iron bloom with the slag beaten out. The era's strongest metal. */
+    public static final DeferredItem<Item> WROUGHT_IRON_INGOT = Epochsmith.ITEMS.registerSimpleItem("wrought_iron_ingot");
+    /** Strikes metal on the Stone Anvil. 192 strikes before it breaks. */
+    public static final DeferredItem<SmithsHammerItem> SMITHS_HAMMER = Epochsmith.ITEMS.registerItem(
+            "smiths_hammer", SmithsHammerItem::new, new Item.Properties().durability(192));
+
     // ---- Primitive era: hide armor (durability a bit above leather) ----
 
     private static final int HIDE_DURABILITY = 6;

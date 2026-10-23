@@ -88,6 +88,10 @@ public class Epochsmith {
                 output.accept(ModBlocks.BLOOMERY_ITEM.get());
                 output.accept(ModItems.BRONZE_INGOT.get());
                 output.accept(ModItems.IRON_BLOOM.get());
+                output.accept(ModBlocks.STONE_ANVIL_ITEM.get());
+                output.accept(ModItems.SMITHS_HAMMER.get());
+                output.accept(ModItems.BRONZE_PLATE.get());
+                output.accept(ModItems.WROUGHT_IRON_INGOT.get());
                 output.accept(EXAMPLE_ITEM.get());// Add the example item to the tab. For your own tabs, this method is preferred over the event
             }).build());
 

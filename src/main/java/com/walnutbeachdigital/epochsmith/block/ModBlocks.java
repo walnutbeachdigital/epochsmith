@@ -80,6 +80,17 @@ public final class ModBlocks {
     public static final DeferredItem<BlockItem> BLOOMERY_ITEM =
             Epochsmith.ITEMS.registerSimpleBlockItem("bloomery", BLOOMERY);
 
+    /** The Bronze and Iron era's crafting station. Work metal on it with a Smith's Hammer. */
+    public static final DeferredBlock<StoneAnvilBlock> STONE_ANVIL = Epochsmith.BLOCKS.register("stone_anvil",
+            () -> new StoneAnvilBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.STONE)
+                    .requiresCorrectToolForDrops()
+                    .strength(3.5F, 6.0F)
+                    .sound(SoundType.STONE)
+                    .noOcclusion()));
+    public static final DeferredItem<BlockItem> STONE_ANVIL_ITEM =
+            Epochsmith.ITEMS.registerSimpleBlockItem("stone_anvil", STONE_ANVIL);
+
     /** Called from the main mod class so this file loads before blocks are registered. */
     public static void init() {
     }

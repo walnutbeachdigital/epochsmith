@@ -81,5 +81,12 @@
   "message.epochsmith.bloomery.no_mixing": "Iron can't share a firing with copper or tin. Empty the bloomery first.",
   "message.epochsmith.bloomery.full": "There's no room for more of that.",
   "message.epochsmith.bloomery.status_bronze": "Bloomery: %s copper, %s tin",
-  "message.epochsmith.bloomery.status_iron": "Bloomery: %s raw iron"
+  "message.epochsmith.bloomery.status_iron": "Bloomery: %s raw iron",
+  "block.epochsmith.stone_anvil": "Stone Anvil",
+  "item.epochsmith.smiths_hammer": "Smith's Hammer",
+  "item.epochsmith.bronze_plate": "Bronze Plate",
+  "item.epochsmith.wrought_iron_ingot": "Wrought Iron Ingot",
+  "message.epochsmith.anvil.unknown": "You don't know how to smith yet. Fire your first batch in a pit kiln.",
+  "message.epochsmith.anvil.busy": "Something else is on the anvil. Take it off with an empty hand.",
+  "message.epochsmith.anvil.empty": "Put bronze ingots or an iron bloom on the anvil first."
 }
