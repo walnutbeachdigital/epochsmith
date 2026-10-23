@@ -30,6 +30,10 @@ public final class ModBlockEntities {
             BLOCK_ENTITIES.register("stone_anvil",
                     () -> BlockEntityType.Builder.of(StoneAnvilBlockEntity::new, ModBlocks.STONE_ANVIL.get()).build(null));
 
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<AmphoraBlockEntity>> AMPHORA =
+            BLOCK_ENTITIES.register("amphora",
+                    () -> BlockEntityType.Builder.of(AmphoraBlockEntity::new, ModBlocks.AMPHORA.get()).build(null));
+
     private ModBlockEntities() {
     }
 }

@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import com.walnutbeachdigital.epochsmith.era.Era;
 import com.walnutbeachdigital.epochsmith.era.EraManager;
+import com.walnutbeachdigital.epochsmith.item.ModItems;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
@@ -45,6 +46,9 @@ public class PitKilnBlockEntity extends BlockEntity {
     public static ItemStack resultFor(ItemStack input) {
         if (input.is(Items.CLAY_BALL)) {
             return new ItemStack(Items.BRICK, input.getCount());
+        }
+        if (input.is(ModItems.UNFIRED_AMPHORA.get())) {
+            return new ItemStack(ModBlocks.AMPHORA_ITEM.get(), input.getCount());
         }
         if (input.is(ItemTags.LOGS_THAT_BURN)) {
             return new ItemStack(Items.CHARCOAL, input.getCount());

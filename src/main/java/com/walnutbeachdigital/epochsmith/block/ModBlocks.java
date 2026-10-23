@@ -91,6 +91,17 @@ public final class ModBlocks {
     public static final DeferredItem<BlockItem> STONE_ANVIL_ITEM =
             Epochsmith.ITEMS.registerSimpleBlockItem("stone_anvil", STONE_ANVIL);
 
+    /** The Bronze and Iron era's storage: 18 slots, keeps its contents when broken. */
+    public static final DeferredBlock<AmphoraBlock> AMPHORA = Epochsmith.BLOCKS.register("amphora",
+            () -> new AmphoraBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.TERRACOTTA_ORANGE)
+                    .strength(0.6F)
+                    .sound(SoundType.DECORATED_POT)
+                    .noOcclusion()));
+    /** Stacks to 16 so a full pit kiln batch of fired amphorae fits in one stack. */
+    public static final DeferredItem<BlockItem> AMPHORA_ITEM =
+            Epochsmith.ITEMS.registerSimpleBlockItem("amphora", AMPHORA, new Item.Properties().stacksTo(16));
+
     /** Called from the main mod class so this file loads before blocks are registered. */
     public static void init() {
     }

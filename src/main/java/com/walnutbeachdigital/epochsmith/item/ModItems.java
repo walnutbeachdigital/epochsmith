@@ -86,6 +86,10 @@ public final class ModItems {
             () -> new ArmorItem(ModArmorMaterials.HIDE, ArmorItem.Type.BOOTS, new Item.Properties()
                     .durability(ArmorItem.Type.BOOTS.getDurability(HIDE_DURABILITY))));
 
+    /** Shaped from clay; fire it in a pit kiln to get a Clay Amphora. */
+    public static final DeferredItem<Item> UNFIRED_AMPHORA = Epochsmith.ITEMS.registerItem(
+            "unfired_amphora", Item::new, new Item.Properties().stacksTo(16));
+
     // ---- Bronze and Iron era: bronze tools (attack stats match iron's) ----
 
     public static final DeferredItem<SwordItem> BRONZE_SWORD = Epochsmith.ITEMS.register("bronze_sword",

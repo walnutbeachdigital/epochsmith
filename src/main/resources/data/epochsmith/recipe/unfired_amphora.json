@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": { "C": { "item": "minecraft:clay_ball" } },
+  "pattern": [ "C C", "C C", " C " ],
+  "result": { "count": 1, "id": "epochsmith:unfired_amphora" }
+}

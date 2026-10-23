@@ -101,6 +101,8 @@ public class Epochsmith {
                 output.accept(ModItems.BRONZE_CHESTPLATE.get());
                 output.accept(ModItems.BRONZE_LEGGINGS.get());
                 output.accept(ModItems.BRONZE_BOOTS.get());
+                output.accept(ModItems.UNFIRED_AMPHORA.get());
+                output.accept(ModBlocks.AMPHORA_ITEM.get());
                 output.accept(EXAMPLE_ITEM.get());// Add the example item to the tab. For your own tabs, this method is preferred over the event
             }).build());
 

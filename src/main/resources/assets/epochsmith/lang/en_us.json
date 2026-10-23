@@ -55,7 +55,7 @@
   "message.epochsmith.kiln.unknown": "You don't know how to use a kiln yet. Pick up some flint first.",
   "message.epochsmith.kiln.burning": "The kiln is burning. Wait for the fire to die down.",
   "message.epochsmith.kiln.more_sticks": "You need at least %s sticks to light the kiln.",
-  "message.epochsmith.kiln.empty": "Load clay or logs into the kiln first.",
+  "message.epochsmith.kiln.empty": "Load clay, logs or an unfired amphora into the kiln first.",
   "message.epochsmith.kiln.full": "The kiln is full, or holds something else. Empty it with a bare hand.",
   "message.epochsmith.kiln.lit": "The kiln is lit. The batch will be fired in about 20 seconds.",
   "block.epochsmith.woven_basket": "Woven Basket",
@@ -97,5 +97,8 @@
   "item.epochsmith.bronze_helmet": "Bronze Lamellar Helm",
   "item.epochsmith.bronze_chestplate": "Bronze Lamellar Cuirass",
   "item.epochsmith.bronze_leggings": "Bronze Lamellar Greaves",
-  "item.epochsmith.bronze_boots": "Bronze Lamellar Boots"
+  "item.epochsmith.bronze_boots": "Bronze Lamellar Boots",
+  "block.epochsmith.amphora": "Clay Amphora",
+  "container.epochsmith.amphora": "Clay Amphora",
+  "item.epochsmith.unfired_amphora": "Unfired Amphora"
 }
