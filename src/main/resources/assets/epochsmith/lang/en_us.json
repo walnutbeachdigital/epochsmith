@@ -109,5 +109,12 @@
   "message.epochsmith.millstone.unknown": "You don't know how to work a millstone yet. Reach the Mechanical era first.",
   "message.epochsmith.millstone.no_power": "The millstone isn't turning. Connect it to a water wheel, windmill or hand crank with axles.",
   "message.epochsmith.millstone.busy": "Something else is in the millstone. Take it out with an empty hand.",
-  "message.epochsmith.millstone.status": "Millstone: %s left to grind, turning force %s"
+  "message.epochsmith.millstone.status": "Millstone: %s left to grind, turning force %s",
+  "block.epochsmith.gearbox": "Gearbox",
+  "block.epochsmith.joiners_bench": "Joiner's Bench",
+  "item.epochsmith.wooden_gear": "Wooden Gear",
+  "item.epochsmith.iron_gear": "Iron Gear",
+  "message.epochsmith.bench.unknown": "You don't know joinery yet. Reach the Mechanical era first.",
+  "message.epochsmith.bench.busy": "Something else is on the bench. Sneak and right-click with an empty hand to take it off.",
+  "message.epochsmith.bench.empty": "Put planks, logs or wrought iron on the bench first."
 }

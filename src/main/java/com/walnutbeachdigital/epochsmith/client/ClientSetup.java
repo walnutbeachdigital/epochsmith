@@ -16,8 +16,9 @@ public final class ClientSetup {
 
     @SubscribeEvent
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
-        event.registerBlockEntityRenderer(ModBlockEntities.STONE_ANVIL.get(), StoneAnvilRenderer::new);
+        event.registerBlockEntityRenderer(ModBlockEntities.STONE_ANVIL.get(), WorkpieceRenderer::new);
         event.registerBlockEntityRenderer(ModBlockEntities.KINETIC.get(), KineticRenderer::new);
+        event.registerBlockEntityRenderer(ModBlockEntities.JOINERS_BENCH.get(), WorkpieceRenderer::new);
     }
 
     private ClientSetup() {

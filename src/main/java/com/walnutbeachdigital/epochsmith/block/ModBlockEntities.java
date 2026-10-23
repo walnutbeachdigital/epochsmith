@@ -47,6 +47,10 @@ public final class ModBlockEntities {
             BLOCK_ENTITIES.register("millstone",
                     () -> BlockEntityType.Builder.of(MillstoneBlockEntity::new, ModBlocks.MILLSTONE.get()).build(null));
 
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<JoinersBenchBlockEntity>> JOINERS_BENCH =
+            BLOCK_ENTITIES.register("joiners_bench",
+                    () -> BlockEntityType.Builder.of(JoinersBenchBlockEntity::new, ModBlocks.JOINERS_BENCH.get()).build(null));
+
     private ModBlockEntities() {
     }
 }

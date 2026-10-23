@@ -13,6 +13,7 @@ import net.minecraft.world.level.block.state.BlockState;
  *
  * Rotation travels in straight lines through shafts (axles and sources) that run
  * along the direction of travel. Every source on a line adds its force.
+ * A gearbox passes rotation out of all its other sides, so power can turn corners and split.
  */
 public final class MechanicalPower {
 
@@ -20,6 +21,8 @@ public final class MechanicalPower {
     public static final int MAX_FORCE = 16;
     /** Longest line of shafts that carries power. */
     public static final int MAX_LENGTH = 32;
+    /** Most gearboxes power can pass through in a row (stops endless loops). */
+    public static final int MAX_GEARBOXES = 8;
 
     /** Total force reaching a machine from all six sides. */
     public static int forceAt(Level level, BlockPos machine) {
@@ -27,7 +30,7 @@ public final class MechanicalPower {
         seen.add(machine);
         int total = 0;
         for (Direction direction : Direction.values()) {
-            total += walk(level, machine.relative(direction), direction, seen);
+            total += walk(level, machine.relative(direction), direction, seen, 0);
         }
         return Math.min(total, MAX_FORCE);
     }
@@ -39,17 +42,28 @@ public final class MechanicalPower {
         int total = ownForce(level, pos, level.getBlockState(pos));
         for (Direction direction : Direction.values()) {
             if (direction.getAxis() == axis) {
-                total += walk(level, pos.relative(direction), direction, seen);
+                total += walk(level, pos.relative(direction), direction, seen, 0);
             }
         }
         return Math.min(total, MAX_FORCE);
     }
 
     /** Follows shafts in one direction, adding up every source along the way. */
-    private static int walk(Level level, BlockPos pos, Direction direction, Set<BlockPos> seen) {
+    private static int walk(Level level, BlockPos pos, Direction direction, Set<BlockPos> seen, int gearboxes) {
         int total = 0;
         for (int i = 0; i < MAX_LENGTH && seen.add(pos); i++) {
             BlockState state = level.getBlockState(pos);
+            if (state.getBlock() instanceof GearboxBlock) {
+                // Branch out of every other side of the gearbox
+                if (gearboxes < MAX_GEARBOXES) {
+                    for (Direction out : Direction.values()) {
+                        if (out != direction.getOpposite()) {
+                            total += walk(level, pos.relative(out), out, seen, gearboxes + 1);
+                        }
+                    }
+                }
+                break;
+            }
             if (!(state.getBlock() instanceof Shaft shaft) || shaft.getAxis(state) != direction.getAxis()) {
                 break;
             }

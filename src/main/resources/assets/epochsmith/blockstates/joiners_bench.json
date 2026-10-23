@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "epochsmith:block/joiners_bench"
+    },
+    "facing=east": {
+      "model": "epochsmith:block/joiners_bench",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "epochsmith:block/joiners_bench",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "epochsmith:block/joiners_bench",
+      "y": 270
+    }
+  }
+}

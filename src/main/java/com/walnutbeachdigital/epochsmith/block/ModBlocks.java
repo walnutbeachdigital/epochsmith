@@ -2,6 +2,7 @@ package com.walnutbeachdigital.epochsmith.block;
 
 import com.walnutbeachdigital.epochsmith.Epochsmith;
 import com.walnutbeachdigital.epochsmith.power.AxleBlock;
+import com.walnutbeachdigital.epochsmith.power.GearboxBlock;
 import com.walnutbeachdigital.epochsmith.power.HandCrankBlock;
 import com.walnutbeachdigital.epochsmith.power.WaterWheelBlock;
 import com.walnutbeachdigital.epochsmith.power.WindmillBlock;
@@ -136,6 +137,17 @@ public final class ModBlocks {
                     .strength(2.5F)
                     .sound(SoundType.STONE)));
     public static final DeferredItem<BlockItem> MILLSTONE_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("millstone", MILLSTONE);
+
+    /** Passes rotation out of all six sides: turn corners and split power. */
+    public static final DeferredBlock<GearboxBlock> GEARBOX = Epochsmith.BLOCKS.register("gearbox",
+            () -> new GearboxBlock(BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).strength(2.0F).sound(SoundType.WOOD)));
+    public static final DeferredItem<BlockItem> GEARBOX_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("gearbox", GEARBOX);
+
+    /** The Mechanical era's crafting station: cuts gears and axles, by hand or with power. */
+    public static final DeferredBlock<JoinersBenchBlock> JOINERS_BENCH = Epochsmith.BLOCKS.register("joiners_bench",
+            () -> new JoinersBenchBlock(BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).strength(2.5F)
+                    .sound(SoundType.WOOD).noOcclusion()));
+    public static final DeferredItem<BlockItem> JOINERS_BENCH_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("joiners_bench", JOINERS_BENCH);
 
     /** Called from the main mod class so this file loads before blocks are registered. */
     public static void init() {

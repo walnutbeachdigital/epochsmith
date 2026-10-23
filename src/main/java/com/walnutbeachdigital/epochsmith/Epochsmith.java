@@ -108,6 +108,10 @@ public class Epochsmith {
                 output.accept(ModBlocks.WATER_WHEEL_ITEM.get());
                 output.accept(ModBlocks.WINDMILL_ITEM.get());
                 output.accept(ModBlocks.MILLSTONE_ITEM.get());
+                output.accept(ModBlocks.GEARBOX_ITEM.get());
+                output.accept(ModBlocks.JOINERS_BENCH_ITEM.get());
+                output.accept(ModItems.WOODEN_GEAR.get());
+                output.accept(ModItems.IRON_GEAR.get());
                 output.accept(EXAMPLE_ITEM.get());// Add the example item to the tab. For your own tabs, this method is preferred over the event
             }).build());
 

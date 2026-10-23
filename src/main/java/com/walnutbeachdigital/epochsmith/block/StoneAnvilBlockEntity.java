@@ -17,7 +17,7 @@ import net.minecraft.world.level.block.state.BlockState;
  * The metal lying on the anvil and how many hammer strikes it has taken.
  * The workpiece is also sent to players' games so it can be drawn on top of the anvil.
  */
-public class StoneAnvilBlockEntity extends BlockEntity {
+public class StoneAnvilBlockEntity extends BlockEntity implements WorkpieceHolder {
 
     /** Most pieces you can stack on the anvil at once. Each finished piece pops off on its own. */
     public static final int MAX_PIECES = 16;
@@ -53,6 +53,7 @@ public class StoneAnvilBlockEntity extends BlockEntity {
 
     // ---- Workpiece ----
 
+    @Override
     public ItemStack getWorkpiece() {
         return workpiece;
     }

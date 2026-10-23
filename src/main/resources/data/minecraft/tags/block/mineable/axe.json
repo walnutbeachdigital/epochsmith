@@ -3,6 +3,8 @@
     "epochsmith:axle",
     "epochsmith:hand_crank",
     "epochsmith:water_wheel",
-    "epochsmith:windmill"
+    "epochsmith:windmill",
+    "epochsmith:gearbox",
+    "epochsmith:joiners_bench"
   ]
 }

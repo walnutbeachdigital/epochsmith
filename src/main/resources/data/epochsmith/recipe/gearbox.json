@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "P": { "tag": "minecraft:planks" },
+    "G": { "item": "epochsmith:wooden_gear" },
+    "A": { "item": "epochsmith:axle" }
+  },
+  "pattern": [ "PGP", "GAG", "PGP" ],
+  "result": { "count": 1, "id": "epochsmith:gearbox" }
+}

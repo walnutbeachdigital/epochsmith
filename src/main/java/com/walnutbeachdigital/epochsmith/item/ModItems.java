@@ -90,6 +90,11 @@ public final class ModItems {
     public static final DeferredItem<Item> UNFIRED_AMPHORA = Epochsmith.ITEMS.registerItem(
             "unfired_amphora", Item::new, new Item.Properties().stacksTo(16));
 
+    // ---- Mechanical era: machine parts (cut on the Joiner's Bench) ----
+
+    public static final DeferredItem<Item> WOODEN_GEAR = Epochsmith.ITEMS.registerSimpleItem("wooden_gear");
+    public static final DeferredItem<Item> IRON_GEAR = Epochsmith.ITEMS.registerSimpleItem("iron_gear");
+
     // ---- Bronze and Iron era: bronze tools (attack stats match iron's) ----
 
     public static final DeferredItem<SwordItem> BRONZE_SWORD = Epochsmith.ITEMS.register("bronze_sword",
