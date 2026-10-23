@@ -19,6 +19,7 @@
     "epochsmith:copper_wire",
     "epochsmith:battery",
     "epochsmith:electric_lamp",
-    "epochsmith:arc_furnace"
+    "epochsmith:arc_furnace",
+    "epochsmith:sorting_cabinet"
   ]
 }

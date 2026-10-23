@@ -6,6 +6,7 @@ import com.walnutbeachdigital.epochsmith.electric.ArcFurnaceBlockEntity;
 import com.walnutbeachdigital.epochsmith.electric.BatteryBlockEntity;
 import com.walnutbeachdigital.epochsmith.electric.DynamoBlockEntity;
 import com.walnutbeachdigital.epochsmith.electric.ElectricLampBlockEntity;
+import com.walnutbeachdigital.epochsmith.electric.SortingCabinetBlockEntity;
 import com.walnutbeachdigital.epochsmith.power.KineticBlockEntity;
 import com.walnutbeachdigital.epochsmith.steam.BlastFurnaceBlockEntity;
 import com.walnutbeachdigital.epochsmith.steam.BoilerBlockEntity;
@@ -111,6 +112,10 @@ public final class ModBlockEntities {
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<ArcFurnaceBlockEntity>> ARC_FURNACE =
             BLOCK_ENTITIES.register("arc_furnace",
                     () -> BlockEntityType.Builder.of(ArcFurnaceBlockEntity::new, ModBlocks.ARC_FURNACE.get()).build(null));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<SortingCabinetBlockEntity>> SORTING_CABINET =
+            BLOCK_ENTITIES.register("sorting_cabinet",
+                    () -> BlockEntityType.Builder.of(SortingCabinetBlockEntity::new, ModBlocks.SORTING_CABINET.get()).build(null));
 
     private ModBlockEntities() {
     }

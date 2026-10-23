@@ -216,6 +216,31 @@ def coil_layer(skip_hat):
     return px
 
 
+STEEL_SHEET = [(150, 164, 182, 255), (138, 152, 170, 255)]
+
+
+def cabinet_side():
+    px = [[STEEL_SHEET[(x + y) % 2] for x in range(16)] for y in range(16)]
+    for i in range(16):
+        px[0][i] = px[i][0] = (206, 218, 232, 255)
+        px[15][i] = px[i][15] = (40, 46, 58, 255)
+    return px
+
+
+def cabinet_front():
+    """Nine drawer fronts in a 3x3 grid, each with a small brass label plate at the bottom."""
+    px = cabinet_side()
+    for row in range(3):
+        for col in range(3):
+            x0, y0 = 1 + col * 5, 1 + row * 5
+            for y in range(y0, y0 + 4):
+                for x in range(x0, x0 + 4):
+                    edge = x in (x0, x0 + 3) or y in (y0, y0 + 3)
+                    px[y][x] = (60, 66, 78, 255) if edge else (92, 100, 114, 255)
+            px[y0 + 3][x0 + 1] = px[y0 + 3][x0 + 2] = (210, 170, 84, 255)
+    return px
+
+
 root = "src/main/resources/assets/epochsmith/textures"
 write_png(f"{root}/block/copper_wire.png", wire())
 write_png(f"{root}/block/dynamo_side.png", dynamo_side())
@@ -239,4 +264,6 @@ write_png(f"{root}/item/electric_drill.png", from_map(ELECTRIC_DRILL, ELEC))
 write_png(f"{root}/item/chainsaw.png", from_map(CHAINSAW, ELEC))
 write_png(f"{root}/models/armor/coil_layer_1.png", coil_layer(True))
 write_png(f"{root}/models/armor/coil_layer_2.png", coil_layer(False))
+write_png(f"{root}/block/sorting_cabinet_side.png", cabinet_side())
+write_png(f"{root}/block/sorting_cabinet_front.png", cabinet_front())
 print("electrical textures written")

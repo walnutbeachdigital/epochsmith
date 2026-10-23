@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "S": { "item": "epochsmith:steel_ingot" },
+    "C": { "item": "epochsmith:banded_crate" },
+    "W": { "item": "epochsmith:copper_wire" }
+  },
+  "pattern": [ "SCS", "CWC", "SCS" ],
+  "result": { "count": 1, "id": "epochsmith:sorting_cabinet" }
+}

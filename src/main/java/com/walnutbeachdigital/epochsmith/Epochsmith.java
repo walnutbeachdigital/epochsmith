@@ -156,6 +156,7 @@ public class Epochsmith {
                 output.accept(ModItems.COIL_CHESTPLATE.get());
                 output.accept(ModItems.COIL_LEGGINGS.get());
                 output.accept(ModItems.COIL_BOOTS.get());
+                output.accept(ModBlocks.SORTING_CABINET_ITEM.get());
                 output.accept(EXAMPLE_ITEM.get());// Add the example item to the tab. For your own tabs, this method is preferred over the event
             }).build());
 

@@ -231,5 +231,7 @@
   "tooltip.epochsmith.electric_drill": "Mines 3x3 and digs faster while charged. Sneak for one block.",
   "tooltip.epochsmith.chainsaw": "Fells whole trees and cuts faster while charged. Sneak for one log.",
   "tooltip.epochsmith.coil_chestplate": "Shocks anything that hits you in melee while charged.",
-  "message.epochsmith.battery.charged": "Charged: %s / %s"
+  "message.epochsmith.battery.charged": "Charged: %s / %s",
+  "block.epochsmith.sorting_cabinet": "Sorting Cabinet",
+  "message.epochsmith.cabinet.unknown": "You don't know how to use a sorting cabinet yet. Reach the Electrical era first."
 }

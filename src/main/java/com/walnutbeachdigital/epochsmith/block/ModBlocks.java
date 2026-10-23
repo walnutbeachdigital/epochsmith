@@ -6,6 +6,7 @@ import com.walnutbeachdigital.epochsmith.electric.BatteryBlock;
 import com.walnutbeachdigital.epochsmith.electric.CopperWireBlock;
 import com.walnutbeachdigital.epochsmith.electric.DynamoBlock;
 import com.walnutbeachdigital.epochsmith.electric.ElectricLampBlock;
+import com.walnutbeachdigital.epochsmith.electric.SortingCabinetBlock;
 import com.walnutbeachdigital.epochsmith.power.AxleBlock;
 import com.walnutbeachdigital.epochsmith.power.GearboxBlock;
 import com.walnutbeachdigital.epochsmith.power.HandCrankBlock;
@@ -261,6 +262,11 @@ public final class ModBlocks {
     public static final DeferredBlock<ArcFurnaceBlock> ARC_FURNACE = Epochsmith.BLOCKS.register("arc_furnace",
             () -> new ArcFurnaceBlock(metal().lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 15 : 0)));
     public static final DeferredItem<BlockItem> ARC_FURNACE_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("arc_furnace", ARC_FURNACE);
+
+    /** The Electrical era's storage: nine labeled drawers of 1,024 that file items for you. */
+    public static final DeferredBlock<SortingCabinetBlock> SORTING_CABINET = Epochsmith.BLOCKS.register("sorting_cabinet",
+            () -> new SortingCabinetBlock(metal()));
+    public static final DeferredItem<BlockItem> SORTING_CABINET_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("sorting_cabinet", SORTING_CABINET);
 
     /** Called from the main mod class so this file loads before blocks are registered. */
     public static void init() {

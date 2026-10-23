@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "epochsmith:block/sorting_cabinet"
+    },
+    "facing=east": {
+      "model": "epochsmith:block/sorting_cabinet",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "epochsmith:block/sorting_cabinet",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "epochsmith:block/sorting_cabinet",
+      "y": 270
+    }
+  }
+}
