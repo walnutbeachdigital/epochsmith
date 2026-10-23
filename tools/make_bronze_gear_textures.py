@@ -1,14 +1,16 @@
-"""Draws placeholder art for bronze tools and bronze lamellar armor. Run from the project root:
+"""Draws tool and armor art for each metal: bronze (lamellar) and steel (knight's plate).
+Run from the project root:
     python3 tools/make_bronze_gear_textures.py"""
 import os
 
 from pixelart import write_png, from_map, TRANSPARENT
 
-BRONZE = {"O": (90, 52, 24, 255), "D": (160, 98, 40, 255), "M": (205, 133, 63, 255), "H": (240, 190, 120, 255),
-          "W": (120, 86, 48, 255), "w": (84, 58, 32, 255)}
+WOOD = {"W": (120, 86, 48, 255), "w": (84, 58, 32, 255)}
+BRONZE = dict({"O": (90, 52, 24, 255), "D": (160, 98, 40, 255), "M": (205, 133, 63, 255), "H": (240, 190, 120, 255)}, **WOOD)
+STEEL = dict({"O": (40, 46, 58, 255), "D": (104, 116, 134, 255), "M": (150, 164, 182, 255), "H": (206, 218, 232, 255)}, **WOOD)
 
 ICONS = {
-    "bronze_sword": [
+    "sword": [
         ".......OO.......",
         "......OHMO......",
         "......OHMO......",
@@ -24,7 +26,7 @@ ICONS = {
         "......OwwO......",
         ".......OO.......",
     ],
-    "bronze_pickaxe": [
+    "pickaxe": [
         "................",
         ".....OOOOOO.....",
         "...OOHHMMMDOO...",
@@ -39,7 +41,7 @@ ICONS = {
         ".......OwO......",
         "........O.......",
     ],
-    "bronze_axe": [
+    "axe": [
         "................",
         ".........OO.....",
         ".......OOHMO....",
@@ -54,7 +56,7 @@ ICONS = {
         ".....OwO........",
         "......O.........",
     ],
-    "bronze_shovel": [
+    "shovel": [
         "................",
         "......OOOO......",
         ".....OHMMDO.....",
@@ -69,7 +71,7 @@ ICONS = {
         "......OwwwO.....",
         ".......OOO......",
     ],
-    "bronze_hoe": [
+    "hoe": [
         "................",
         "....OOOOOO......",
         "...OHMMMDWO.....",
@@ -83,7 +85,7 @@ ICONS = {
         "........OwO.....",
         ".........O......",
     ],
-    "bronze_helmet": [
+    "helmet": [
         "................",
         "................",
         "................",
@@ -94,7 +96,7 @@ ICONS = {
         "...OMO....ODO...",
         "...OOO....OOO...",
     ],
-    "bronze_chestplate": [
+    "chestplate": [
         "................",
         "...OOO....OOO...",
         "..OHMDOOOOOHDO..",
@@ -107,7 +109,7 @@ ICONS = {
         "....ODDDDDDO....",
         "....OOOOOOOO....",
     ],
-    "bronze_leggings": [
+    "leggings": [
         "................",
         "....OOOOOOOO....",
         "....OHMMMMDO....",
@@ -119,7 +121,7 @@ ICONS = {
         "....ODDO.ODO....",
         "....OOOO.OOO....",
     ],
-    "bronze_boots": [
+    "boots": [
         "................",
         "................",
         "................",
@@ -133,6 +135,26 @@ ICONS = {
         "..OOOO...OOOO...",
     ],
 }
+
+
+# A brace drill: crank handle above, steel bit below
+HAND_DRILL = [
+    "................",
+    ".......OO.......",
+    "......OHMO......",
+    "......OMDO......",
+    ".......OO.......",
+    "........OW......",
+    "....OOOOOW......",
+    "....OHMMMO......",
+    "...OWO..OW......",
+    "...OWO..OW......",
+    "....O...OW......",
+    "........OHO.....",
+    "........OMO.....",
+    "........OMO.....",
+    ".........O......",
+]
 
 
 def lamellar(width, height, skip_hat):
@@ -161,10 +183,39 @@ def lamellar(width, height, skip_hat):
     return px
 
 
+def plate(width, height, skip_hat):
+    """Large polished plates with dark seams and rivets: the look of knight's armor."""
+    px = []
+    for y in range(height):
+        row = []
+        for x in range(width):
+            if skip_hat and x >= 32 and y < 16:
+                row.append(TRANSPARENT)
+                continue
+            px_in, py_in = x % 8, y % 8
+            if px_in == 7 or py_in == 7:
+                c = "O"
+            elif (px_in, py_in) in ((1, 1), (5, 1), (1, 5), (5, 5)):
+                c = "H"
+            elif py_in <= 1:
+                c = "H" if px_in < 6 else "M"
+            elif py_in >= 5:
+                c = "D"
+            else:
+                c = "M"
+            row.append(STEEL[c])
+        px.append(row)
+    return px
+
+
 root = "src/main/resources/assets/epochsmith/textures"
-for name, rows in ICONS.items():
-    write_png(f"{root}/item/{name}.png", from_map(rows, BRONZE))
+for metal, palette in (("bronze", BRONZE), ("steel", STEEL)):
+    for name, rows in ICONS.items():
+        write_png(f"{root}/item/{metal}_{name}.png", from_map(rows, palette))
+write_png(f"{root}/item/hand_drill.png", from_map(HAND_DRILL, STEEL))
 os.makedirs(f"{root}/models/armor", exist_ok=True)
 write_png(f"{root}/models/armor/bronze_layer_1.png", lamellar(64, 32, skip_hat=True))
 write_png(f"{root}/models/armor/bronze_layer_2.png", lamellar(64, 32, skip_hat=False))
-print("bronze gear textures written")
+write_png(f"{root}/models/armor/knight_layer_1.png", plate(64, 32, skip_hat=True))
+write_png(f"{root}/models/armor/knight_layer_2.png", plate(64, 32, skip_hat=False))
+print("bronze and steel gear textures written")

@@ -5,6 +5,7 @@
     "epochsmith:water_wheel",
     "epochsmith:windmill",
     "epochsmith:gearbox",
-    "epochsmith:joiners_bench"
+    "epochsmith:joiners_bench",
+    "epochsmith:banded_crate"
   ]
 }

@@ -147,5 +147,18 @@
   "message.epochsmith.gear_train.weather.clear_for": "  Weather: clear skies for about %s minutes.",
   "message.epochsmith.gear_train.weather.rain_in": "  Weather: rain expected in about %s minutes.",
   "message.epochsmith.gear_train.weather.rain_ends": "  Weather: the rain should stop in about %s minutes.",
-  "message.epochsmith.gear_train.weather.storm_ends": "  Weather: the storm should pass in about %s minutes."
+  "message.epochsmith.gear_train.weather.storm_ends": "  Weather: the storm should pass in about %s minutes.",
+  "item.epochsmith.steel_sword": "Steel Sword",
+  "item.epochsmith.steel_pickaxe": "Steel Pickaxe",
+  "item.epochsmith.steel_axe": "Steel Axe",
+  "item.epochsmith.steel_shovel": "Steel Shovel",
+  "item.epochsmith.steel_hoe": "Steel Hoe",
+  "item.epochsmith.hand_drill": "Hand Drill",
+  "item.epochsmith.knight_helmet": "Knight's Helm",
+  "item.epochsmith.knight_chestplate": "Knight's Breastplate",
+  "item.epochsmith.knight_leggings": "Knight's Leg Plates",
+  "item.epochsmith.knight_boots": "Knight's Sabatons",
+  "block.epochsmith.banded_crate": "Banded Crate",
+  "container.epochsmith.banded_crate": "Banded Crate",
+  "container.epochsmith.banded_crate_large": "Large Banded Crate"
 }

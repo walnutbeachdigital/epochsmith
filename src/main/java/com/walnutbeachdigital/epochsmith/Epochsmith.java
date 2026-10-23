@@ -115,6 +115,17 @@ public class Epochsmith {
                 output.accept(ModBlocks.FORGE_ITEM.get());
                 output.accept(ModItems.STEEL_INGOT.get());
                 output.accept(ModBlocks.GEAR_TRAIN_ITEM.get());
+                output.accept(ModBlocks.BANDED_CRATE_ITEM.get());
+                output.accept(ModItems.STEEL_SWORD.get());
+                output.accept(ModItems.STEEL_PICKAXE.get());
+                output.accept(ModItems.STEEL_AXE.get());
+                output.accept(ModItems.STEEL_SHOVEL.get());
+                output.accept(ModItems.STEEL_HOE.get());
+                output.accept(ModItems.HAND_DRILL.get());
+                output.accept(ModItems.KNIGHT_HELMET.get());
+                output.accept(ModItems.KNIGHT_CHESTPLATE.get());
+                output.accept(ModItems.KNIGHT_LEGGINGS.get());
+                output.accept(ModItems.KNIGHT_BOOTS.get());
                 output.accept(EXAMPLE_ITEM.get());// Add the example item to the tab. For your own tabs, this method is preferred over the event
             }).build());
 

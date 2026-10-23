@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": { "P": { "tag": "minecraft:planks" }, "I": { "item": "epochsmith:wrought_iron_ingot" } },
+  "pattern": ["PIP", "P P", "PIP"],
+  "result": { "count": 1, "id": "epochsmith:banded_crate" }
+}

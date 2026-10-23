@@ -63,6 +63,26 @@ public final class ModArmorMaterials {
                     0.0F,
                     0.0F));
 
+    /**
+     * Knight's plate (crucible steel): between iron and diamond. Total armor 17
+     * (iron 15, diamond 20) with 1 toughness. Repaired with steel ingots.
+     */
+    public static final DeferredHolder<ArmorMaterial, ArmorMaterial> KNIGHT = ARMOR_MATERIALS.register("knight",
+            () -> new ArmorMaterial(
+                    Util.make(new EnumMap<>(ArmorItem.Type.class), defense -> {
+                        defense.put(ArmorItem.Type.BOOTS, 2);
+                        defense.put(ArmorItem.Type.LEGGINGS, 5);
+                        defense.put(ArmorItem.Type.CHESTPLATE, 7);
+                        defense.put(ArmorItem.Type.HELMET, 3);
+                        defense.put(ArmorItem.Type.BODY, 7);
+                    }),
+                    10,
+                    SoundEvents.ARMOR_EQUIP_IRON,
+                    () -> Ingredient.of(ModItems.STEEL_INGOT.get()),
+                    List.of(new ArmorMaterial.Layer(ResourceLocation.fromNamespaceAndPath(Epochsmith.MODID, "knight"))),
+                    1.0F,
+                    0.0F));
+
     private ModArmorMaterials() {
     }
 }

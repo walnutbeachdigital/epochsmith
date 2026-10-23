@@ -169,6 +169,11 @@ public final class ModBlocks {
                     .sound(SoundType.COPPER)));
     public static final DeferredItem<BlockItem> GEAR_TRAIN_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("gear_train", GEAR_TRAIN);
 
+    /** The Mechanical era's storage: 27 slots, two side by side open as one. */
+    public static final DeferredBlock<BandedCrateBlock> BANDED_CRATE = Epochsmith.BLOCKS.register("banded_crate",
+            () -> new BandedCrateBlock(BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).strength(2.5F).sound(SoundType.WOOD)));
+    public static final DeferredItem<BlockItem> BANDED_CRATE_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("banded_crate", BANDED_CRATE);
+
     /** Called from the main mod class so this file loads before blocks are registered. */
     public static void init() {
     }

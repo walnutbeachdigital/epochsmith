@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "epochsmith:block/banded_crate"
+    }
+  }
+}

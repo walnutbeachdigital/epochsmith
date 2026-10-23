@@ -2,8 +2,14 @@ package com.walnutbeachdigital.epochsmith.item;
 
 import com.walnutbeachdigital.epochsmith.Epochsmith;
 
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.level.block.Block;
+
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.AxeItem;
+import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.PickaxeItem;
@@ -132,6 +138,50 @@ public final class ModItems {
     public static final DeferredItem<ArmorItem> BRONZE_BOOTS = Epochsmith.ITEMS.register("bronze_boots",
             () -> new ArmorItem(ModArmorMaterials.BRONZE, ArmorItem.Type.BOOTS, new Item.Properties()
                     .durability(ArmorItem.Type.BOOTS.getDurability(BRONZE_DURABILITY))));
+
+    // ---- Mechanical era: steel tools (attack stats a step above iron) ----
+
+    public static final DeferredItem<SwordItem> STEEL_SWORD = Epochsmith.ITEMS.register("steel_sword",
+            () -> new SwordItem(ModTiers.STEEL, new Item.Properties()
+                    .attributes(SwordItem.createAttributes(ModTiers.STEEL, 3, -2.4F))));
+    public static final DeferredItem<PickaxeItem> STEEL_PICKAXE = Epochsmith.ITEMS.register("steel_pickaxe",
+            () -> new PickaxeItem(ModTiers.STEEL, new Item.Properties()
+                    .attributes(PickaxeItem.createAttributes(ModTiers.STEEL, 1.0F, -2.8F))));
+    public static final DeferredItem<AxeItem> STEEL_AXE = Epochsmith.ITEMS.register("steel_axe",
+            () -> new AxeItem(ModTiers.STEEL, new Item.Properties()
+                    .attributes(AxeItem.createAttributes(ModTiers.STEEL, 5.5F, -3.0F))));
+    public static final DeferredItem<ShovelItem> STEEL_SHOVEL = Epochsmith.ITEMS.register("steel_shovel",
+            () -> new ShovelItem(ModTiers.STEEL, new Item.Properties()
+                    .attributes(ShovelItem.createAttributes(ModTiers.STEEL, 1.5F, -3.0F))));
+    public static final DeferredItem<HoeItem> STEEL_HOE = Epochsmith.ITEMS.register("steel_hoe",
+            () -> new HoeItem(ModTiers.STEEL, new Item.Properties()
+                    .attributes(HoeItem.createAttributes(ModTiers.STEEL, -2.5F, -0.5F))));
+
+    /** Blocks the Hand Drill can dig: everything a pickaxe or a shovel can. */
+    public static final TagKey<Block> HAND_DRILL_MINEABLE = TagKey.create(Registries.BLOCK,
+            ResourceLocation.fromNamespaceAndPath(Epochsmith.MODID, "mineable/hand_drill"));
+
+    /** A crank-wound brace drill: one tool for both stone and earth. */
+    public static final DeferredItem<DiggerItem> HAND_DRILL = Epochsmith.ITEMS.register("hand_drill",
+            () -> new DiggerItem(ModTiers.STEEL, HAND_DRILL_MINEABLE, new Item.Properties()
+                    .attributes(DiggerItem.createAttributes(ModTiers.STEEL, 1.0F, -2.8F))));
+
+    // ---- Mechanical era: knight's plate armor ----
+
+    private static final int KNIGHT_DURABILITY = 24;
+
+    public static final DeferredItem<ArmorItem> KNIGHT_HELMET = Epochsmith.ITEMS.register("knight_helmet",
+            () -> new ArmorItem(ModArmorMaterials.KNIGHT, ArmorItem.Type.HELMET, new Item.Properties()
+                    .durability(ArmorItem.Type.HELMET.getDurability(KNIGHT_DURABILITY))));
+    public static final DeferredItem<ArmorItem> KNIGHT_CHESTPLATE = Epochsmith.ITEMS.register("knight_chestplate",
+            () -> new ArmorItem(ModArmorMaterials.KNIGHT, ArmorItem.Type.CHESTPLATE, new Item.Properties()
+                    .durability(ArmorItem.Type.CHESTPLATE.getDurability(KNIGHT_DURABILITY))));
+    public static final DeferredItem<ArmorItem> KNIGHT_LEGGINGS = Epochsmith.ITEMS.register("knight_leggings",
+            () -> new ArmorItem(ModArmorMaterials.KNIGHT, ArmorItem.Type.LEGGINGS, new Item.Properties()
+                    .durability(ArmorItem.Type.LEGGINGS.getDurability(KNIGHT_DURABILITY))));
+    public static final DeferredItem<ArmorItem> KNIGHT_BOOTS = Epochsmith.ITEMS.register("knight_boots",
+            () -> new ArmorItem(ModArmorMaterials.KNIGHT, ArmorItem.Type.BOOTS, new Item.Properties()
+                    .durability(ArmorItem.Type.BOOTS.getDurability(KNIGHT_DURABILITY))));
 
     /** Called from the main mod class so this file loads before items are registered. */
     public static void init() {

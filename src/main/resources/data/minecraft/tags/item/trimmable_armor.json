@@ -3,6 +3,10 @@
     "epochsmith:bronze_helmet",
     "epochsmith:bronze_chestplate",
     "epochsmith:bronze_leggings",
-    "epochsmith:bronze_boots"
+    "epochsmith:bronze_boots",
+    "epochsmith:knight_helmet",
+    "epochsmith:knight_chestplate",
+    "epochsmith:knight_leggings",
+    "epochsmith:knight_boots"
   ]
 }

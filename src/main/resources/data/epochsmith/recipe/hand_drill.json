@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": { "I": { "item": "epochsmith:steel_ingot" }, "S": { "item": "minecraft:stick" }, "G": { "item": "epochsmith:iron_gear" } },
+  "pattern": ["ISI", " G ", " I "],
+  "result": { "count": 1, "id": "epochsmith:hand_drill" }
+}

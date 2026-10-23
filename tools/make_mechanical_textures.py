@@ -40,9 +40,24 @@ def gearbox_face():
     return px
 
 
+def crate_face():
+    plank = [(160, 118, 70, 255), (146, 106, 62, 255)]
+    band = (62, 66, 74, 255)
+    band_hi = (104, 110, 120, 255)
+    px = [[plank[(x // 5) % 2] for x in range(16)] for y in range(16)]
+    for i in range(16):
+        for y in (2, 13):
+            px[y][i] = band_hi
+            px[y + 1][i] = band
+    for (x, y) in ((1, 2), (14, 2), (1, 13), (14, 13)):
+        px[y][x] = (200, 204, 210, 255)
+    return px
+
+
 root = "src/main/resources/assets/epochsmith/textures"
 write_png(f"{root}/item/wooden_gear.png", from_map(GEAR, WOOD))
 write_png(f"{root}/item/iron_gear.png", from_map(GEAR, IRON))
 write_png(f"{root}/block/gearbox.png", gearbox_face())
 write_png(f"{root}/item/steel_ingot.png", from_map(INGOT, STEEL))
+write_png(f"{root}/block/banded_crate.png", crate_face())
 print("mechanical textures written")

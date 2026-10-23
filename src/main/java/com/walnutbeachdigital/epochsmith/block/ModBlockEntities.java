@@ -59,6 +59,10 @@ public final class ModBlockEntities {
             BLOCK_ENTITIES.register("gear_train",
                     () -> BlockEntityType.Builder.of(GearTrainBlockEntity::new, ModBlocks.GEAR_TRAIN.get()).build(null));
 
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<BandedCrateBlockEntity>> BANDED_CRATE =
+            BLOCK_ENTITIES.register("banded_crate",
+                    () -> BlockEntityType.Builder.of(BandedCrateBlockEntity::new, ModBlocks.BANDED_CRATE.get()).build(null));
+
     private ModBlockEntities() {
     }
 }

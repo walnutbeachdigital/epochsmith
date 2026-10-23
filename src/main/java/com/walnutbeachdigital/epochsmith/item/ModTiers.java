@@ -36,6 +36,19 @@ public final class ModTiers {
             16,
             () -> Ingredient.of(ModItems.BRONZE_INGOT.get()));
 
+    /**
+     * Crucible steel: between iron and diamond. Mines what iron can (not obsidian),
+     * but lasts far longer: durability 700 (iron 250, diamond 1561), speed 7.
+     * Repaired with steel ingots.
+     */
+    public static final Tier STEEL = new SimpleTier(
+            BlockTags.INCORRECT_FOR_IRON_TOOL,
+            700,
+            7.0F,
+            2.5F,
+            12,
+            () -> Ingredient.of(ModItems.STEEL_INGOT.get()));
+
     private ModTiers() {
     }
 }
