@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "I": { "item": "minecraft:iron_ingot" },
+    "G": { "item": "epochsmith:iron_gear" },
+    "S": { "item": "epochsmith:steel_ingot" }
+  },
+  "pattern": [ "III", "GSG", "I I" ],
+  "result": { "count": 1, "id": "epochsmith:lathe" }
+}

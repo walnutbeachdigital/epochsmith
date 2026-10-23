@@ -8,6 +8,7 @@ import com.walnutbeachdigital.epochsmith.power.WaterWheelBlock;
 import com.walnutbeachdigital.epochsmith.power.WindmillBlock;
 import com.walnutbeachdigital.epochsmith.steam.BoilerBlock;
 import com.walnutbeachdigital.epochsmith.steam.CokeOvenBlock;
+import com.walnutbeachdigital.epochsmith.steam.LatheBlock;
 import com.walnutbeachdigital.epochsmith.steam.SteamEngineBlock;
 import com.walnutbeachdigital.epochsmith.steam.SteamPipeBlock;
 
@@ -207,6 +208,11 @@ public final class ModBlocks {
     public static final DeferredBlock<SteamEngineBlock> STEAM_ENGINE = Epochsmith.BLOCKS.register("steam_engine",
             () -> new SteamEngineBlock(metal().noOcclusion()));
     public static final DeferredItem<BlockItem> STEAM_ENGINE_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("steam_engine", STEAM_ENGINE);
+
+    /** The Industrial era's crafting station: steam-powered, turns precision parts. */
+    public static final DeferredBlock<LatheBlock> LATHE = Epochsmith.BLOCKS.register("lathe",
+            () -> new LatheBlock(metal().noOcclusion()));
+    public static final DeferredItem<BlockItem> LATHE_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("lathe", LATHE);
 
     /** Called from the main mod class so this file loads before blocks are registered. */
     public static void init() {

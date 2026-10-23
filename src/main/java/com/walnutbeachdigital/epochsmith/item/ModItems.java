@@ -107,6 +107,12 @@ public final class ModItems {
     /** Baked coal from the coke oven. Burns twice as long as coal (also in vanilla furnaces). */
     public static final DeferredItem<Item> COKE = Epochsmith.ITEMS.registerSimpleItem("coke");
 
+    // ---- Industrial era: precision parts (turned on the Machinist's Lathe) ----
+
+    public static final DeferredItem<Item> RIVETS = Epochsmith.ITEMS.registerSimpleItem("rivets");
+    public static final DeferredItem<Item> PRESSURE_GAUGE = Epochsmith.ITEMS.registerSimpleItem("pressure_gauge");
+    public static final DeferredItem<Item> STEAM_PISTON = Epochsmith.ITEMS.registerSimpleItem("steam_piston");
+
     // ---- Bronze and Iron era: bronze tools (attack stats match iron's) ----
 
     public static final DeferredItem<SwordItem> BRONZE_SWORD = Epochsmith.ITEMS.register("bronze_sword",

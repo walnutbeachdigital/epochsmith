@@ -115,6 +115,67 @@ COKE_LUMP = [
     "......OOOO......",
 ]
 
+WROUGHT = {"O": (35, 38, 44, 255), "D": (80, 86, 96, 255), "M": (110, 116, 126, 255), "H": (150, 156, 166, 255)}
+STEEL = {"O": (40, 46, 58, 255), "D": (104, 116, 134, 255), "M": (150, 164, 182, 255), "H": (206, 218, 232, 255)}
+
+RIVETS = [
+    "................",
+    "................",
+    "....OO....OO....",
+    "...OHMO..OHMO...",
+    "...OMDO..OMDO...",
+    "....OD....OD....",
+    "....OD....OD....",
+    ".....O.....O....",
+    ".......OO.......",
+    "......OHMO......",
+    "......OMDO......",
+    ".......OD.......",
+    ".......OD.......",
+    "........O.......",
+]
+
+STEAM_PISTON = [
+    "................",
+    ".....OOOOOO.....",
+    "....OHHHHHMO....",
+    "....OHMMMMDO....",
+    "....OHMMMMDO....",
+    "....OHMMMMDO....",
+    "....ODDDDDDO....",
+    ".....OOOOOO.....",
+    ".......OO.......",
+    ".......OH.......",
+    ".......OM.......",
+    ".......OM.......",
+    "......OOOOO.....",
+    "......OHMDO.....",
+    "......OOOOO.....",
+]
+
+
+def pressure_gauge():
+    """A brass-rimmed dial with a red needle on a copper stem."""
+    import math
+    px = [[(0, 0, 0, 0) for _ in range(16)] for _ in range(16)]
+    for y in range(16):
+        for x in range(16):
+            d = math.hypot(x - 7.5, y - 6.5)
+            if d <= 5.0:
+                px[y][x] = (236, 232, 220, 255)
+            elif d <= 6.2:
+                px[y][x] = BRASS if d < 5.7 else BRASS_DARK
+    for (x, y) in ((5, 8), (6, 7), (7, 6)):
+        px[y][x] = (200, 40, 32, 255)
+    px[6][8] = (40, 36, 34, 255)
+    for (x, y) in ((4, 4), (11, 4), (7, 2)):
+        px[y][x] = (90, 86, 80, 255)
+    for y in (13, 14, 15):
+        for x in (6, 7, 8, 9):
+            px[y][x] = (176, 96, 58, 255) if x in (7, 8) else (126, 66, 40, 255)
+    return px
+
+
 root = "src/main/resources/assets/epochsmith/textures"
 write_png(f"{root}/item/coke.png", from_map(COKE_LUMP, COKE))
 write_png(f"{root}/block/boiler_side.png", riveted(3))
@@ -124,4 +185,7 @@ write_png(f"{root}/block/coke_oven_front.png", coke_oven_front(False))
 write_png(f"{root}/block/coke_oven_front_lit.png", coke_oven_front(True))
 write_png(f"{root}/block/steam_pipe.png", pipe())
 write_png(f"{root}/block/flywheel.png", flywheel())
+write_png(f"{root}/item/rivets.png", from_map(RIVETS, WROUGHT))
+write_png(f"{root}/item/steam_piston.png", from_map(STEAM_PISTON, STEEL))
+write_png(f"{root}/item/pressure_gauge.png", pressure_gauge())
 print("industrial textures written")

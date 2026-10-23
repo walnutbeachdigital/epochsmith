@@ -5,6 +5,7 @@ import com.walnutbeachdigital.epochsmith.Epochsmith;
 import com.walnutbeachdigital.epochsmith.power.KineticBlockEntity;
 import com.walnutbeachdigital.epochsmith.steam.BoilerBlockEntity;
 import com.walnutbeachdigital.epochsmith.steam.CokeOvenBlockEntity;
+import com.walnutbeachdigital.epochsmith.steam.LatheBlockEntity;
 import com.walnutbeachdigital.epochsmith.steam.SteamEngineBlockEntity;
 
 import net.minecraft.core.registries.Registries;
@@ -77,6 +78,10 @@ public final class ModBlockEntities {
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<SteamEngineBlockEntity>> STEAM_ENGINE =
             BLOCK_ENTITIES.register("steam_engine",
                     () -> BlockEntityType.Builder.of(SteamEngineBlockEntity::new, ModBlocks.STEAM_ENGINE.get()).build(null));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<LatheBlockEntity>> LATHE =
+            BLOCK_ENTITIES.register("lathe",
+                    () -> BlockEntityType.Builder.of(LatheBlockEntity::new, ModBlocks.LATHE.get()).build(null));
 
     private ModBlockEntities() {
     }
