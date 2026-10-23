@@ -1,16 +1,9 @@
 """Draws Epochsmith's placeholder tin textures (16x16 PNGs). Run from the project root:
     python3 tools/make_tin_textures.py
 Uses only the Python standard library."""
-import random, struct, zlib, os
+import random
 
-def write_png(path, px):
-    raw = b"".join(b"\x00" + bytes(c for p in row for c in p) for row in px)
-    def chunk(t, d):
-        return struct.pack(">I", len(d)) + t + d + struct.pack(">I", zlib.crc32(t + d) & 0xFFFFFFFF)
-    data = (b"\x89PNG\r\n\x1a\n" + chunk(b"IHDR", struct.pack(">IIBBBBB", 16, 16, 8, 6, 0, 0, 0))
-            + chunk(b"IDAT", zlib.compress(raw, 9)) + chunk(b"IEND", b""))
-    with open(path, "wb") as f:
-        f.write(data)
+from pixelart import write_png, from_map as _from_map, INGOT
 
 TIN = {"O": (70, 74, 82, 255), "D": (140, 146, 156, 255), "M": (185, 190, 198, 255), "H": (232, 236, 240, 255)}
 
@@ -32,8 +25,7 @@ def ore(seed, shades):
     return px
 
 def from_map(rows):
-    rows = rows + ["." * 16] * (16 - len(rows))
-    return [[TIN[ch] if ch in TIN else (0, 0, 0, 0) for ch in row.ljust(16, ".")] for row in rows]
+    return _from_map(rows, TIN)
 
 STONE = [(112, 112, 112), (125, 125, 125), (134, 134, 134), (118, 118, 118)]
 DEEPSLATE = [(70, 70, 76), (78, 78, 84), (62, 62, 68), (86, 86, 92)]
@@ -52,20 +44,7 @@ RAW_TIN = [
     "....ODDDDDDO....",
     ".....OOOOOO.....",
 ]
-TIN_INGOT = [
-    "................",
-    "................",
-    "................",
-    "................",
-    "................",
-    ".....OOOOOOO....",
-    "....OHHHHHHHO...",
-    "...OHMMMMMMMDO..",
-    "..OHMMMMMMMMDO..",
-    "..OMMMMMMMMDO...",
-    "..ODDDDDDDDO....",
-    "...OOOOOOOO.....",
-]
+TIN_INGOT = INGOT
 
 base = "src/main/resources/assets/epochsmith/textures"
 write_png(f"{base}/block/tin_ore.png", ore(1, STONE))

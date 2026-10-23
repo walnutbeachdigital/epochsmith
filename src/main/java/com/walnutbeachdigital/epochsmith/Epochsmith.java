@@ -85,6 +85,9 @@ public class Epochsmith {
                 output.accept(ModBlocks.DEEPSLATE_TIN_ORE_ITEM.get());
                 output.accept(ModItems.RAW_TIN.get());
                 output.accept(ModItems.TIN_INGOT.get());
+                output.accept(ModBlocks.BLOOMERY_ITEM.get());
+                output.accept(ModItems.BRONZE_INGOT.get());
+                output.accept(ModItems.IRON_BLOOM.get());
                 output.accept(EXAMPLE_ITEM.get());// Add the example item to the tab. For your own tabs, this method is preferred over the event
             }).build());
 

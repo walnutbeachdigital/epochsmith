@@ -55,6 +55,11 @@ public final class ModItems {
     /** Alloyed with copper in the bloomery to make bronze. */
     public static final DeferredItem<Item> TIN_INGOT = Epochsmith.ITEMS.registerSimpleItem("tin_ingot");
 
+    /** Copper and tin alloyed in the bloomery. The Bronze and Iron era's main metal. */
+    public static final DeferredItem<Item> BRONZE_INGOT = Epochsmith.ITEMS.registerSimpleItem("bronze_ingot");
+    /** A spongy lump of iron from the bloomery. Hammer it on an anvil to get wrought iron. */
+    public static final DeferredItem<Item> IRON_BLOOM = Epochsmith.ITEMS.registerSimpleItem("iron_bloom");
+
     // ---- Primitive era: hide armor (durability a bit above leather) ----
 
     private static final int HIDE_DURABILITY = 6;

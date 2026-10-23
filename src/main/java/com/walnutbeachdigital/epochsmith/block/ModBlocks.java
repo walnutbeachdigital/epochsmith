@@ -69,6 +69,17 @@ public final class ModBlocks {
     public static final DeferredItem<BlockItem> DEEPSLATE_TIN_ORE_ITEM =
             Epochsmith.ITEMS.registerSimpleBlockItem("deepslate_tin_ore", DEEPSLATE_TIN_ORE);
 
+    /** The Bronze and Iron era's smelter and signature invention. Glows while lit. */
+    public static final DeferredBlock<BloomeryBlock> BLOOMERY = Epochsmith.BLOCKS.register("bloomery",
+            () -> new BloomeryBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.TERRACOTTA_RED)
+                    .requiresCorrectToolForDrops()
+                    .strength(3.0F)
+                    .sound(SoundType.MUD_BRICKS)
+                    .lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 13 : 0)));
+    public static final DeferredItem<BlockItem> BLOOMERY_ITEM =
+            Epochsmith.ITEMS.registerSimpleBlockItem("bloomery", BLOOMERY);
+
     /** Called from the main mod class so this file loads before blocks are registered. */
     public static void init() {
     }

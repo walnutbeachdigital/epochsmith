@@ -67,5 +67,19 @@
   "block.epochsmith.tin_ore": "Tin Ore",
   "block.epochsmith.deepslate_tin_ore": "Deepslate Tin Ore",
   "item.epochsmith.raw_tin": "Raw Tin",
-  "item.epochsmith.tin_ingot": "Tin Ingot"
+  "item.epochsmith.tin_ingot": "Tin Ingot",
+  "block.epochsmith.bloomery": "Bloomery Furnace",
+  "item.epochsmith.bronze_ingot": "Bronze Ingot",
+  "item.epochsmith.iron_bloom": "Iron Bloom",
+  "message.epochsmith.bloomery.unknown": "You don't know how to work a bloomery yet. Fire your first batch in a pit kiln.",
+  "message.epochsmith.bloomery.burning": "The bloomery is roaring. Wait for the firing to finish.",
+  "message.epochsmith.bloomery.not_coal": "Coal burns too dirty for a bloomery. Use charcoal from a pit kiln.",
+  "message.epochsmith.bloomery.no_charge": "Load 3 copper and 1 tin, or raw iron, before lighting.",
+  "message.epochsmith.bloomery.more_charcoal": "You need %s charcoal to light the bloomery.",
+  "message.epochsmith.bloomery.lit": "The bloomery is lit. The metal will be ready in about 30 seconds.",
+  "message.epochsmith.bloomery.take_output": "Take the finished metal out first (empty hand).",
+  "message.epochsmith.bloomery.no_mixing": "Iron can't share a firing with copper or tin. Empty the bloomery first.",
+  "message.epochsmith.bloomery.full": "There's no room for more of that.",
+  "message.epochsmith.bloomery.status_bronze": "Bloomery: %s copper, %s tin",
+  "message.epochsmith.bloomery.status_iron": "Bloomery: %s raw iron"
 }

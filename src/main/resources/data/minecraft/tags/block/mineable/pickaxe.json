@@ -1,3 +1,8 @@
 {
-  "values": [ "epochsmith:knapping_stone", "epochsmith:tin_ore", "epochsmith:deepslate_tin_ore" ]
+  "values": [
+    "epochsmith:knapping_stone",
+    "epochsmith:tin_ore",
+    "epochsmith:deepslate_tin_ore",
+    "epochsmith:bloomery"
+  ]
 }

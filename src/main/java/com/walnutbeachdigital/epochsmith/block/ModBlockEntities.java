@@ -22,6 +22,10 @@ public final class ModBlockEntities {
             BLOCK_ENTITIES.register("woven_basket",
                     () -> BlockEntityType.Builder.of(WovenBasketBlockEntity::new, ModBlocks.WOVEN_BASKET.get()).build(null));
 
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<BloomeryBlockEntity>> BLOOMERY =
+            BLOCK_ENTITIES.register("bloomery",
+                    () -> BlockEntityType.Builder.of(BloomeryBlockEntity::new, ModBlocks.BLOOMERY.get()).build(null));
+
     private ModBlockEntities() {
     }
 }

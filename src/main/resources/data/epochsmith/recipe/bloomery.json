@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": { "item": "minecraft:brick" },
+    "K": { "item": "epochsmith:pit_kiln" }
+  },
+  "pattern": [
+    "BBB",
+    "BKB",
+    "BBB"
+  ],
+  "result": { "count": 1, "id": "epochsmith:bloomery" }
+}
