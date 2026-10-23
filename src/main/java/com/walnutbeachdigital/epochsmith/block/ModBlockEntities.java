@@ -18,6 +18,10 @@ public final class ModBlockEntities {
             BLOCK_ENTITIES.register("pit_kiln",
                     () -> BlockEntityType.Builder.of(PitKilnBlockEntity::new, ModBlocks.PIT_KILN.get()).build(null));
 
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<WovenBasketBlockEntity>> WOVEN_BASKET =
+            BLOCK_ENTITIES.register("woven_basket",
+                    () -> BlockEntityType.Builder.of(WovenBasketBlockEntity::new, ModBlocks.WOVEN_BASKET.get()).build(null));
+
     private ModBlockEntities() {
     }
 }

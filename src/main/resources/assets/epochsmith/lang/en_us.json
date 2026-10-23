@@ -57,5 +57,11 @@
   "message.epochsmith.kiln.more_sticks": "You need at least %s sticks to light the kiln.",
   "message.epochsmith.kiln.empty": "Load clay or logs into the kiln first.",
   "message.epochsmith.kiln.full": "The kiln is full, or holds something else. Empty it with a bare hand.",
-  "message.epochsmith.kiln.lit": "The kiln is lit. The batch will be fired in about 20 seconds."
+  "message.epochsmith.kiln.lit": "The kiln is lit. The batch will be fired in about 20 seconds.",
+  "block.epochsmith.woven_basket": "Woven Basket",
+  "container.epochsmith.woven_basket": "Woven Basket",
+  "item.epochsmith.hide_helmet": "Hide Cap",
+  "item.epochsmith.hide_chestplate": "Hide Tunic",
+  "item.epochsmith.hide_leggings": "Hide Leggings",
+  "item.epochsmith.hide_boots": "Hide Boots"
 }

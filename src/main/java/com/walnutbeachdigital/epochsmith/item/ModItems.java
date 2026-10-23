@@ -2,6 +2,7 @@ package com.walnutbeachdigital.epochsmith.item;
 
 import com.walnutbeachdigital.epochsmith.Epochsmith;
 
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.PickaxeItem;
@@ -46,6 +47,23 @@ public final class ModItems {
     public static final DeferredItem<ShovelItem> FLINT_SHOVEL = Epochsmith.ITEMS.register("flint_shovel",
             () -> new ShovelItem(ModTiers.FLINT, new Item.Properties()
                     .attributes(ShovelItem.createAttributes(ModTiers.FLINT, 1.5F, -3.0F))));
+
+    // ---- Primitive era: hide armor (durability a bit above leather) ----
+
+    private static final int HIDE_DURABILITY = 6;
+
+    public static final DeferredItem<ArmorItem> HIDE_HELMET = Epochsmith.ITEMS.register("hide_helmet",
+            () -> new ArmorItem(ModArmorMaterials.HIDE, ArmorItem.Type.HELMET, new Item.Properties()
+                    .durability(ArmorItem.Type.HELMET.getDurability(HIDE_DURABILITY))));
+    public static final DeferredItem<ArmorItem> HIDE_CHESTPLATE = Epochsmith.ITEMS.register("hide_chestplate",
+            () -> new ArmorItem(ModArmorMaterials.HIDE, ArmorItem.Type.CHESTPLATE, new Item.Properties()
+                    .durability(ArmorItem.Type.CHESTPLATE.getDurability(HIDE_DURABILITY))));
+    public static final DeferredItem<ArmorItem> HIDE_LEGGINGS = Epochsmith.ITEMS.register("hide_leggings",
+            () -> new ArmorItem(ModArmorMaterials.HIDE, ArmorItem.Type.LEGGINGS, new Item.Properties()
+                    .durability(ArmorItem.Type.LEGGINGS.getDurability(HIDE_DURABILITY))));
+    public static final DeferredItem<ArmorItem> HIDE_BOOTS = Epochsmith.ITEMS.register("hide_boots",
+            () -> new ArmorItem(ModArmorMaterials.HIDE, ArmorItem.Type.BOOTS, new Item.Properties()
+                    .durability(ArmorItem.Type.BOOTS.getDurability(HIDE_DURABILITY))));
 
     /** Called from the main mod class so this file loads before items are registered. */
     public static void init() {

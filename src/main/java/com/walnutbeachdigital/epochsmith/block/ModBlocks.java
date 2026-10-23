@@ -3,6 +3,7 @@ package com.walnutbeachdigital.epochsmith.block;
 import com.walnutbeachdigital.epochsmith.Epochsmith;
 
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -37,6 +38,16 @@ public final class ModBlocks {
                     .lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 13 : 0)));
     public static final DeferredItem<BlockItem> PIT_KILN_ITEM =
             Epochsmith.ITEMS.registerSimpleBlockItem("pit_kiln", PIT_KILN);
+
+    /** The Primitive era's storage: 9 slots, keeps its contents when broken. */
+    public static final DeferredBlock<WovenBasketBlock> WOVEN_BASKET = Epochsmith.BLOCKS.register("woven_basket",
+            () -> new WovenBasketBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_YELLOW)
+                    .strength(0.5F)
+                    .sound(SoundType.GRASS)
+                    .noOcclusion()));
+    public static final DeferredItem<BlockItem> WOVEN_BASKET_ITEM =
+            Epochsmith.ITEMS.registerSimpleBlockItem("woven_basket", WOVEN_BASKET, new Item.Properties().stacksTo(1));
 
     /** Called from the main mod class so this file loads before blocks are registered. */
     public static void init() {

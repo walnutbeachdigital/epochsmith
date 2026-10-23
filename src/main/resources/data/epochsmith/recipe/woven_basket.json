@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": { "F": { "item": "epochsmith:plant_fiber" } },
+  "pattern": [ "F F", "F F", "FFF" ],
+  "result": { "count": 1, "id": "epochsmith:woven_basket" }
+}

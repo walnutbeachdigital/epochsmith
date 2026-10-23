@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import com.walnutbeachdigital.epochsmith.era.EraAttachments;
 import com.walnutbeachdigital.epochsmith.block.ModBlockEntities;
 import com.walnutbeachdigital.epochsmith.block.ModBlocks;
+import com.walnutbeachdigital.epochsmith.item.ModArmorMaterials;
 import com.walnutbeachdigital.epochsmith.item.ModItems;
 
 import com.mojang.logging.LogUtils;
@@ -68,6 +69,7 @@ public class Epochsmith {
                 output.accept(ModItems.CHRONICLE.get());
                 output.accept(ModBlocks.KNAPPING_STONE_ITEM.get());
                 output.accept(ModBlocks.PIT_KILN_ITEM.get());
+                output.accept(ModBlocks.WOVEN_BASKET_ITEM.get());
                 output.accept(ModItems.FLINT_BLADE.get());
                 output.accept(ModItems.PLANT_FIBER.get());
                 output.accept(ModItems.CORDAGE.get());
@@ -75,6 +77,10 @@ public class Epochsmith {
                 output.accept(ModItems.FLINT_PICKAXE.get());
                 output.accept(ModItems.FLINT_AXE.get());
                 output.accept(ModItems.FLINT_SHOVEL.get());
+                output.accept(ModItems.HIDE_HELMET.get());
+                output.accept(ModItems.HIDE_CHESTPLATE.get());
+                output.accept(ModItems.HIDE_LEGGINGS.get());
+                output.accept(ModItems.HIDE_BOOTS.get());
                 output.accept(EXAMPLE_ITEM.get());// Add the example item to the tab. For your own tabs, this method is preferred over the event
             }).build());
 
@@ -86,6 +92,7 @@ public class Epochsmith {
 
         // Register the Deferred Register to the mod event bus so blocks get registered
         // Load Epochsmith's block list (and their block items) before anything registers
+        ModArmorMaterials.ARMOR_MATERIALS.register(modEventBus);
         ModBlocks.init();
         BLOCKS.register(modEventBus);
         ModBlockEntities.BLOCK_ENTITIES.register(modEventBus);
