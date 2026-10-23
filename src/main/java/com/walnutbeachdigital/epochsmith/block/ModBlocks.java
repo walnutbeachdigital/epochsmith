@@ -6,6 +6,10 @@ import com.walnutbeachdigital.epochsmith.power.GearboxBlock;
 import com.walnutbeachdigital.epochsmith.power.HandCrankBlock;
 import com.walnutbeachdigital.epochsmith.power.WaterWheelBlock;
 import com.walnutbeachdigital.epochsmith.power.WindmillBlock;
+import com.walnutbeachdigital.epochsmith.steam.BoilerBlock;
+import com.walnutbeachdigital.epochsmith.steam.CokeOvenBlock;
+import com.walnutbeachdigital.epochsmith.steam.SteamEngineBlock;
+import com.walnutbeachdigital.epochsmith.steam.SteamPipeBlock;
 
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -173,6 +177,36 @@ public final class ModBlocks {
     public static final DeferredBlock<BandedCrateBlock> BANDED_CRATE = Epochsmith.BLOCKS.register("banded_crate",
             () -> new BandedCrateBlock(BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).strength(2.5F).sound(SoundType.WOOD)));
     public static final DeferredItem<BlockItem> BANDED_CRATE_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("banded_crate", BANDED_CRATE);
+
+    // ---- Industrial era: steam ----
+
+    private static BlockBehaviour.Properties metal() {
+        return BlockBehaviour.Properties.of().mapColor(MapColor.METAL).requiresCorrectToolForDrops()
+                .strength(4.0F, 6.0F).sound(SoundType.METAL);
+    }
+
+    /** Bakes coal into coke. */
+    public static final DeferredBlock<CokeOvenBlock> COKE_OVEN = Epochsmith.BLOCKS.register("coke_oven",
+            () -> new CokeOvenBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_RED).requiresCorrectToolForDrops()
+                    .strength(3.0F).sound(SoundType.STONE)
+                    .lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 10 : 0)));
+    public static final DeferredItem<BlockItem> COKE_OVEN_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("coke_oven", COKE_OVEN);
+
+    /** Boils water into steam. */
+    public static final DeferredBlock<BoilerBlock> BOILER = Epochsmith.BLOCKS.register("boiler",
+            () -> new BoilerBlock(metal().lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 9 : 0)));
+    public static final DeferredItem<BlockItem> BOILER_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("boiler", BOILER);
+
+    /** Carries steam; joins up to neighbours on its own. */
+    public static final DeferredBlock<SteamPipeBlock> STEAM_PIPE = Epochsmith.BLOCKS.register("steam_pipe",
+            () -> new SteamPipeBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_ORANGE)
+                    .requiresCorrectToolForDrops().strength(2.0F).sound(SoundType.COPPER).noOcclusion()));
+    public static final DeferredItem<BlockItem> STEAM_PIPE_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("steam_pipe", STEAM_PIPE);
+
+    /** Turns steam into rotation power. The Industrial era's signature invention. */
+    public static final DeferredBlock<SteamEngineBlock> STEAM_ENGINE = Epochsmith.BLOCKS.register("steam_engine",
+            () -> new SteamEngineBlock(metal().noOcclusion()));
+    public static final DeferredItem<BlockItem> STEAM_ENGINE_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("steam_engine", STEAM_ENGINE);
 
     /** Called from the main mod class so this file loads before blocks are registered. */
     public static void init() {

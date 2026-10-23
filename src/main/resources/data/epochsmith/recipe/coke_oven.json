@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": { "B": { "item": "minecraft:bricks" }, "F": { "item": "minecraft:furnace" } },
+  "pattern": [ "BBB", "BFB", "BBB" ],
+  "result": { "count": 1, "id": "epochsmith:coke_oven" }
+}

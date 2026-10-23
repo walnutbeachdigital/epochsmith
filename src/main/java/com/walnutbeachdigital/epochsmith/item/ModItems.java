@@ -104,6 +104,9 @@ public final class ModItems {
     /** Wrought iron refined in the forge. The Mechanical era's metal. */
     public static final DeferredItem<Item> STEEL_INGOT = Epochsmith.ITEMS.registerSimpleItem("steel_ingot");
 
+    /** Baked coal from the coke oven. Burns twice as long as coal (also in vanilla furnaces). */
+    public static final DeferredItem<Item> COKE = Epochsmith.ITEMS.registerSimpleItem("coke");
+
     // ---- Bronze and Iron era: bronze tools (attack stats match iron's) ----
 
     public static final DeferredItem<SwordItem> BRONZE_SWORD = Epochsmith.ITEMS.register("bronze_sword",

@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": { "C": { "item": "minecraft:copper_ingot" }, "S": { "item": "epochsmith:steel_ingot" } },
+  "pattern": [ "CSC" ],
+  "result": { "count": 6, "id": "epochsmith:steam_pipe" }
+}

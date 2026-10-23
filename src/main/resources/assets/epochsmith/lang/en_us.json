@@ -160,5 +160,19 @@
   "item.epochsmith.knight_boots": "Knight's Sabatons",
   "block.epochsmith.banded_crate": "Banded Crate",
   "container.epochsmith.banded_crate": "Banded Crate",
-  "container.epochsmith.banded_crate_large": "Large Banded Crate"
+  "container.epochsmith.banded_crate_large": "Large Banded Crate",
+  "block.epochsmith.coke_oven": "Coke Oven",
+  "block.epochsmith.boiler": "Boiler",
+  "block.epochsmith.steam_pipe": "Steam Pipe",
+  "block.epochsmith.steam_engine": "Steam Engine",
+  "item.epochsmith.coke": "Coke",
+  "message.epochsmith.coke_oven.unknown": "You don't know how to bake coke yet. Reach the Industrial era first.",
+  "message.epochsmith.coke_oven.baking": "The coal is baking. Coke will be ready in about 30 seconds.",
+  "message.epochsmith.coke_oven.busy": "The oven is full, or holds finished coke. Empty it with a bare hand.",
+  "message.epochsmith.boiler.unknown": "You don't know how to run a boiler yet. Reach the Industrial era first.",
+  "message.epochsmith.boiler.status": "Boiler: %s buckets of water, fuel for %s seconds. %s",
+  "message.epochsmith.boiler.producing": "Making steam.",
+  "message.epochsmith.boiler.idle": "Not making steam (needs both water and fuel).",
+  "message.epochsmith.engine.running": "Steam Engine: turning force %s.",
+  "message.epochsmith.engine.no_steam": "Steam Engine: no steam. Connect a working boiler with steam pipes."
 }

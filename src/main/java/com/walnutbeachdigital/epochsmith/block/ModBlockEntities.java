@@ -3,6 +3,9 @@ package com.walnutbeachdigital.epochsmith.block;
 import com.walnutbeachdigital.epochsmith.Epochsmith;
 
 import com.walnutbeachdigital.epochsmith.power.KineticBlockEntity;
+import com.walnutbeachdigital.epochsmith.steam.BoilerBlockEntity;
+import com.walnutbeachdigital.epochsmith.steam.CokeOvenBlockEntity;
+import com.walnutbeachdigital.epochsmith.steam.SteamEngineBlockEntity;
 
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -62,6 +65,18 @@ public final class ModBlockEntities {
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<BandedCrateBlockEntity>> BANDED_CRATE =
             BLOCK_ENTITIES.register("banded_crate",
                     () -> BlockEntityType.Builder.of(BandedCrateBlockEntity::new, ModBlocks.BANDED_CRATE.get()).build(null));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<CokeOvenBlockEntity>> COKE_OVEN =
+            BLOCK_ENTITIES.register("coke_oven",
+                    () -> BlockEntityType.Builder.of(CokeOvenBlockEntity::new, ModBlocks.COKE_OVEN.get()).build(null));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<BoilerBlockEntity>> BOILER =
+            BLOCK_ENTITIES.register("boiler",
+                    () -> BlockEntityType.Builder.of(BoilerBlockEntity::new, ModBlocks.BOILER.get()).build(null));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<SteamEngineBlockEntity>> STEAM_ENGINE =
+            BLOCK_ENTITIES.register("steam_engine",
+                    () -> BlockEntityType.Builder.of(SteamEngineBlockEntity::new, ModBlocks.STEAM_ENGINE.get()).build(null));
 
     private ModBlockEntities() {
     }

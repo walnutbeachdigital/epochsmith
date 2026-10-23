@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "S": { "item": "epochsmith:steel_ingot" },
+    "B": { "item": "minecraft:bucket" },
+    "F": { "item": "minecraft:furnace" }
+  },
+  "pattern": [ "SSS", "SBS", "SFS" ],
+  "result": { "count": 1, "id": "epochsmith:boiler" }
+}

@@ -7,6 +7,10 @@
     "epochsmith:stone_anvil",
     "epochsmith:millstone",
     "epochsmith:forge",
-    "epochsmith:gear_train"
+    "epochsmith:gear_train",
+    "epochsmith:coke_oven",
+    "epochsmith:boiler",
+    "epochsmith:steam_pipe",
+    "epochsmith:steam_engine"
   ]
 }
