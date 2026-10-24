@@ -58,6 +58,6 @@ root = "src/main/resources/assets/epochsmith/textures"
 write_png(f"{root}/item/wooden_gear.png", from_map(GEAR, WOOD))
 write_png(f"{root}/item/iron_gear.png", from_map(GEAR, IRON))
 write_png(f"{root}/block/gearbox.png", gearbox_face())
-write_png(f"{root}/item/steel_ingot.png", from_map(INGOT, STEEL))
+# Now made by tools/recolor_vanilla.py (recolored from vanilla iron/coal): write_png(f"{root}/item/steel_ingot.png", from_map(INGOT, STEEL))
 write_png(f"{root}/block/banded_crate.png", crate_face())
 print("mechanical textures written")

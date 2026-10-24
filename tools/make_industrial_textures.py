@@ -265,7 +265,7 @@ def strongbox_front():
 
 
 root = "src/main/resources/assets/epochsmith/textures"
-write_png(f"{root}/item/coke.png", from_map(COKE_LUMP, COKE))
+# Now made by tools/recolor_vanilla.py (recolored from vanilla iron/coal): write_png(f"{root}/item/coke.png", from_map(COKE_LUMP, COKE))
 write_png(f"{root}/block/boiler_side.png", riveted(3))
 write_png(f"{root}/block/boiler_top.png", boiler_top())
 write_png(f"{root}/block/coke_oven_side.png", bricks())

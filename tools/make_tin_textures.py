@@ -47,8 +47,8 @@ RAW_TIN = [
 TIN_INGOT = INGOT
 
 base = "src/main/resources/assets/epochsmith/textures"
-write_png(f"{base}/block/tin_ore.png", ore(1, STONE))
-write_png(f"{base}/block/deepslate_tin_ore.png", ore(2, DEEPSLATE))
-write_png(f"{base}/item/raw_tin.png", from_map(RAW_TIN))
-write_png(f"{base}/item/tin_ingot.png", from_map(TIN_INGOT))
+# Now made by tools/recolor_vanilla.py (recolored from vanilla iron/coal): write_png(f"{base}/block/tin_ore.png", ore(1, STONE))
+# Now made by tools/recolor_vanilla.py (recolored from vanilla iron/coal): write_png(f"{base}/block/deepslate_tin_ore.png", ore(2, DEEPSLATE))
+# Now made by tools/recolor_vanilla.py (recolored from vanilla iron/coal): write_png(f"{base}/item/raw_tin.png", from_map(RAW_TIN))
+# Now made by tools/recolor_vanilla.py (recolored from vanilla iron/coal): write_png(f"{base}/item/tin_ingot.png", from_map(TIN_INGOT))
 print("tin textures written")
