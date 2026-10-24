@@ -2,6 +2,7 @@ package com.walnutbeachdigital.epochsmith.block;
 
 import com.walnutbeachdigital.epochsmith.Epochsmith;
 import com.walnutbeachdigital.epochsmith.future.FusionReactorBlock;
+import com.walnutbeachdigital.epochsmith.future.MatterPrinterBlock;
 import com.walnutbeachdigital.epochsmith.future.NanofabricatorBlock;
 import com.walnutbeachdigital.epochsmith.future.PlasmaSmelterBlock;
 import com.walnutbeachdigital.epochsmith.future.QuantumCellBlock;
@@ -335,6 +336,12 @@ public final class ModBlocks {
             () -> new QuantumCellBlock(metal().lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 8 : 0)));
     public static final DeferredItem<QuantumCellItem> QUANTUM_CELL_ITEM = Epochsmith.ITEMS.register("quantum_cell",
             () -> new QuantumCellItem(QUANTUM_CELL.get(), new Item.Properties().rarity(Rarity.RARE)));
+
+    /** The Future era's crafting: prints copies of scanned items from raw matter. */
+    public static final DeferredBlock<MatterPrinterBlock> MATTER_PRINTER = Epochsmith.BLOCKS.register("matter_printer",
+            () -> new MatterPrinterBlock(metal().lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 12 : 0)));
+    public static final DeferredItem<BlockItem> MATTER_PRINTER_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("matter_printer", MATTER_PRINTER,
+            new Item.Properties().rarity(Rarity.RARE));
 
     /** Called from the main mod class so this file loads before blocks are registered. */
     public static void init() {

@@ -213,3 +213,36 @@ write_png(f"{root}/block/quantum_cell_side.png", quantum_side(False))
 write_png(f"{root}/block/quantum_cell_side_on.png", quantum_side(True))
 write_png(f"{root}/block/quantum_cell_top.png", quantum_top())
 print("quantum cell textures written")
+
+
+def printer_side():
+    """Pearl-white shell with a cyan status strip."""
+    px = nanofab_side()
+    for x in range(1, 15):
+        px[11][x] = (80, 220, 255, 255)
+    return px
+
+
+def printer_front(lit):
+    """A print chamber; when working, an item takes shape in a cone of light."""
+    px = printer_side()
+    for y in range(2, 11):
+        for x in range(3, 13):
+            if y in (2, 10) or x in (3, 12):
+                px[y][x] = (110, 120, 140, 255)
+            else:
+                px[y][x] = (24, 30, 44, 255)
+    if lit:
+        for y in range(3, 10):
+            half = (y - 2) // 2
+            for x in range(8 - half - 1, 8 + half + 1):
+                if 3 < x < 12:
+                    px[y][x] = (120, 230, 255, 255) if (x + y) % 2 else (200, 250, 255, 255)
+    px[3][7] = px[3][8] = (255, 255, 255, 255)
+    return px
+
+
+write_png(f"{root}/block/matter_printer_side.png", printer_side())
+write_png(f"{root}/block/matter_printer_front.png", printer_front(False))
+write_png(f"{root}/block/matter_printer_front_on.png", printer_front(True))
+print("matter printer textures written")

@@ -39,6 +39,8 @@ public final class ModCapabilities {
                 (smelter, side) -> smelter.getAutomation());
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ModBlockEntities.QUANTUM_CELL.get(),
                 (cell, side) -> cell.getAutomation());
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ModBlockEntities.MATTER_PRINTER.get(),
+                (printer, side) -> printer.getAutomation());
     }
 
     private ModCapabilities() {

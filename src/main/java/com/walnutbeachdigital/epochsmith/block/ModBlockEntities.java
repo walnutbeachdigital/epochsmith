@@ -2,6 +2,7 @@ package com.walnutbeachdigital.epochsmith.block;
 
 import com.walnutbeachdigital.epochsmith.Epochsmith;
 import com.walnutbeachdigital.epochsmith.future.FusionReactorBlockEntity;
+import com.walnutbeachdigital.epochsmith.future.MatterPrinterBlockEntity;
 import com.walnutbeachdigital.epochsmith.future.NanofabricatorBlockEntity;
 import com.walnutbeachdigital.epochsmith.future.PlasmaSmelterBlockEntity;
 import com.walnutbeachdigital.epochsmith.future.QuantumCellBlockEntity;
@@ -166,6 +167,10 @@ public final class ModBlockEntities {
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<QuantumCellBlockEntity>> QUANTUM_CELL =
             BLOCK_ENTITIES.register("quantum_cell",
                     () -> BlockEntityType.Builder.of(QuantumCellBlockEntity::new, ModBlocks.QUANTUM_CELL.get()).build(null));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<MatterPrinterBlockEntity>> MATTER_PRINTER =
+            BLOCK_ENTITIES.register("matter_printer",
+                    () -> BlockEntityType.Builder.of(MatterPrinterBlockEntity::new, ModBlocks.MATTER_PRINTER.get()).build(null));
 
     private ModBlockEntities() {
     }

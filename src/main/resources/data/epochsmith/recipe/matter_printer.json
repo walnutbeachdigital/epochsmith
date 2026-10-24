@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "N": {
+      "item": "epochsmith:nanobots"
+    },
+    "A": {
+      "item": "epochsmith:automated_assembler"
+    },
+    "P": {
+      "item": "epochsmith:plasma_cell"
+    },
+    "D": {
+      "item": "minecraft:diamond_block"
+    },
+    "S": {
+      "item": "epochsmith:superconductor_coil"
+    }
+  },
+  "pattern": [
+    "NDN",
+    "SAS",
+    "NPN"
+  ],
+  "result": {
+    "count": 1,
+    "id": "epochsmith:matter_printer"
+  }
+}

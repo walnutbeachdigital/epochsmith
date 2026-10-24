@@ -23,6 +23,7 @@ public final class ClientSetup {
         event.registerBlockEntityRenderer(ModBlockEntities.FABRICATOR.get(), WorkpieceRenderer::new);
         event.registerBlockEntityRenderer(ModBlockEntities.ASSEMBLER.get(), WorkpieceRenderer::new);
         event.registerBlockEntityRenderer(ModBlockEntities.NANOFABRICATOR.get(), WorkpieceRenderer::new);
+        event.registerBlockEntityRenderer(ModBlockEntities.MATTER_PRINTER.get(), WorkpieceRenderer::new);
         event.registerBlockEntityRenderer(ModBlockEntities.SORTING_CABINET.get(), SortingCabinetRenderer::new);
     }
 

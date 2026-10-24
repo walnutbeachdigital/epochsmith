@@ -30,6 +30,7 @@
     "epochsmith:nanofabricator",
     "epochsmith:fusion_reactor",
     "epochsmith:plasma_smelter",
-    "epochsmith:quantum_cell"
+    "epochsmith:quantum_cell",
+    "epochsmith:matter_printer"
   ]
 }
