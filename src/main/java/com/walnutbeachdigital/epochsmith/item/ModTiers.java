@@ -85,6 +85,18 @@ public final class ModTiers {
             15,
             () -> Ingredient.of(ModItems.STEEL_INGOT.get()));
 
+    /**
+     * Future-era nano tools: beyond netherite. 4000 durability, speed 14.
+     * Repaired with graphene.
+     */
+    public static final Tier NANO = new SimpleTier(
+            BlockTags.INCORRECT_FOR_NETHERITE_TOOL,
+            4000,
+            14.0F,
+            6.0F,
+            20,
+            () -> Ingredient.of(ModItems.GRAPHENE.get()));
+
     private ModTiers() {
     }
 }

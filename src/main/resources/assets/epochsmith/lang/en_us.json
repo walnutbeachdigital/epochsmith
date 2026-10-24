@@ -39,7 +39,7 @@
   "chronicle.epochsmith.information.intro": "The transistor, invented in 1947, made computers small and cheap. Circuits, software and networks followed.",
   "chronicle.epochsmith.information.signature": "Computer Core",
   "chronicle.epochsmith.future.intro": "No one knows what comes next. This chapter imagines ideas scientists work on today, like fusion power. A glimpse, not a prediction.",
-  "chronicle.epochsmith.future.signature": "Fusion Core",
+  "chronicle.epochsmith.future.signature": "Fusion Reactor",
   "block.epochsmith.knapping_stone": "Knapping Stone",
   "item.epochsmith.flint_blade": "Flint Blade",
   "item.epochsmith.plant_fiber": "Plant Fiber",
@@ -341,5 +341,18 @@
   "message.epochsmith.matter_printer.unpowered": "No power: connect copper wire from a generator or battery.",
   "block.epochsmith.wireless_node": "Wireless Power Node",
   "block.epochsmith.hover_pad": "Hover Pad",
-  "message.epochsmith.wireless_node.status": "Wireless Node: linked to %s other nodes within %s blocks."
+  "message.epochsmith.wireless_node.status": "Wireless Node: linked to %s other nodes within %s blocks.",
+  "item.epochsmith.nano_multitool": "Nano Multitool",
+  "item.epochsmith.mining_laser": "Mining Laser",
+  "item.epochsmith.exosuit_helmet": "Exosuit Helmet",
+  "item.epochsmith.exosuit_chestplate": "Exosuit Power Frame",
+  "item.epochsmith.exosuit_leggings": "Exosuit Leg Actuators",
+  "item.epochsmith.exosuit_boots": "Exosuit Boots",
+  "tooltip.epochsmith.nano_multitool": "Every tool in one. Right-click blocks to strip, make paths or till. Sneak + right-click to switch modes.",
+  "tooltip.epochsmith.multitool.vein": "Mode: Vein (whole ore veins and trees)",
+  "message.epochsmith.multitool.vein": "Multitool: Vein mode",
+  "tooltip.epochsmith.mining_laser": "Right-click to mine the block you're looking at, up to 32 blocks away.",
+  "message.epochsmith.mining_laser.empty": "The mining laser is out of charge. Recharge it at a battery.",
+  "tooltip.epochsmith.exosuit_chestplate": "Full suit, charged: Jump Boost, no fall damage, and flight (double-tap jump). Flying uses charge.",
+  "message.epochsmith.exosuit.empty": "Exosuit power depleted: flight offline. Recharge the power frame at a battery."
 }

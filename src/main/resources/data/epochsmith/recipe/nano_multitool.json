@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "N": {
+      "item": "epochsmith:nanobots"
+    },
+    "M": {
+      "item": "epochsmith:multitool"
+    },
+    "G": {
+      "item": "epochsmith:graphene"
+    },
+    "P": {
+      "item": "epochsmith:plasma_cell"
+    },
+    "I": {
+      "item": "minecraft:netherite_ingot"
+    }
+  },
+  "pattern": [
+    "NIN",
+    "GMG",
+    "NPN"
+  ],
+  "result": {
+    "count": 1,
+    "id": "epochsmith:nano_multitool"
+  }
+}

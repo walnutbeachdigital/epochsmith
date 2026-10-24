@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "C": {
+      "item": "epochsmith:composite_leggings"
+    },
+    "G": {
+      "item": "epochsmith:graphene"
+    },
+    "N": {
+      "item": "epochsmith:nanobots"
+    },
+    "I": {
+      "item": "minecraft:netherite_ingot"
+    }
+  },
+  "pattern": [
+    "GNG",
+    "ICI",
+    "GNG"
+  ],
+  "result": {
+    "count": 1,
+    "id": "epochsmith:exosuit_leggings"
+  }
+}

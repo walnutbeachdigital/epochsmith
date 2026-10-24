@@ -23,7 +23,9 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.common.Tags;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -56,6 +58,11 @@ public final class PoweredToolEvents {
         }
         ItemStack tool = player.getMainHandItem();
         if (!PoweredTools.hasPower(tool)) {
+            return;
+        }
+        if (tool.getItem() instanceof PoweredTools.VeinMiner miner && miner.minesVeins(tool)
+                && event.getState().is(Tags.Blocks.ORES)) {
+            mineVein(player, tool, event.getPos(), event.getState().getBlock());
             return;
         }
         // Tree felling comes first, so a multitool in area mode fells trees instead of cutting 3x3 through them
@@ -146,8 +153,34 @@ public final class PoweredToolEvents {
         }
     }
 
+    /** Nano multitool vein mode: mines every touching block of the same ore, up to 64. */
+    private static void mineVein(ServerPlayer player, ItemStack tool, BlockPos start, Block ore) {
+        Level level = player.level();
+        Set<BlockPos> seen = new HashSet<>();
+        Deque<BlockPos> queue = new ArrayDeque<>();
+        seen.add(start);
+        queue.add(start);
+        int mined = 0;
+        while (!queue.isEmpty() && mined < MAX_TREE) {
+            BlockPos pos = queue.poll();
+            for (BlockPos next : BlockPos.betweenClosed(pos.offset(-1, -1, -1), pos.offset(1, 1, 1))) {
+                if (seen.contains(next) || !level.getBlockState(next).is(ore)) {
+                    continue;
+                }
+                BlockPos found = next.immutable();
+                seen.add(found);
+                if (tool.isEmpty() || !PoweredTools.usePower(tool)) {
+                    return;
+                }
+                breakAsPlayer(player, found);
+                queue.add(found);
+                mined++;
+            }
+        }
+    }
+
     /** Breaks a block exactly as if the player had mined it (drops, tool wear, protections). */
-    private static void breakAsPlayer(ServerPlayer player, BlockPos pos) {
+    static void breakAsPlayer(ServerPlayer player, BlockPos pos) {
         breaking = true;
         try {
             player.gameMode.destroyBlock(pos);

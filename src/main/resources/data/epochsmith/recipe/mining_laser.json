@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "L": {
+      "item": "epochsmith:laser_cutter"
+    },
+    "D": {
+      "item": "minecraft:diamond"
+    },
+    "S": {
+      "item": "epochsmith:superconductor_coil"
+    },
+    "P": {
+      "item": "epochsmith:plasma_cell"
+    },
+    "G": {
+      "item": "epochsmith:graphene"
+    }
+  },
+  "pattern": [
+    "GDG",
+    "SLS",
+    "GPG"
+  ],
+  "result": {
+    "count": 1,
+    "id": "epochsmith:mining_laser"
+  }
+}

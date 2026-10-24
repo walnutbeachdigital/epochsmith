@@ -21,6 +21,13 @@ public final class PoweredTools {
         }
     }
 
+    /** A tool that mines a whole ore vein at once while powered (nano multitool in vein mode). */
+    public interface VeinMiner {
+        default boolean minesVeins(ItemStack stack) {
+            return true;
+        }
+    }
+
     /** A tool that cuts three blocks deep in a straight line while powered (laser cutter). */
     public interface TunnelBorer {
     }

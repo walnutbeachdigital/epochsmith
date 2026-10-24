@@ -7,6 +7,7 @@
     "epochsmith:steam_drill",
     "epochsmith:electric_drill",
     "epochsmith:laser_cutter",
-    "epochsmith:multitool"
+    "epochsmith:multitool",
+    "epochsmith:nano_multitool"
   ]
 }

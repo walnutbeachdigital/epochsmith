@@ -26,9 +26,20 @@ public class MultitoolItem extends DiggerItem implements ElectricPowered, Powere
 
     public static final int PRECISE = 0;
     public static final int AREA = 1;
+    public static final int VEIN = 2;
+    private static final String[] MODE_NAMES = {"precise", "area", "vein"};
 
     public MultitoolItem(Tier tier, TagKey<Block> blocks, Properties properties) {
         super(tier, blocks, properties);
+    }
+
+    /** How many modes sneak + right-click cycles through. */
+    protected int modeCount() {
+        return 2;
+    }
+
+    protected String descriptionKey() {
+        return "tooltip.epochsmith.multitool";
     }
 
     public static int getMode(ItemStack stack) {
@@ -52,10 +63,9 @@ public class MultitoolItem extends DiggerItem implements ElectricPowered, Powere
             return InteractionResultHolder.pass(stack);
         }
         if (!level.isClientSide()) {
-            int mode = getMode(stack) == AREA ? PRECISE : AREA;
+            int mode = (getMode(stack) + 1) % modeCount();
             stack.set(ModDataComponents.TOOL_MODE.get(), mode);
-            player.displayClientMessage(Component.translatable(mode == AREA
-                    ? "message.epochsmith.multitool.area" : "message.epochsmith.multitool.precise"), true);
+            player.displayClientMessage(Component.translatable("message.epochsmith.multitool." + MODE_NAMES[mode]), true);
             level.playSound(null, player.blockPosition(), SoundEvents.NOTE_BLOCK_HAT.value(), SoundSource.PLAYERS, 0.6F, 1.6F);
         }
         return InteractionResultHolder.sidedSuccess(stack, level.isClientSide());
@@ -69,10 +79,9 @@ public class MultitoolItem extends DiggerItem implements ElectricPowered, Powere
 
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> lines, TooltipFlag flag) {
-        lines.add(Component.translatable(getMode(stack) == AREA
-                ? "tooltip.epochsmith.multitool.area" : "tooltip.epochsmith.multitool.precise")
+        lines.add(Component.translatable("tooltip.epochsmith.multitool." + MODE_NAMES[Math.min(getMode(stack), modeCount() - 1)])
                 .withStyle(ChatFormatting.AQUA));
-        lines.add(Component.translatable("tooltip.epochsmith.multitool"));
+        lines.add(Component.translatable(descriptionKey()));
         ElectricPowered.addTooltip(stack, lines);
     }
 }

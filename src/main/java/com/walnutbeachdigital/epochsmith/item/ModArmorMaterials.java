@@ -143,6 +143,26 @@ public final class ModArmorMaterials {
                     3.0F,
                     0.1F));
 
+    /**
+     * The powered exosuit: beyond netherite (total 24), 4 toughness, strong knockback resistance.
+     * Repaired with graphene.
+     */
+    public static final DeferredHolder<ArmorMaterial, ArmorMaterial> EXOSUIT = ARMOR_MATERIALS.register("exosuit",
+            () -> new ArmorMaterial(
+                    Util.make(new EnumMap<>(ArmorItem.Type.class), defense -> {
+                        defense.put(ArmorItem.Type.BOOTS, 4);
+                        defense.put(ArmorItem.Type.LEGGINGS, 7);
+                        defense.put(ArmorItem.Type.CHESTPLATE, 9);
+                        defense.put(ArmorItem.Type.HELMET, 4);
+                        defense.put(ArmorItem.Type.BODY, 12);
+                    }),
+                    20,
+                    SoundEvents.ARMOR_EQUIP_NETHERITE,
+                    () -> Ingredient.of(ModItems.GRAPHENE.get()),
+                    List.of(new ArmorMaterial.Layer(ResourceLocation.fromNamespaceAndPath(Epochsmith.MODID, "exosuit"))),
+                    4.0F,
+                    0.15F));
+
     private ModArmorMaterials() {
     }
 }

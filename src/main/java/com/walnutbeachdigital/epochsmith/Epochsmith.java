@@ -174,6 +174,12 @@ public class Epochsmith {
                 output.accept(ModBlocks.MATTER_PRINTER_ITEM.get());
                 output.accept(ModBlocks.WIRELESS_NODE_ITEM.get());
                 output.accept(ModBlocks.HOVER_PAD_ITEM.get());
+                output.accept(ModItems.NANO_MULTITOOL.get());
+                output.accept(ModItems.MINING_LASER.get());
+                output.accept(ModItems.EXOSUIT_HELMET.get());
+                output.accept(ModItems.EXOSUIT_CHESTPLATE.get());
+                output.accept(ModItems.EXOSUIT_LEGGINGS.get());
+                output.accept(ModItems.EXOSUIT_BOOTS.get());
             }).build());
 
     // The constructor for the mod class is the first code that is run when your mod is loaded.

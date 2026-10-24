@@ -292,6 +292,28 @@ public final class ModItems {
     public static final DeferredItem<Item> PLASMA_CELL = Epochsmith.ITEMS.registerSimpleItem("plasma_cell",
             new Item.Properties().rarity(Rarity.UNCOMMON));
 
+    // ---- Future era: nano multitool, mining laser and the powered exosuit
+    public static final DeferredItem<NanoMultitoolItem> NANO_MULTITOOL = Epochsmith.ITEMS.register("nano_multitool",
+            () -> new NanoMultitoolItem(ModTiers.NANO, MULTITOOL_MINEABLE, new Item.Properties().fireResistant()
+                    .rarity(Rarity.EPIC).attributes(DiggerItem.createAttributes(ModTiers.NANO, 5.0F, -2.4F))));
+    public static final DeferredItem<MiningLaserItem> MINING_LASER = Epochsmith.ITEMS.register("mining_laser",
+            () -> new MiningLaserItem(new Item.Properties().stacksTo(1).fireResistant().rarity(Rarity.EPIC)));
+
+    private static final int EXOSUIT_DURABILITY = 50;
+    public static final DeferredItem<ArmorItem> EXOSUIT_HELMET = Epochsmith.ITEMS.register("exosuit_helmet",
+            () -> new ArmorItem(ModArmorMaterials.EXOSUIT, ArmorItem.Type.HELMET, new Item.Properties().fireResistant()
+                    .rarity(Rarity.EPIC).durability(ArmorItem.Type.HELMET.getDurability(EXOSUIT_DURABILITY))));
+    /** The power pack: charge it at a battery. */
+    public static final DeferredItem<ExosuitChestplateItem> EXOSUIT_CHESTPLATE = Epochsmith.ITEMS.register("exosuit_chestplate",
+            () -> new ExosuitChestplateItem(ModArmorMaterials.EXOSUIT, new Item.Properties().fireResistant()
+                    .rarity(Rarity.EPIC).durability(ArmorItem.Type.CHESTPLATE.getDurability(EXOSUIT_DURABILITY))));
+    public static final DeferredItem<ArmorItem> EXOSUIT_LEGGINGS = Epochsmith.ITEMS.register("exosuit_leggings",
+            () -> new ArmorItem(ModArmorMaterials.EXOSUIT, ArmorItem.Type.LEGGINGS, new Item.Properties().fireResistant()
+                    .rarity(Rarity.EPIC).durability(ArmorItem.Type.LEGGINGS.getDurability(EXOSUIT_DURABILITY))));
+    public static final DeferredItem<ArmorItem> EXOSUIT_BOOTS = Epochsmith.ITEMS.register("exosuit_boots",
+            () -> new ArmorItem(ModArmorMaterials.EXOSUIT, ArmorItem.Type.BOOTS, new Item.Properties().fireResistant()
+                    .rarity(Rarity.EPIC).durability(ArmorItem.Type.BOOTS.getDurability(EXOSUIT_DURABILITY))));
+
     /** Called from the main mod class so this file loads before items are registered. */
     public static void init() {
     }

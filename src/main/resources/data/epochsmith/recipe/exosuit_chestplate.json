@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "C": {
+      "item": "epochsmith:composite_chestplate"
+    },
+    "G": {
+      "item": "epochsmith:graphene"
+    },
+    "I": {
+      "item": "minecraft:netherite_ingot"
+    },
+    "P": {
+      "item": "epochsmith:plasma_cell"
+    },
+    "S": {
+      "item": "epochsmith:superconductor_coil"
+    }
+  },
+  "pattern": [
+    "GPG",
+    "ICI",
+    "GSG"
+  ],
+  "result": {
+    "count": 1,
+    "id": "epochsmith:exosuit_chestplate"
+  }
+}

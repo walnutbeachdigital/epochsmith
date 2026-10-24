@@ -288,3 +288,72 @@ write_png(f"{root}/block/hover_pad_top_on.png", hover_top(True))
 write_png(f"{root}/block/hover_pad_side.png", hover_side())
 write_png(f"{root}/block/wireless_node.png", node_texture())
 print("hover pad and wireless node textures written")
+
+
+# ---- Nano multitool, mining laser and powered exosuit
+NANO = {"O": (14, 12, 22, 255), "D": (50, 44, 70, 255), "M": (96, 86, 130, 255), "H": (200, 190, 240, 255),
+        "B": (120, 240, 255, 255), "b": (60, 160, 230, 255), "Y": (200, 120, 255, 255), "R": (255, 120, 220, 255)}
+
+NANO_MULTITOOL = [
+    "................",
+    "..OOO.....OOOO..",
+    ".OHHMO...OHBBMO.",
+    ".OMBMDO.OHBMDO..",
+    "..ODDMDOMMDOO...",
+    "...OODMMMDO.....",
+    ".....OMBMO......",
+    "....OMDbDMO.....",
+    "...OMDO.ODMO....",
+    "..OYDO...OO.....",
+    ".OYDO...........",
+    ".ORO............",
+    "..O.............",
+]
+
+MINING_LASER = [
+    "................",
+    "................",
+    "................",
+    "..........OOO...",
+    ".OOOOOOOOOHBBO..",
+    "OHHMMMMMMMMBBBO.",
+    "OMMMMDDDDDMBBO..",
+    "ODDDDOOOODDOOO..",
+    ".OOODYO..OO.....",
+    "...ODDO.........",
+    "...ODDO.........",
+    "...OHDO.........",
+    "....OO..........",
+]
+
+EXO = {"O": (12, 12, 18, 255), "D": (40, 40, 56, 255), "M": (230, 230, 240, 255), "H": (255, 255, 255, 255),
+       "W": (120, 240, 255, 255), "w": (60, 160, 230, 255)}
+
+
+def exo_layer(skip_hat):
+    """White armored plates over a dark frame, with glowing cyan power lines."""
+    px = []
+    for y in range(32):
+        row = []
+        for x in range(64):
+            if skip_hat and x >= 32 and y < 16:
+                row.append((0, 0, 0, 0))
+            elif x % 8 == 0 or y % 8 == 0:
+                row.append((30, 30, 44, 255))
+            elif y % 8 == 4 and x % 8 in (2, 3, 4, 5):
+                row.append((120, 240, 255, 255))
+            else:
+                row.append((232, 232, 242, 255) if (x + y) % 6 else (214, 214, 228, 255))
+        px.append(row)
+    return px
+
+
+import make_bronze_gear_textures as gear
+
+write_png(f"{root}/item/nano_multitool.png", from_map(NANO_MULTITOOL, NANO))
+write_png(f"{root}/item/mining_laser.png", from_map(MINING_LASER, NANO))
+for piece in ("helmet", "chestplate", "leggings", "boots"):
+    write_png(f"{root}/item/exosuit_{piece}.png", from_map(gear.ICONS[piece], EXO))
+write_png(f"{root}/models/armor/exosuit_layer_1.png", exo_layer(True))
+write_png(f"{root}/models/armor/exosuit_layer_2.png", exo_layer(False))
+print("future gear textures written")

@@ -19,6 +19,10 @@
     "epochsmith:composite_helmet",
     "epochsmith:composite_chestplate",
     "epochsmith:composite_leggings",
-    "epochsmith:composite_boots"
+    "epochsmith:composite_boots",
+    "epochsmith:exosuit_helmet",
+    "epochsmith:exosuit_chestplate",
+    "epochsmith:exosuit_leggings",
+    "epochsmith:exosuit_boots"
   ]
 }
