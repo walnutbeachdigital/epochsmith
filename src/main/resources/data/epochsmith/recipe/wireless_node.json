@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "E": {
+      "item": "minecraft:ender_pearl"
+    },
+    "S": {
+      "item": "epochsmith:superconductor_coil"
+    },
+    "W": {
+      "item": "epochsmith:copper_wire"
+    },
+    "G": {
+      "item": "epochsmith:graphene"
+    }
+  },
+  "pattern": [
+    " E ",
+    "GSG",
+    "GWG"
+  ],
+  "result": {
+    "count": 2,
+    "id": "epochsmith:wireless_node"
+  }
+}

@@ -172,6 +172,8 @@ public class Epochsmith {
                 output.accept(ModBlocks.PLASMA_SMELTER_ITEM.get());
                 output.accept(ModBlocks.QUANTUM_CELL_ITEM.get());
                 output.accept(ModBlocks.MATTER_PRINTER_ITEM.get());
+                output.accept(ModBlocks.WIRELESS_NODE_ITEM.get());
+                output.accept(ModBlocks.HOVER_PAD_ITEM.get());
             }).build());
 
     // The constructor for the mod class is the first code that is run when your mod is loaded.

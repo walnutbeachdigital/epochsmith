@@ -338,5 +338,8 @@
   "message.epochsmith.matter_printer.status": "Printing %s (%s matter each). %s matter stored. %s",
   "message.epochsmith.matter_printer.working": "Working.",
   "message.epochsmith.matter_printer.no_matter": "Not enough matter: feed it blocks or items.",
-  "message.epochsmith.matter_printer.unpowered": "No power: connect copper wire from a generator or battery."
+  "message.epochsmith.matter_printer.unpowered": "No power: connect copper wire from a generator or battery.",
+  "block.epochsmith.wireless_node": "Wireless Power Node",
+  "block.epochsmith.hover_pad": "Hover Pad",
+  "message.epochsmith.wireless_node.status": "Wireless Node: linked to %s other nodes within %s blocks."
 }

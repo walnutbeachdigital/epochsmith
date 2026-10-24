@@ -2,7 +2,9 @@ package com.walnutbeachdigital.epochsmith.block;
 
 import com.walnutbeachdigital.epochsmith.Epochsmith;
 import com.walnutbeachdigital.epochsmith.future.FusionReactorBlockEntity;
+import com.walnutbeachdigital.epochsmith.future.HoverPadBlockEntity;
 import com.walnutbeachdigital.epochsmith.future.MatterPrinterBlockEntity;
+import com.walnutbeachdigital.epochsmith.future.WirelessNodeBlockEntity;
 import com.walnutbeachdigital.epochsmith.future.NanofabricatorBlockEntity;
 import com.walnutbeachdigital.epochsmith.future.PlasmaSmelterBlockEntity;
 import com.walnutbeachdigital.epochsmith.future.QuantumCellBlockEntity;
@@ -171,6 +173,14 @@ public final class ModBlockEntities {
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<MatterPrinterBlockEntity>> MATTER_PRINTER =
             BLOCK_ENTITIES.register("matter_printer",
                     () -> BlockEntityType.Builder.of(MatterPrinterBlockEntity::new, ModBlocks.MATTER_PRINTER.get()).build(null));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<WirelessNodeBlockEntity>> WIRELESS_NODE =
+            BLOCK_ENTITIES.register("wireless_node",
+                    () -> BlockEntityType.Builder.of(WirelessNodeBlockEntity::new, ModBlocks.WIRELESS_NODE.get()).build(null));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<HoverPadBlockEntity>> HOVER_PAD =
+            BLOCK_ENTITIES.register("hover_pad",
+                    () -> BlockEntityType.Builder.of(HoverPadBlockEntity::new, ModBlocks.HOVER_PAD.get()).build(null));
 
     private ModBlockEntities() {
     }

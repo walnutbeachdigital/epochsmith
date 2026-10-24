@@ -1,0 +1,147 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "particle": "epochsmith:block/wireless_node",
+    "all": "epochsmith:block/wireless_node",
+    "base": "epochsmith:block/nanofabricator_side"
+  },
+  "elements": [
+    {
+      "from": [
+        3,
+        0,
+        3
+      ],
+      "to": [
+        13,
+        3,
+        13
+      ],
+      "faces": {
+        "down": {
+          "texture": "#base",
+          "uv": [
+            3,
+            3,
+            13,
+            13
+          ],
+          "cullface": "down"
+        },
+        "up": {
+          "texture": "#base",
+          "uv": [
+            3,
+            3,
+            13,
+            13
+          ]
+        },
+        "north": {
+          "texture": "#base",
+          "uv": [
+            3,
+            13,
+            13,
+            16
+          ]
+        },
+        "south": {
+          "texture": "#base",
+          "uv": [
+            3,
+            13,
+            13,
+            16
+          ]
+        },
+        "east": {
+          "texture": "#base",
+          "uv": [
+            3,
+            13,
+            13,
+            16
+          ]
+        },
+        "west": {
+          "texture": "#base",
+          "uv": [
+            3,
+            13,
+            13,
+            16
+          ]
+        }
+      }
+    },
+    {
+      "from": [
+        6,
+        3,
+        6
+      ],
+      "to": [
+        10,
+        14,
+        10
+      ],
+      "faces": {
+        "up": {
+          "texture": "#all",
+          "uv": [
+            6,
+            0,
+            10,
+            4
+          ]
+        },
+        "down": {
+          "texture": "#all",
+          "uv": [
+            6,
+            12,
+            10,
+            16
+          ]
+        },
+        "north": {
+          "texture": "#all",
+          "uv": [
+            6,
+            0,
+            10,
+            11
+          ]
+        },
+        "south": {
+          "texture": "#all",
+          "uv": [
+            6,
+            0,
+            10,
+            11
+          ]
+        },
+        "east": {
+          "texture": "#all",
+          "uv": [
+            6,
+            0,
+            10,
+            11
+          ]
+        },
+        "west": {
+          "texture": "#all",
+          "uv": [
+            6,
+            0,
+            10,
+            11
+          ]
+        }
+      }
+    }
+  ]
+}

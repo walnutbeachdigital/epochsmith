@@ -2,7 +2,9 @@ package com.walnutbeachdigital.epochsmith.block;
 
 import com.walnutbeachdigital.epochsmith.Epochsmith;
 import com.walnutbeachdigital.epochsmith.future.FusionReactorBlock;
+import com.walnutbeachdigital.epochsmith.future.HoverPadBlock;
 import com.walnutbeachdigital.epochsmith.future.MatterPrinterBlock;
+import com.walnutbeachdigital.epochsmith.future.WirelessNodeBlock;
 import com.walnutbeachdigital.epochsmith.future.NanofabricatorBlock;
 import com.walnutbeachdigital.epochsmith.future.PlasmaSmelterBlock;
 import com.walnutbeachdigital.epochsmith.future.QuantumCellBlock;
@@ -342,6 +344,16 @@ public final class ModBlocks {
             () -> new MatterPrinterBlock(metal().lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 12 : 0)));
     public static final DeferredItem<BlockItem> MATTER_PRINTER_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("matter_printer", MATTER_PRINTER,
             new Item.Properties().rarity(Rarity.RARE));
+
+    /** Carries power through the air to other nodes within 32 blocks. */
+    public static final DeferredBlock<WirelessNodeBlock> WIRELESS_NODE = Epochsmith.BLOCKS.register("wireless_node",
+            () -> new WirelessNodeBlock(metal().noOcclusion().lightLevel(state -> 6)));
+    public static final DeferredItem<BlockItem> WIRELESS_NODE_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("wireless_node", WIRELESS_NODE);
+
+    /** An anti-gravity lift: float up, sneak to drift down. */
+    public static final DeferredBlock<HoverPadBlock> HOVER_PAD = Epochsmith.BLOCKS.register("hover_pad",
+            () -> new HoverPadBlock(metal().noOcclusion().lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 10 : 0)));
+    public static final DeferredItem<BlockItem> HOVER_PAD_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("hover_pad", HOVER_PAD);
 
     /** Called from the main mod class so this file loads before blocks are registered. */
     public static void init() {

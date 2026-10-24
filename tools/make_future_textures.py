@@ -246,3 +246,45 @@ write_png(f"{root}/block/matter_printer_side.png", printer_side())
 write_png(f"{root}/block/matter_printer_front.png", printer_front(False))
 write_png(f"{root}/block/matter_printer_front_on.png", printer_front(True))
 print("matter printer textures written")
+
+
+def hover_top(lit):
+    """Concentric anti-gravity rings."""
+    px = [[(200, 198, 214, 255) for _ in range(16)] for _ in range(16)]
+    for y in range(16):
+        for x in range(16):
+            d = ((x - 7.5) ** 2 + (y - 7.5) ** 2) ** 0.5
+            if int(d) in (2, 5):
+                px[y][x] = (120, 230, 255, 255) if lit else (90, 100, 130, 255)
+            elif d >= 7.2:
+                px[y][x] = (150, 146, 170, 255)
+            elif d < 1.5:
+                px[y][x] = (255, 255, 255, 255) if lit else (110, 110, 130, 255)
+    return px
+
+
+def hover_side():
+    px = [[(200, 198, 214, 255) for _ in range(16)] for _ in range(16)]
+    for x in range(16):
+        px[12][x] = (230, 230, 240, 255)
+        px[13][x] = (120, 230, 255, 255)
+        px[15][x] = (120, 116, 140, 255)
+    return px
+
+
+def node_texture():
+    """A slim emitter pillar with a glowing tip."""
+    px = [[(70, 74, 90, 255) if x % 4 else (56, 60, 74, 255) for x in range(16)] for y in range(16)]
+    for y in range(0, 4):
+        for x in range(16):
+            px[y][x] = (120, 230, 255, 255) if (x + y) % 2 else (190, 250, 255, 255)
+    for x in range(16):
+        px[4][x] = (200, 198, 214, 255)
+    return px
+
+
+write_png(f"{root}/block/hover_pad_top.png", hover_top(False))
+write_png(f"{root}/block/hover_pad_top_on.png", hover_top(True))
+write_png(f"{root}/block/hover_pad_side.png", hover_side())
+write_png(f"{root}/block/wireless_node.png", node_texture())
+print("hover pad and wireless node textures written")

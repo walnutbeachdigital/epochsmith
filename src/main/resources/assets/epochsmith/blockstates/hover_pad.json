@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "lit=false": {
+      "model": "epochsmith:block/hover_pad"
+    },
+    "lit=true": {
+      "model": "epochsmith:block/hover_pad_on"
+    }
+  }
+}

@@ -7,12 +7,16 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.walnutbeachdigital.epochsmith.future.WirelessNodeBlock;
+import com.walnutbeachdigital.epochsmith.future.WirelessNodes;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 
 /**
- * Follows copper wire from a machine to find every generator (dynamo, solar panel) and battery
+ * Follows copper wire (and wireless nodes) from a machine to find every generator (dynamo, solar panel) and battery
  * it can draw from. Generators come first in the list, so machines use fresh power before stored power.
  */
 public final class ElectricNetwork {
@@ -28,8 +32,17 @@ public final class ElectricNetwork {
         enqueueNeighbours(level, start, seen, queue);
         while (!queue.isEmpty() && seen.size() < MAX_NODES) {
             BlockPos pos = queue.poll();
-            if (level.getBlockState(pos).getBlock() instanceof CopperWireBlock) {
+            Block block = level.getBlockState(pos).getBlock();
+            if (block instanceof CopperWireBlock) {
                 enqueueNeighbours(level, pos, seen, queue);
+            } else if (block instanceof WirelessNodeBlock) {
+                // A wireless node carries power like wire, and also jumps to every node in range
+                enqueueNeighbours(level, pos, seen, queue);
+                for (BlockPos other : WirelessNodes.near(level, pos)) {
+                    if (seen.add(other)) {
+                        queue.add(other);
+                    }
+                }
             } else if (level.getBlockEntity(pos) instanceof BatteryBlockEntity) {
                 batteries.add(pos);
             } else if (level.getBlockEntity(pos) instanceof EnergySource) {

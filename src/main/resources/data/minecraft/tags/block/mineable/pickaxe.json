@@ -31,6 +31,8 @@
     "epochsmith:fusion_reactor",
     "epochsmith:plasma_smelter",
     "epochsmith:quantum_cell",
-    "epochsmith:matter_printer"
+    "epochsmith:matter_printer",
+    "epochsmith:hover_pad",
+    "epochsmith:wireless_node"
   ]
 }
