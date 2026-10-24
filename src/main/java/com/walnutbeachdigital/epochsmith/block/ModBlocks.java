@@ -1,6 +1,7 @@
 package com.walnutbeachdigital.epochsmith.block;
 
 import com.walnutbeachdigital.epochsmith.Epochsmith;
+import com.walnutbeachdigital.epochsmith.future.NanofabricatorBlock;
 import com.walnutbeachdigital.epochsmith.information.AssemblerBlock;
 import com.walnutbeachdigital.epochsmith.information.ComputerCoreBlock;
 import com.walnutbeachdigital.epochsmith.information.DataVaultBlock;
@@ -305,6 +306,12 @@ public final class ModBlocks {
     public static final DeferredBlock<AssemblerBlock> ASSEMBLER = Epochsmith.BLOCKS.register("automated_assembler",
             () -> new AssemblerBlock(metal().lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 6 : 0)));
     public static final DeferredItem<BlockItem> ASSEMBLER_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("automated_assembler", ASSEMBLER);
+
+    // ---- Future era
+    /** Builds graphene and nanobots atom by atom. */
+    public static final DeferredBlock<NanofabricatorBlock> NANOFABRICATOR = Epochsmith.BLOCKS.register("nanofabricator",
+            () -> new NanofabricatorBlock(metal().lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 12 : 0)));
+    public static final DeferredItem<BlockItem> NANOFABRICATOR_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("nanofabricator", NANOFABRICATOR);
 
     /** Called from the main mod class so this file loads before blocks are registered. */
     public static void init() {

@@ -296,5 +296,14 @@
   "hud.epochsmith.above": "%s up",
   "hud.epochsmith.below": "%s down",
   "hud.epochsmith.level": "same level",
-  "hud.epochsmith.no_ore": "No ore within 8 blocks"
+  "hud.epochsmith.no_ore": "No ore within 8 blocks",
+  "item.epochsmith.graphene": "Graphene",
+  "item.epochsmith.nanobots": "Nanobots",
+  "item.epochsmith.superconductor_coil": "Superconductor Coil",
+  "item.epochsmith.plasma_cell": "Plasma Cell",
+  "block.epochsmith.nanofabricator": "Nanofabricator",
+  "message.epochsmith.nanofabricator.unknown": "You don't know how to use a nanofabricator yet. Reach the Future era first.",
+  "message.epochsmith.nanofabricator.busy": "Something else is in the nanofabricator. Sneak and right-click with an empty hand to take it out.",
+  "message.epochsmith.nanofabricator.working": "Nanofabricator: building, %s left.",
+  "message.epochsmith.nanofabricator.idle": "Nanofabricator: %s loaded. No power: connect copper wire from a generator or battery."
 }

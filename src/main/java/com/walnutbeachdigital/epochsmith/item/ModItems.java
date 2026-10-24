@@ -8,6 +8,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 
 import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.HoeItem;
@@ -279,6 +280,17 @@ public final class ModItems {
     public static final DeferredItem<ArmorItem> COMPOSITE_BOOTS = Epochsmith.ITEMS.register("composite_boots",
             () -> new ArmorItem(ModArmorMaterials.COMPOSITE, ArmorItem.Type.BOOTS, new Item.Properties().fireResistant()
                     .durability(ArmorItem.Type.BOOTS.getDurability(COMPOSITE_DURABILITY))));
+
+    // ---- Future era: materials
+    /** Carbon one atom thick, made from coal in the nanofabricator. */
+    public static final DeferredItem<Item> GRAPHENE = Epochsmith.ITEMS.registerSimpleItem("graphene");
+    /** Microscopic machines, made from circuit boards in the nanofabricator. */
+    public static final DeferredItem<Item> NANOBOTS = Epochsmith.ITEMS.registerSimpleItem("nanobots");
+    /** Carries power with no loss. Used in the fusion reactor and Future machines. */
+    public static final DeferredItem<Item> SUPERCONDUCTOR_COIL = Epochsmith.ITEMS.registerSimpleItem("superconductor_coil");
+    /** Contained plasma: fuel for the fusion reactor and the plasma smelter. */
+    public static final DeferredItem<Item> PLASMA_CELL = Epochsmith.ITEMS.registerSimpleItem("plasma_cell",
+            new Item.Properties().rarity(Rarity.UNCOMMON));
 
     /** Called from the main mod class so this file loads before items are registered. */
     public static void init() {

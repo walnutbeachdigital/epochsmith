@@ -163,6 +163,11 @@ public class Epochsmith {
                 output.accept(ModItems.COMPOSITE_CHESTPLATE.get());
                 output.accept(ModItems.COMPOSITE_LEGGINGS.get());
                 output.accept(ModItems.COMPOSITE_BOOTS.get());
+                output.accept(ModBlocks.NANOFABRICATOR_ITEM.get());
+                output.accept(ModItems.GRAPHENE.get());
+                output.accept(ModItems.NANOBOTS.get());
+                output.accept(ModItems.SUPERCONDUCTOR_COIL.get());
+                output.accept(ModItems.PLASMA_CELL.get());
             }).build());
 
     // The constructor for the mod class is the first code that is run when your mod is loaded.

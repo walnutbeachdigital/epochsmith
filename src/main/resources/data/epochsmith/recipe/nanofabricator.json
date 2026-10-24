@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "I": {
+      "item": "epochsmith:steel_ingot"
+    },
+    "C": {
+      "item": "epochsmith:circuit_board"
+    },
+    "F": {
+      "item": "epochsmith:circuit_fabricator"
+    },
+    "D": {
+      "item": "minecraft:diamond"
+    },
+    "Q": {
+      "item": "minecraft:quartz_block"
+    }
+  },
+  "pattern": [
+    "QDQ",
+    "CFC",
+    "IQI"
+  ],
+  "result": {
+    "count": 1,
+    "id": "epochsmith:nanofabricator"
+  }
+}
