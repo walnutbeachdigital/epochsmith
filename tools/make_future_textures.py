@@ -106,13 +106,13 @@ def nanofab_front(on):
     return px
 
 
-write_png(f"{root}/item/graphene.png", from_map(GRAPHENE, GRAPHENE_PAL))
-write_png(f"{root}/item/nanobots.png", from_map(NANOBOTS, NANO_PAL))
-write_png(f"{root}/item/superconductor_coil.png", from_map(SUPERCONDUCTOR, COIL_PAL))
-write_png(f"{root}/item/plasma_cell.png", from_map(PLASMA_CELL, CELL_PAL))
-write_png(f"{root}/block/nanofabricator_side.png", nanofab_side())
-write_png(f"{root}/block/nanofabricator_front.png", nanofab_front(False))
-write_png(f"{root}/block/nanofabricator_front_on.png", nanofab_front(True))
+# Now made by the newer texture scripts: write_png(f"{root}/item/graphene.png", from_map(GRAPHENE, GRAPHENE_PAL))
+# Now made by the newer texture scripts: write_png(f"{root}/item/nanobots.png", from_map(NANOBOTS, NANO_PAL))
+# Now made by the newer texture scripts: write_png(f"{root}/item/superconductor_coil.png", from_map(SUPERCONDUCTOR, COIL_PAL))
+# Now made by the newer texture scripts: write_png(f"{root}/item/plasma_cell.png", from_map(PLASMA_CELL, CELL_PAL))
+# Now made by the newer texture scripts: write_png(f"{root}/block/nanofabricator_side.png", nanofab_side())
+# Now made by the newer texture scripts: write_png(f"{root}/block/nanofabricator_front.png", nanofab_front(False))
+# Now made by the newer texture scripts: write_png(f"{root}/block/nanofabricator_front_on.png", nanofab_front(True))
 print("future textures written")
 
 
@@ -145,9 +145,9 @@ def reactor_top():
     return px
 
 
-write_png(f"{root}/block/fusion_reactor_side.png", reactor_side(False))
-write_png(f"{root}/block/fusion_reactor_side_on.png", reactor_side(True))
-write_png(f"{root}/block/fusion_reactor_top.png", reactor_top())
+# Now made by the newer texture scripts: write_png(f"{root}/block/fusion_reactor_side.png", reactor_side(False))
+# Now made by the newer texture scripts: write_png(f"{root}/block/fusion_reactor_side_on.png", reactor_side(True))
+# Now made by the newer texture scripts: write_png(f"{root}/block/fusion_reactor_top.png", reactor_top())
 print("fusion reactor textures written")
 
 
@@ -176,9 +176,9 @@ def smelter_front(lit):
     return px
 
 
-write_png(f"{root}/block/plasma_smelter_side.png", smelter_side())
-write_png(f"{root}/block/plasma_smelter_front.png", smelter_front(False))
-write_png(f"{root}/block/plasma_smelter_front_on.png", smelter_front(True))
+# Now made by the newer texture scripts: write_png(f"{root}/block/plasma_smelter_side.png", smelter_side())
+# Now made by the newer texture scripts: write_png(f"{root}/block/plasma_smelter_front.png", smelter_front(False))
+# Now made by the newer texture scripts: write_png(f"{root}/block/plasma_smelter_front_on.png", smelter_front(True))
 print("plasma smelter textures written")
 
 
@@ -209,9 +209,9 @@ def quantum_top():
     return px
 
 
-write_png(f"{root}/block/quantum_cell_side.png", quantum_side(False))
-write_png(f"{root}/block/quantum_cell_side_on.png", quantum_side(True))
-write_png(f"{root}/block/quantum_cell_top.png", quantum_top())
+# Now made by the newer texture scripts: write_png(f"{root}/block/quantum_cell_side.png", quantum_side(False))
+# Now made by the newer texture scripts: write_png(f"{root}/block/quantum_cell_side_on.png", quantum_side(True))
+# Now made by the newer texture scripts: write_png(f"{root}/block/quantum_cell_top.png", quantum_top())
 print("quantum cell textures written")
 
 
@@ -242,9 +242,9 @@ def printer_front(lit):
     return px
 
 
-write_png(f"{root}/block/matter_printer_side.png", printer_side())
-write_png(f"{root}/block/matter_printer_front.png", printer_front(False))
-write_png(f"{root}/block/matter_printer_front_on.png", printer_front(True))
+# Now made by the newer texture scripts: write_png(f"{root}/block/matter_printer_side.png", printer_side())
+# Now made by the newer texture scripts: write_png(f"{root}/block/matter_printer_front.png", printer_front(False))
+# Now made by the newer texture scripts: write_png(f"{root}/block/matter_printer_front_on.png", printer_front(True))
 print("matter printer textures written")
 
 
@@ -283,10 +283,10 @@ def node_texture():
     return px
 
 
-write_png(f"{root}/block/hover_pad_top.png", hover_top(False))
-write_png(f"{root}/block/hover_pad_top_on.png", hover_top(True))
-write_png(f"{root}/block/hover_pad_side.png", hover_side())
-write_png(f"{root}/block/wireless_node.png", node_texture())
+# Now made by the newer texture scripts: write_png(f"{root}/block/hover_pad_top.png", hover_top(False))
+# Now made by the newer texture scripts: write_png(f"{root}/block/hover_pad_top_on.png", hover_top(True))
+# Now made by the newer texture scripts: write_png(f"{root}/block/hover_pad_side.png", hover_side())
+# Now made by the newer texture scripts: write_png(f"{root}/block/wireless_node.png", node_texture())
 print("hover pad and wireless node textures written")
 
 
@@ -350,8 +350,8 @@ def exo_layer(skip_hat):
 
 import make_bronze_gear_textures as gear
 
-write_png(f"{root}/item/nano_multitool.png", from_map(NANO_MULTITOOL, NANO))
-write_png(f"{root}/item/mining_laser.png", from_map(MINING_LASER, NANO))
+# Now made by the newer texture scripts: write_png(f"{root}/item/nano_multitool.png", from_map(NANO_MULTITOOL, NANO))
+# Now made by the newer texture scripts: write_png(f"{root}/item/mining_laser.png", from_map(MINING_LASER, NANO))
 # Now made by tools/recolor_vanilla.py: for piece in ("helmet", "chestplate", "leggings", "boots"):
 #     write_png(f"{root}/item/exosuit_{piece}.png", from_map(gear.ICONS[piece], EXO))
 # Now made by tools/recolor_vanilla.py: write_png(f"{root}/models/armor/exosuit_layer_1.png", exo_layer(True))

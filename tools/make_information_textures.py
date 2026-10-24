@@ -88,13 +88,13 @@ def solar_top():
 
 
 root = "src/main/resources/assets/epochsmith/textures"
-write_png(f"{root}/item/silicon.png", from_map(SILICON_LUMP, SILICON))
-write_png(f"{root}/item/transistor.png", from_map(TRANSISTOR, PART))
-write_png(f"{root}/item/circuit_board.png", from_map(CIRCUIT_BOARD, PART))
-write_png(f"{root}/block/fabricator_side.png", fabricator_side())
-write_png(f"{root}/block/fabricator_front.png", fabricator_front(False))
-write_png(f"{root}/block/fabricator_front_on.png", fabricator_front(True))
-write_png(f"{root}/block/solar_panel_top.png", solar_top())
+# Now made by the newer texture scripts: write_png(f"{root}/item/silicon.png", from_map(SILICON_LUMP, SILICON))
+# Now made by the newer texture scripts: write_png(f"{root}/item/transistor.png", from_map(TRANSISTOR, PART))
+# Now made by the newer texture scripts: write_png(f"{root}/item/circuit_board.png", from_map(CIRCUIT_BOARD, PART))
+# Now made by the newer texture scripts: write_png(f"{root}/block/fabricator_side.png", fabricator_side())
+# Now made by the newer texture scripts: write_png(f"{root}/block/fabricator_front.png", fabricator_front(False))
+# Now made by the newer texture scripts: write_png(f"{root}/block/fabricator_front_on.png", fabricator_front(True))
+# Now made by the newer texture scripts: write_png(f"{root}/block/solar_panel_top.png", solar_top())
 print("information textures written")
 
 
@@ -123,9 +123,9 @@ def core_top():
     return px
 
 
-write_png(f"{root}/block/computer_core_side.png", core_side(False))
-write_png(f"{root}/block/computer_core_side_on.png", core_side(True))
-write_png(f"{root}/block/computer_core_top.png", core_top())
+# Now made by the newer texture scripts: write_png(f"{root}/block/computer_core_side.png", core_side(False))
+# Now made by the newer texture scripts: write_png(f"{root}/block/computer_core_side_on.png", core_side(True))
+# Now made by the newer texture scripts: write_png(f"{root}/block/computer_core_top.png", core_top())
 print("computer core textures written")
 
 
@@ -155,9 +155,9 @@ def induction_front(on):
     return px
 
 
-write_png(f"{root}/block/induction_furnace_side.png", induction_side())
-write_png(f"{root}/block/induction_furnace_front.png", induction_front(False))
-write_png(f"{root}/block/induction_furnace_front_on.png", induction_front(True))
+# Now made by the newer texture scripts: write_png(f"{root}/block/induction_furnace_side.png", induction_side())
+# Now made by the newer texture scripts: write_png(f"{root}/block/induction_furnace_front.png", induction_front(False))
+# Now made by the newer texture scripts: write_png(f"{root}/block/induction_furnace_front_on.png", induction_front(True))
 print("induction furnace textures written")
 
 
@@ -188,9 +188,9 @@ def vault_top():
     return px
 
 
-write_png(f"{root}/block/data_vault_side.png", vault_side(False))
-write_png(f"{root}/block/data_vault_side_on.png", vault_side(True))
-write_png(f"{root}/block/data_vault_top.png", vault_top())
+# Now made by the newer texture scripts: write_png(f"{root}/block/data_vault_side.png", vault_side(False))
+# Now made by the newer texture scripts: write_png(f"{root}/block/data_vault_side_on.png", vault_side(True))
+# Now made by the newer texture scripts: write_png(f"{root}/block/data_vault_top.png", vault_top())
 print("data vault textures written")
 
 
@@ -220,9 +220,9 @@ def assembler_front(on):
     return px
 
 
-write_png(f"{root}/block/assembler_side.png", assembler_side())
-write_png(f"{root}/block/assembler_front.png", assembler_front(False))
-write_png(f"{root}/block/assembler_front_on.png", assembler_front(True))
+# Now made by the newer texture scripts: write_png(f"{root}/block/assembler_side.png", assembler_side())
+# Now made by the newer texture scripts: write_png(f"{root}/block/assembler_front.png", assembler_front(False))
+# Now made by the newer texture scripts: write_png(f"{root}/block/assembler_front_on.png", assembler_front(True))
 print("assembler textures written")
 
 
@@ -287,8 +287,8 @@ def composite_layer(skip_hat):
 
 import make_bronze_gear_textures as gear
 
-write_png(f"{root}/item/laser_cutter.png", from_map(LASER_CUTTER, TOOL))
-write_png(f"{root}/item/multitool.png", from_map(MULTITOOL, TOOL))
+# Now made by the newer texture scripts: write_png(f"{root}/item/laser_cutter.png", from_map(LASER_CUTTER, TOOL))
+# Now made by the newer texture scripts: write_png(f"{root}/item/multitool.png", from_map(MULTITOOL, TOOL))
 # Now made by tools/recolor_vanilla.py: for piece in ("helmet", "chestplate", "leggings", "boots"):
 #     write_png(f"{root}/item/composite_{piece}.png", from_map(gear.ICONS[piece], COMPOSITE))
 # Now made by tools/recolor_vanilla.py: write_png(f"{root}/models/armor/composite_layer_1.png", composite_layer(True))

@@ -54,6 +54,6 @@ UNFIRED = [
 ]
 
 root = "src/main/resources/assets/epochsmith/textures"
-write_png(f"{root}/block/amphora.png", amphora_face())
-write_png(f"{root}/item/unfired_amphora.png", from_map(UNFIRED, CLAY))
+# Now made by the newer texture scripts: write_png(f"{root}/block/amphora.png", amphora_face())
+# Now made by the newer texture scripts: write_png(f"{root}/item/unfired_amphora.png", from_map(UNFIRED, CLAY))
 print("amphora textures written")

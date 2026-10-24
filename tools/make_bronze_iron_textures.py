@@ -62,8 +62,8 @@ SMITHS_HAMMER = [
 
 base = "src/main/resources/assets/epochsmith/textures/item"
 # Now made by tools/recolor_vanilla.py (recolored from vanilla iron/coal): write_png(f"{base}/bronze_ingot.png", from_map(INGOT, BRONZE))
-write_png(f"{base}/iron_bloom.png", from_map(IRON_BLOOM, BLOOM))
-write_png(f"{base}/bronze_plate.png", from_map(PLATE, BRONZE))
+# Now made by the newer texture scripts: write_png(f"{base}/iron_bloom.png", from_map(IRON_BLOOM, BLOOM))
+# Now made by the newer texture scripts: write_png(f"{base}/bronze_plate.png", from_map(PLATE, BRONZE))
 # Now made by tools/recolor_vanilla.py (recolored from vanilla iron/coal): write_png(f"{base}/wrought_iron_ingot.png", from_map(INGOT, WROUGHT))
-write_png(f"{base}/smiths_hammer.png", from_map(SMITHS_HAMMER, HAMMER))
+# Now made by the newer texture scripts: write_png(f"{base}/smiths_hammer.png", from_map(SMITHS_HAMMER, HAMMER))
 print("bronze and iron textures written")

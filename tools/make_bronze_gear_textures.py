@@ -212,7 +212,7 @@ root = "src/main/resources/assets/epochsmith/textures"
 # Now made by tools/recolor_vanilla.py: for metal, palette in (("bronze", BRONZE), ("steel", STEEL)):
 #     for name, rows in ICONS.items():
 #         write_png(f"{root}/item/{metal}_{name}.png", from_map(rows, palette))
-write_png(f"{root}/item/hand_drill.png", from_map(HAND_DRILL, STEEL))
+# Now made by the newer texture scripts: write_png(f"{root}/item/hand_drill.png", from_map(HAND_DRILL, STEEL))
 os.makedirs(f"{root}/models/armor", exist_ok=True)
 # Now made by tools/recolor_vanilla.py: write_png(f"{root}/models/armor/bronze_layer_1.png", lamellar(64, 32, skip_hat=True))
 # Now made by tools/recolor_vanilla.py: write_png(f"{root}/models/armor/bronze_layer_2.png", lamellar(64, 32, skip_hat=False))
