@@ -7,6 +7,8 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
+import com.walnutbeachdigital.epochsmith.menu.ModMenus;
 
 /**
  * Client-only setup: hooks up custom renderers. Never runs on a dedicated server.
@@ -25,6 +27,11 @@ public final class ClientSetup {
         event.registerBlockEntityRenderer(ModBlockEntities.NANOFABRICATOR.get(), WorkpieceRenderer::new);
         event.registerBlockEntityRenderer(ModBlockEntities.MATTER_PRINTER.get(), WorkpieceRenderer::new);
         event.registerBlockEntityRenderer(ModBlockEntities.SORTING_CABINET.get(), SortingCabinetRenderer::new);
+    }
+
+    @SubscribeEvent
+    public static void registerScreens(RegisterMenuScreensEvent event) {
+        event.register(ModMenus.MACHINE.get(), MachineScreen::new);
     }
 
     private ClientSetup() {

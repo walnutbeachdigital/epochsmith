@@ -1,5 +1,7 @@
 package com.walnutbeachdigital.epochsmith.information;
 
+import com.walnutbeachdigital.epochsmith.menu.MachineMenus;
+import com.walnutbeachdigital.epochsmith.menu.MachineGui;
 import javax.annotation.Nullable;
 
 import com.mojang.serialization.MapCodec;
@@ -86,48 +88,23 @@ public class AssemblerBlock extends BaseEntityBlock implements ElectricConnectab
                 : createTickerHelper(type, ModBlockEntities.ASSEMBLER.get(), AssemblerBlockEntity::serverTick);
     }
 
+    /** Right-click opens the machine's GUI (whatever you're holding). */
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        return MachineMenus.open(state, level, pos, player, Era.INFORMATION, "message.epochsmith.assembler.unknown");
+    }
+
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
                                               Player player, InteractionHand hand, BlockHitResult hit) {
-        if (!level.isClientSide() && level.getBlockEntity(pos) instanceof AssemblerBlockEntity assembler) {
-            if (!EraManager.hasReached(player, Era.INFORMATION)) {
-                player.displayClientMessage(Component.translatable("message.epochsmith.assembler.unknown"), true);
-            } else if (player.isShiftKeyDown() || !assembler.isProgrammed()) {
-                player.displayClientMessage(assembler.program(stack), true);
-                level.playSound(null, pos, SoundEvents.NOTE_BLOCK_BIT.value(), SoundSource.BLOCKS, 0.5F, 1.2F);
-            } else if (!assembler.accepts(stack)) {
-                player.displayClientMessage(Component.translatable("message.epochsmith.assembler.not_needed",
-                        stack.getHoverName()), true);
-            } else if (assembler.insert(stack)) {
-                level.playSound(null, pos, SoundEvents.CHAIN_PLACE, SoundSource.BLOCKS, 0.6F, 1.0F);
-                player.displayClientMessage(assembler.describe(), true);
-            } else {
-                player.displayClientMessage(Component.translatable("message.epochsmith.assembler.busy"), true);
-            }
-        }
-        return ItemInteractionResult.sidedSuccess(level.isClientSide());
+        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
 
-    @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        if (!level.isClientSide() && level.getBlockEntity(pos) instanceof AssemblerBlockEntity assembler) {
-            java.util.List<ItemStack> taken = player.isShiftKeyDown() ? assembler.reset() : assembler.takeOutputs();
-            for (ItemStack stack : taken) {
-                if (!player.getInventory().add(stack)) {
-                    player.drop(stack, false);
-                }
-            }
-            player.displayClientMessage(assembler.describe(), true);
-        }
-        return InteractionResult.sidedSuccess(level.isClientSide());
-    }
-
+    /** Breaking the machine drops everything inside. */
     @Override
     protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
-        if (!state.is(newState.getBlock()) && level.getBlockEntity(pos) instanceof AssemblerBlockEntity assembler) {
-            for (ItemStack stack : assembler.takeEverything()) {
-                Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), stack);
-            }
+        if (!state.is(newState.getBlock()) && level.getBlockEntity(pos) instanceof MachineGui gui) {
+            MachineMenus.dropAll(level, pos, gui.getMenuItems());
         }
         super.onRemove(state, level, pos, newState, movedByPiston);
     }

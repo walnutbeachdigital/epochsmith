@@ -1,5 +1,10 @@
 package com.walnutbeachdigital.epochsmith.future;
 
+import net.neoforged.neoforge.items.IItemHandlerModifiable;
+import net.neoforged.neoforge.items.wrapper.CombinedInvWrapper;
+import com.walnutbeachdigital.epochsmith.menu.MachineLayout;
+import com.walnutbeachdigital.epochsmith.menu.MachineItems;
+import com.walnutbeachdigital.epochsmith.menu.MachineGui;
 import com.walnutbeachdigital.epochsmith.block.StatusDescriber;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +36,7 @@ import net.neoforged.neoforge.items.ItemStackHandler;
  * and it breaks it down into matter. Scan an item (sneak + right-click with it) and it prints copies,
  * using that item's matter value plus 64 energy per point of matter.
  */
-public class MatterPrinterBlockEntity extends BlockEntity implements WorkpieceHolder, StatusDescriber {
+public class MatterPrinterBlockEntity extends BlockEntity implements WorkpieceHolder, StatusDescriber, MachineGui {
 
     public static final int SLOTS = 9;
     public static final int MAX_MATTER = 1000000;
@@ -86,6 +91,88 @@ public class MatterPrinterBlockEntity extends BlockEntity implements WorkpieceHo
             return slot == SLOTS && level != null && MatterValues.valueOf(level, stack) > 0;
         }
     };
+
+    /** Anything put here is broken down into matter. */
+    private final ItemStackHandler feed = new ItemStackHandler(1) {
+        @Override
+        public boolean isItemValid(int slot, ItemStack stack) {
+            return level != null && MatterValues.valueOf(level, stack) > 0;
+        }
+
+        @Override
+        protected void onContentsChanged(int slot) {
+            setChanged();
+        }
+    };
+    /** The item to copy: put one here to scan it (it isn't used up). */
+    private final ItemStackHandler pattern = new ItemStackHandler(1) {
+        @Override
+        public int getSlotLimit(int slot) {
+            return 1;
+        }
+
+        @Override
+        protected void onContentsChanged(int slot) {
+            setChanged();
+        }
+    };
+    private ItemStack lastPattern = ItemStack.EMPTY;
+    private int lastDrawn = 0;
+
+    public static final MachineLayout LAYOUT = new MachineLayout(5)
+            .pattern(26, 17).input(26, 53)
+            .output(98, 17).output(116, 17).output(134, 17)
+            .output(98, 35).output(116, 35).output(134, 35)
+            .output(98, 53).output(116, 53).output(134, 53)
+            .arrow(56, 35, 2, 3)
+            .gauge(8, 17, 0, 1, MachineLayout.MATTER, "gui.epochsmith.matter")
+            .gaugeOf(160, 17, 4, ENERGY_PER_TICK, MachineLayout.ENERGY, "gui.epochsmith.power");
+
+    /** What the GUI shows: the pattern slot, the matter feed slot, then nine output slots. */
+    private final IItemHandlerModifiable menuItems = new CombinedInvWrapper(pattern, feed, outputs);
+
+    @Override
+    public IItemHandlerModifiable getMenuItems() {
+        return menuItems;
+    }
+
+    @Override
+    public MachineLayout getLayout() {
+        return LAYOUT;
+    }
+
+    @Override
+    public int getMenuValue(int index) {
+        int cost = target.isEmpty() || level == null ? 0 : Math.max(0, MatterValues.valueOf(level, target));
+        return switch (index) {
+            case 0 -> matter;
+            case 1 -> MAX_MATTER;
+            case 2 -> progress;
+            case 3 -> Math.max(1, cost * ENERGY_PER_MATTER);
+            case 4 -> lastDrawn;
+            default -> 0;
+        };
+    }
+
+    /** Breaks down whatever is in the feed slot, and follows the pattern slot. */
+    private void handleSlots() {
+        ItemStack food = feed.getStackInSlot(0);
+        if (!food.isEmpty()) {
+            int taken = recycle(food, false);
+            if (taken > 0) {
+                feed.extractItem(0, taken, false);
+            }
+        }
+        ItemStack wanted = pattern.getStackInSlot(0);
+        if (!ItemStack.isSameItemSameComponents(wanted, lastPattern)) {
+            lastPattern = wanted.copy();
+            if (wanted.isEmpty()) {
+                clearTarget();
+            } else {
+                scan(wanted);
+            }
+        }
+    }
 
     public MatterPrinterBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.MATTER_PRINTER.get(), pos, state);
@@ -182,11 +269,14 @@ public class MatterPrinterBlockEntity extends BlockEntity implements WorkpieceHo
         if (level.getGameTime() % REFRESH_INTERVAL == 0) {
             printer.sources = ElectricNetwork.findSources(level, pos);
         }
+        printer.handleSlots();
+        printer.lastDrawn = 0;
         boolean working = false;
         int cost = printer.target.isEmpty() ? MatterValues.UNPRINTABLE : MatterValues.valueOf(level, printer.target);
         if (cost > 0 && printer.matter >= cost && printer.fits(printer.target)) {
             int needed = cost * ENERGY_PER_MATTER - printer.progress;
             int drawn = ElectricNetwork.draw(level, printer.sources, Math.min(ENERGY_PER_TICK, needed), false);
+            printer.lastDrawn = drawn;
             working = drawn > 0;
             printer.progress += drawn;
             if (printer.progress >= cost * ENERGY_PER_MATTER) {
@@ -216,6 +306,8 @@ public class MatterPrinterBlockEntity extends BlockEntity implements WorkpieceHo
         tag.putInt("Matter", matter);
         tag.putInt("Progress", progress);
         tag.put("Outputs", outputs.serializeNBT(registries));
+        tag.put("Feed", feed.serializeNBT(registries));
+        tag.put("Pattern", pattern.serializeNBT(registries));
     }
 
     @Override
@@ -225,6 +317,11 @@ public class MatterPrinterBlockEntity extends BlockEntity implements WorkpieceHo
         matter = tag.getInt("Matter");
         progress = tag.getInt("Progress");
         outputs.deserializeNBT(registries, tag.getCompound("Outputs"));
+        if (tag.contains("Pattern")) {
+            feed.deserializeNBT(registries, tag.getCompound("Feed"));
+            pattern.deserializeNBT(registries, tag.getCompound("Pattern"));
+            lastPattern = pattern.getStackInSlot(0).copy();
+        }
     }
 
     @Override

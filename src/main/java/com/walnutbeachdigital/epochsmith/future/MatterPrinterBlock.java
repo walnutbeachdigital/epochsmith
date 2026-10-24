@@ -1,5 +1,7 @@
 package com.walnutbeachdigital.epochsmith.future;
 
+import com.walnutbeachdigital.epochsmith.menu.MachineMenus;
+import com.walnutbeachdigital.epochsmith.menu.MachineGui;
 import javax.annotation.Nullable;
 
 import com.mojang.serialization.MapCodec;
@@ -86,53 +88,23 @@ public class MatterPrinterBlock extends BaseEntityBlock implements ElectricConne
                 : createTickerHelper(type, ModBlockEntities.MATTER_PRINTER.get(), MatterPrinterBlockEntity::serverTick);
     }
 
+    /** Right-click opens the machine's GUI (whatever you're holding). */
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        return MachineMenus.open(state, level, pos, player, Era.FUTURE, "message.epochsmith.matter_printer.unknown");
+    }
+
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
                                               Player player, InteractionHand hand, BlockHitResult hit) {
-        if (!level.isClientSide() && level.getBlockEntity(pos) instanceof MatterPrinterBlockEntity printer) {
-            if (!EraManager.hasReached(player, Era.FUTURE)) {
-                player.displayClientMessage(Component.translatable("message.epochsmith.matter_printer.unknown"), true);
-            } else if (player.isShiftKeyDown()) {
-                player.displayClientMessage(printer.scan(stack), true);
-                level.playSound(null, pos, SoundEvents.BEACON_POWER_SELECT, SoundSource.BLOCKS, 0.6F, 1.6F);
-            } else {
-                int taken = printer.recycle(stack, false);
-                if (taken > 0) {
-                    stack.shrink(taken);
-                    level.playSound(null, pos, SoundEvents.GRINDSTONE_USE, SoundSource.BLOCKS, 0.4F, 1.4F);
-                    player.displayClientMessage(printer.describe(), true);
-                } else {
-                    player.displayClientMessage(Component.translatable("message.epochsmith.matter_printer.no_value",
-                            stack.getHoverName()), true);
-                }
-            }
-        }
-        return ItemInteractionResult.sidedSuccess(level.isClientSide());
+        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
 
-    @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        if (!level.isClientSide() && level.getBlockEntity(pos) instanceof MatterPrinterBlockEntity printer) {
-            if (player.isShiftKeyDown()) {
-                printer.clearTarget();
-            } else {
-                for (ItemStack stack : printer.takeOutputs()) {
-                    if (!player.getInventory().add(stack)) {
-                        player.drop(stack, false);
-                    }
-                }
-            }
-            player.displayClientMessage(printer.describe(), true);
-        }
-        return InteractionResult.sidedSuccess(level.isClientSide());
-    }
-
+    /** Breaking the machine drops everything inside. */
     @Override
     protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
-        if (!state.is(newState.getBlock()) && level.getBlockEntity(pos) instanceof MatterPrinterBlockEntity printer) {
-            for (ItemStack stack : printer.takeOutputs()) {
-                Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), stack);
-            }
+        if (!state.is(newState.getBlock()) && level.getBlockEntity(pos) instanceof MachineGui gui) {
+            MachineMenus.dropAll(level, pos, gui.getMenuItems());
         }
         super.onRemove(state, level, pos, newState, movedByPiston);
     }

@@ -1,5 +1,8 @@
 package com.walnutbeachdigital.epochsmith.steam;
 
+import com.walnutbeachdigital.epochsmith.menu.MachineLayout;
+import com.walnutbeachdigital.epochsmith.menu.MachineItems;
+import com.walnutbeachdigital.epochsmith.menu.MachineGui;
 import com.walnutbeachdigital.epochsmith.block.StatusDescriber;
 import com.walnutbeachdigital.epochsmith.block.ModBlockEntities;
 import com.walnutbeachdigital.epochsmith.block.WorkpieceHolder;
@@ -29,12 +32,17 @@ import net.minecraft.world.level.block.state.BlockState;
  *  copper ingot -> 1 pressure gauge (6 seconds)
  *  steel ingot -> 1 steam piston (8 seconds)
  */
-public class LatheBlockEntity extends BlockEntity implements WorkpieceHolder, StatusDescriber {
+public class LatheBlockEntity extends BlockEntity implements WorkpieceHolder, StatusDescriber, MachineGui {
 
     public static final int MAX_PIECES = 16;
     private static final int CHECK_INTERVAL = 10;
 
-    private ItemStack workpiece = ItemStack.EMPTY;
+    public static final MachineLayout LAYOUT = new MachineLayout(4)
+            .input(56, 35).output(116, 35).arrow(79, 34, 0, 1)
+            .status(8, 60, 2, "gui.epochsmith.steam_status");
+
+    private final MachineItems items = new MachineItems(this::changed, (slot, stack) -> canWork(stack),
+            MachineItems.Role.INPUT, MachineItems.Role.OUTPUT).limit(0, MAX_PIECES);
     private int progress = 0;
     private boolean steam = false;
 
@@ -73,48 +81,46 @@ public class LatheBlockEntity extends BlockEntity implements WorkpieceHolder, St
 
     @Override
     public ItemStack getWorkpiece() {
-        return workpiece;
+        return items.getStackInSlot(0);
     }
 
     public boolean hasSteam() {
         return steam;
     }
 
-    public boolean place(ItemStack stack) {
-        if (workpiece.isEmpty()) {
-            workpiece = stack.split(Math.min(stack.getCount(), MAX_PIECES));
-            progress = 0;
-            changed();
-            return true;
-        }
-        if (ItemStack.isSameItemSameComponents(workpiece, stack) && workpiece.getCount() < MAX_PIECES) {
-            int moved = Math.min(stack.getCount(), MAX_PIECES - workpiece.getCount());
-            workpiece.grow(moved);
-            stack.shrink(moved);
-            changed();
-            return true;
-        }
-        return false;
-    }
-
-    public ItemStack takeAll() {
-        ItemStack taken = workpiece;
-        workpiece = ItemStack.EMPTY;
-        progress = 0;
-        changed();
-        return taken;
-    }
-
     public Component describe() {
         return Component.translatable(steam ? "message.epochsmith.lathe.status" : "message.epochsmith.lathe.no_steam",
-                workpiece.getCount());
+                getWorkpiece().getCount());
+    }
+
+    // ---- GUI ----
+
+    @Override
+    public MachineItems getMenuItems() {
+        return items;
+    }
+
+    @Override
+    public MachineLayout getLayout() {
+        return LAYOUT;
+    }
+
+    @Override
+    public int getMenuValue(int index) {
+        return switch (index) {
+            case 0 -> progress;
+            case 1 -> getWorkpiece().isEmpty() ? 1 : workFor(getWorkpiece());
+            case 2 -> steam ? 1 : 0;
+            default -> 0;
+        };
     }
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, LatheBlockEntity lathe) {
         if (level.getGameTime() % CHECK_INTERVAL == 0) {
             lathe.steam = SteamNetwork.explore(level, pos).workingBoilers() > 0;
         }
-        boolean working = lathe.steam && !lathe.workpiece.isEmpty();
+        ItemStack piece = lathe.getWorkpiece();
+        boolean working = lathe.steam && !piece.isEmpty() && lathe.items.fitsOutput(resultFor(piece));
         if (state.getValue(LatheBlock.ACTIVE) != working) {
             level.setBlock(pos, state.setValue(LatheBlock.ACTIVE, working), Block.UPDATE_ALL);
         }
@@ -129,10 +135,10 @@ public class LatheBlockEntity extends BlockEntity implements WorkpieceHolder, St
         if (level.getGameTime() % 20 == 0) {
             level.playSound(null, pos, SoundEvents.GRINDSTONE_USE, SoundSource.BLOCKS, 0.25F, 1.6F);
         }
-        if (lathe.progress >= workFor(lathe.workpiece)) {
+        if (lathe.progress >= workFor(piece)) {
             lathe.progress = 0;
-            Block.popResource(level, pos.above(), resultFor(lathe.workpiece));
-            lathe.workpiece.shrink(1);
+            lathe.items.addOutput(resultFor(piece));
+            lathe.items.extractItem(0, 1, false);
             level.playSound(null, pos, SoundEvents.UI_STONECUTTER_TAKE_RESULT, SoundSource.BLOCKS, 0.7F, 1.3F);
             lathe.changed();
         } else {
@@ -150,14 +156,14 @@ public class LatheBlockEntity extends BlockEntity implements WorkpieceHolder, St
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
-        tag.put("Workpiece", workpiece.saveOptional(registries));
+        tag.put("Items", items.serializeNBT(registries));
         tag.putInt("Progress", progress);
     }
 
     @Override
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
-        workpiece = ItemStack.parseOptional(registries, tag.getCompound("Workpiece"));
+        items.deserializeNBT(registries, tag.getCompound("Items"));
         progress = tag.getInt("Progress");
     }
 

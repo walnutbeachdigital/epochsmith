@@ -1,5 +1,7 @@
 package com.walnutbeachdigital.epochsmith.steam;
 
+import com.walnutbeachdigital.epochsmith.menu.MachineMenus;
+import com.walnutbeachdigital.epochsmith.menu.MachineGui;
 import javax.annotation.Nullable;
 
 import com.mojang.serialization.MapCodec;
@@ -85,41 +87,23 @@ public class CokeOvenBlock extends BaseEntityBlock {
                 : createTickerHelper(type, ModBlockEntities.COKE_OVEN.get(), CokeOvenBlockEntity::serverTick);
     }
 
+    /** Right-click opens the machine's GUI (whatever you're holding). */
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        return MachineMenus.open(state, level, pos, player, Era.INDUSTRIAL, "message.epochsmith.coke_oven.unknown");
+    }
+
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
                                               Player player, InteractionHand hand, BlockHitResult hit) {
-        if (!stack.is(Items.COAL)) {
-            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-        }
-        if (!level.isClientSide() && level.getBlockEntity(pos) instanceof CokeOvenBlockEntity oven) {
-            if (!EraManager.hasReached(player, Era.INDUSTRIAL)) {
-                player.displayClientMessage(Component.translatable("message.epochsmith.coke_oven.unknown"), true);
-            } else if (oven.insertCoal(stack)) {
-                level.playSound(null, pos, SoundEvents.FIRECHARGE_USE, SoundSource.BLOCKS, 0.5F, 0.8F);
-                player.displayClientMessage(Component.translatable("message.epochsmith.coke_oven.baking"), true);
-            } else {
-                player.displayClientMessage(Component.translatable("message.epochsmith.coke_oven.busy"), true);
-            }
-        }
-        return ItemInteractionResult.sidedSuccess(level.isClientSide());
+        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
 
-    @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        if (!level.isClientSide() && level.getBlockEntity(pos) instanceof CokeOvenBlockEntity oven
-                && !oven.getContents().isEmpty()) {
-            ItemStack taken = oven.takeAll();
-            if (!player.getInventory().add(taken)) {
-                player.drop(taken, false);
-            }
-        }
-        return InteractionResult.sidedSuccess(level.isClientSide());
-    }
-
+    /** Breaking the machine drops everything inside. */
     @Override
     protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
-        if (!state.is(newState.getBlock()) && level.getBlockEntity(pos) instanceof CokeOvenBlockEntity oven) {
-            Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), oven.takeAll());
+        if (!state.is(newState.getBlock()) && level.getBlockEntity(pos) instanceof MachineGui gui) {
+            MachineMenus.dropAll(level, pos, gui.getMenuItems());
         }
         super.onRemove(state, level, pos, newState, movedByPiston);
     }

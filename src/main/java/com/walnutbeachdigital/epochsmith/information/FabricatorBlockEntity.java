@@ -1,5 +1,8 @@
 package com.walnutbeachdigital.epochsmith.information;
 
+import com.walnutbeachdigital.epochsmith.menu.MachineLayout;
+import com.walnutbeachdigital.epochsmith.menu.MachineItems;
+import com.walnutbeachdigital.epochsmith.menu.MachineGui;
 import com.walnutbeachdigital.epochsmith.block.StatusDescriber;
 import java.util.List;
 
@@ -28,14 +31,20 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
  * Etches silicon into transistors: 1 silicon -> 4 transistors, using 1,280 energy
  * at up to 64 per tick (one silicon every second on full power).
  */
-public class FabricatorBlockEntity extends BlockEntity implements WorkpieceHolder, StatusDescriber {
+public class FabricatorBlockEntity extends BlockEntity implements WorkpieceHolder, StatusDescriber, MachineGui {
 
     public static final int ENERGY_PER_ITEM = 1280;
     public static final int ENERGY_PER_TICK = 64;
     public static final int MAX_ITEMS = 64;
     private static final int REFRESH_INTERVAL = 20;
 
-    private ItemStack input = ItemStack.EMPTY;
+    public static final MachineLayout LAYOUT = new MachineLayout(3)
+            .input(56, 35).output(116, 35).arrow(79, 34, 0, 1)
+            .gaugeOf(152, 17, 2, ENERGY_PER_TICK, MachineLayout.ENERGY, "gui.epochsmith.power");
+
+    private final MachineItems items = new MachineItems(this::changed, (slot, stack) -> !resultFor(stack).isEmpty(),
+            MachineItems.Role.INPUT, MachineItems.Role.OUTPUT);
+    private int lastDrawn = 0;
     private int progress = 0;
     private List<BlockPos> sources = List.of();
 
@@ -52,34 +61,34 @@ public class FabricatorBlockEntity extends BlockEntity implements WorkpieceHolde
 
     @Override
     public ItemStack getWorkpiece() {
-        return input;
+        return items.getStackInSlot(0);
     }
 
-    public boolean insert(ItemStack stack) {
-        if (input.isEmpty()) {
-            input = stack.split(Math.min(stack.getCount(), MAX_ITEMS));
-        } else if (ItemStack.isSameItemSameComponents(input, stack) && input.getCount() < MAX_ITEMS) {
-            int moved = Math.min(stack.getCount(), MAX_ITEMS - input.getCount());
-            input.grow(moved);
-            stack.shrink(moved);
-        } else {
-            return false;
-        }
-        changed();
-        return true;
+    // ---- GUI ----
+
+    @Override
+    public MachineItems getMenuItems() {
+        return items;
     }
 
-    public ItemStack takeInput() {
-        ItemStack taken = input;
-        input = ItemStack.EMPTY;
-        progress = 0;
-        changed();
-        return taken;
+    @Override
+    public MachineLayout getLayout() {
+        return LAYOUT;
+    }
+
+    @Override
+    public int getMenuValue(int index) {
+        return switch (index) {
+            case 0 -> progress;
+            case 1 -> ENERGY_PER_ITEM;
+            case 2 -> lastDrawn;
+            default -> 0;
+        };
     }
 
     public Component describe() {
         return Component.translatable(getBlockState().getValue(BlockStateProperties.LIT)
-                ? "message.epochsmith.fabricator.working" : "message.epochsmith.fabricator.idle", input.getCount());
+                ? "message.epochsmith.fabricator.working" : "message.epochsmith.fabricator.idle", getWorkpiece().getCount());
     }
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, FabricatorBlockEntity fab) {
@@ -87,14 +96,17 @@ public class FabricatorBlockEntity extends BlockEntity implements WorkpieceHolde
             fab.sources = ElectricNetwork.findSources(level, pos);
         }
         boolean working = false;
-        if (!fab.input.isEmpty()) {
+        ItemStack input = fab.getWorkpiece();
+        fab.lastDrawn = 0;
+        if (!input.isEmpty() && fab.items.fitsOutput(resultFor(input))) {
             int drawn = ElectricNetwork.draw(level, fab.sources, ENERGY_PER_TICK, false);
+            fab.lastDrawn = drawn;
             working = drawn > 0;
             fab.progress += drawn;
             if (fab.progress >= ENERGY_PER_ITEM) {
                 fab.progress -= ENERGY_PER_ITEM;
-                Block.popResource(level, pos.above(), resultFor(fab.input));
-                fab.input.shrink(1);
+                fab.items.addOutput(resultFor(input));
+                fab.items.extractItem(0, 1, false);
                 level.playSound(null, pos, SoundEvents.BEACON_POWER_SELECT, SoundSource.BLOCKS, 0.3F, 2.0F);
                 fab.changed();
             } else {
@@ -116,14 +128,14 @@ public class FabricatorBlockEntity extends BlockEntity implements WorkpieceHolde
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
-        tag.put("Input", input.saveOptional(registries));
+        tag.put("Items", items.serializeNBT(registries));
         tag.putInt("Progress", progress);
     }
 
     @Override
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
-        input = ItemStack.parseOptional(registries, tag.getCompound("Input"));
+        items.deserializeNBT(registries, tag.getCompound("Items"));
         progress = tag.getInt("Progress");
     }
 

@@ -5,6 +5,9 @@ import java.util.UUID;
 import com.walnutbeachdigital.epochsmith.era.Era;
 import com.walnutbeachdigital.epochsmith.era.EraManager;
 import com.walnutbeachdigital.epochsmith.item.ModItems;
+import com.walnutbeachdigital.epochsmith.menu.MachineGui;
+import com.walnutbeachdigital.epochsmith.menu.MachineItems;
+import com.walnutbeachdigital.epochsmith.menu.MachineLayout;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
@@ -23,24 +26,29 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
 /**
- * Holds the pit kiln's contents and runs the firing timer.
+ * The Primitive era's kiln. Put clay, logs or an unfired amphora in the top slot and fuel
+ * (1 coal or charcoal, or 4 sticks) in the bottom slot: it lights and fires the whole batch
+ * (up to 16) in 20 seconds.
  */
-public class PitKilnBlockEntity extends BlockEntity {
+public class PitKilnBlockEntity extends BlockEntity implements MachineGui {
 
-    /** One firing takes 20 seconds (20 ticks per second) and fires the whole batch at once. */
     public static final int FIRE_TIME = 400;
-    /** Most items the kiln holds at once. */
     public static final int MAX_ITEMS = 16;
+    public static final int STICKS_PER_FIRING = 4;
+    private static final int INPUT = 0, FUEL = 1, OUTPUT = 2;
 
-    private ItemStack contents = ItemStack.EMPTY;
+    public static final MachineLayout LAYOUT = new MachineLayout(3)
+            .input(56, 17).fuel(56, 53).output(116, 35)
+            .flame(56, 36, 2, 1).arrow(79, 34, 0, 1);
+
+    private final MachineItems items = new MachineItems(this::setChanged, (slot, stack) -> slot == INPUT ? canFire(stack) : isFuel(stack),
+            MachineItems.Role.INPUT, MachineItems.Role.FUEL, MachineItems.Role.OUTPUT).limit(INPUT, MAX_ITEMS);
     private int progress = 0;
-    private UUID igniter = null;
+    private UUID user = null;
 
     public PitKilnBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.PIT_KILN.get(), pos, state);
     }
-
-    // ---- What the kiln can fire ----
 
     /** The fired result for an item, or EMPTY if the kiln can't fire it. */
     public static ItemStack resultFor(ItemStack input) {
@@ -60,72 +68,90 @@ public class PitKilnBlockEntity extends BlockEntity {
         return !resultFor(stack).isEmpty();
     }
 
-    // ---- Contents ----
-
-    public ItemStack getContents() {
-        return contents;
+    public static boolean isFuel(ItemStack stack) {
+        return stack.is(Items.COAL) || stack.is(Items.CHARCOAL) || stack.is(Items.STICK);
     }
 
-    public boolean hasFirableContents() {
-        return canFire(contents);
+    public MachineItems getItems() {
+        return items;
     }
 
-    /** Puts as much of the stack in as fits. Returns true if anything went in. */
-    public boolean insert(ItemStack stack) {
-        if (contents.isEmpty()) {
-            contents = stack.split(Math.min(stack.getCount(), MAX_ITEMS));
-            setChanged();
-            return true;
-        }
-        if (ItemStack.isSameItemSameComponents(contents, stack) && contents.getCount() < MAX_ITEMS) {
-            int moved = Math.min(stack.getCount(), MAX_ITEMS - contents.getCount());
-            contents.grow(moved);
-            stack.shrink(moved);
-            setChanged();
-            return true;
-        }
-        return false;
+    // ---- GUI ----
+
+    @Override
+    public MachineItems getMenuItems() {
+        return items;
     }
 
-    /** Takes everything out. */
-    public ItemStack takeAll() {
-        ItemStack taken = contents;
-        contents = ItemStack.EMPTY;
-        setChanged();
-        return taken;
+    @Override
+    public MachineLayout getLayout() {
+        return LAYOUT;
     }
 
-    /** Starts a firing. The player who lit it is credited when it finishes. */
-    public void ignite(Player player) {
-        progress = 0;
-        igniter = player.getUUID();
+    @Override
+    public int getMenuValue(int index) {
+        boolean lit = getBlockState().getValue(BlockStateProperties.LIT);
+        return switch (index) {
+            case 0 -> progress;
+            case 1 -> FIRE_TIME;
+            case 2 -> lit ? FIRE_TIME - progress : 0;
+            default -> 0;
+        };
+    }
+
+    @Override
+    public void onMenuOpened(Player player) {
+        user = player.getUUID();
         setChanged();
     }
 
     // ---- Ticking ----
 
-    public static void serverTick(Level level, BlockPos pos, BlockState state, PitKilnBlockEntity kiln) {
-        if (!state.getValue(BlockStateProperties.LIT)) {
-            return;
+    /** Takes one firing's worth of fuel. Returns false if there isn't enough. */
+    private boolean useFuel() {
+        ItemStack fuel = items.getStackInSlot(FUEL);
+        int needed = fuel.is(Items.STICK) ? STICKS_PER_FIRING : 1;
+        if (fuel.isEmpty() || fuel.getCount() < needed) {
+            return false;
         }
-        kiln.progress++;
-        if (kiln.progress >= FIRE_TIME) {
-            kiln.finishFiring(level, pos, state);
-        }
+        items.extractItem(FUEL, needed, false);
+        return true;
     }
 
-    private void finishFiring(Level level, BlockPos pos, BlockState state) {
-        contents = resultFor(contents);
-        progress = 0;
+    public static void serverTick(Level level, BlockPos pos, BlockState state, PitKilnBlockEntity kiln) {
+        ItemStack input = kiln.items.getStackInSlot(INPUT);
+        boolean lit = state.getValue(BlockStateProperties.LIT);
+        if (!lit) {
+            if (canFire(input) && kiln.items.fitsOutput(resultFor(input)) && kiln.useFuel()) {
+                kiln.progress = 0;
+                level.setBlock(pos, state.setValue(BlockStateProperties.LIT, true), Block.UPDATE_ALL);
+                level.playSound(null, pos, SoundEvents.FIRECHARGE_USE, SoundSource.BLOCKS, 0.7F, 1.0F);
+                kiln.setChanged();
+            }
+            return;
+        }
+        if (kiln.progress < FIRE_TIME) {
+            kiln.progress++;
+            kiln.setChanged();
+            return;
+        }
+        // Fired: the whole batch comes out together, once there's room
+        ItemStack result = resultFor(input);
+        if (!result.isEmpty() && !kiln.items.fitsOutput(result)) {
+            return;
+        }
+        if (!result.isEmpty()) {
+            kiln.items.extractItem(INPUT, input.getCount(), false);
+            kiln.items.addOutput(result);
+        }
+        kiln.progress = 0;
         level.setBlock(pos, state.setValue(BlockStateProperties.LIT, false), Block.UPDATE_ALL);
         level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 0.6F, 1.0F);
-
         // The first successful firing is the Primitive era's signature invention
-        if (igniter != null && level.getPlayerByUUID(igniter) instanceof ServerPlayer player) {
+        if (!result.isEmpty() && kiln.user != null && level.getPlayerByUUID(kiln.user) instanceof ServerPlayer player) {
             EraManager.advanceTo(player, Era.BRONZE_IRON);
         }
-        igniter = null;
-        setChanged();
+        kiln.setChanged();
     }
 
     // ---- Saving ----
@@ -133,18 +159,18 @@ public class PitKilnBlockEntity extends BlockEntity {
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
-        tag.put("Contents", contents.saveOptional(registries));
+        tag.put("Items", items.serializeNBT(registries));
         tag.putInt("Progress", progress);
-        if (igniter != null) {
-            tag.putUUID("Igniter", igniter);
+        if (user != null) {
+            tag.putUUID("User", user);
         }
     }
 
     @Override
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
-        contents = ItemStack.parseOptional(registries, tag.getCompound("Contents"));
+        items.deserializeNBT(registries, tag.getCompound("Items"));
         progress = tag.getInt("Progress");
-        igniter = tag.hasUUID("Igniter") ? tag.getUUID("Igniter") : null;
+        user = tag.hasUUID("User") ? tag.getUUID("User") : null;
     }
 }

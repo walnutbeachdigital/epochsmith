@@ -1,5 +1,8 @@
 package com.walnutbeachdigital.epochsmith.block;
 
+import com.walnutbeachdigital.epochsmith.menu.MachineLayout;
+import com.walnutbeachdigital.epochsmith.menu.MachineItems;
+import com.walnutbeachdigital.epochsmith.menu.MachineGui;
 import com.walnutbeachdigital.epochsmith.item.ModItems;
 import com.walnutbeachdigital.epochsmith.power.MechanicalPower;
 
@@ -23,7 +26,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
  *  - Wrought iron ingot: 1 crucible steel ingot. Costs 2 heat.
  * Each coal or charcoal adds 8 heat (64 max).
  */
-public class ForgeBlockEntity extends BlockEntity implements StatusDescriber {
+public class ForgeBlockEntity extends BlockEntity implements StatusDescriber, MachineGui {
 
     public static final int MIN_FORCE = 4;
     public static final int MAX_ITEMS = 16;
@@ -31,7 +34,16 @@ public class ForgeBlockEntity extends BlockEntity implements StatusDescriber {
     public static final int MAX_HEAT = 64;
     private static final int POWER_CHECK_INTERVAL = 10;
 
-    private ItemStack input = ItemStack.EMPTY;
+    private static final int INPUT = 0, FUEL = 1;
+
+    public static final MachineLayout LAYOUT = new MachineLayout(5)
+            .input(56, 17).fuel(56, 53).output(116, 35).arrow(79, 34, 0, 1)
+            .gaugeOf(30, 17, 2, MAX_HEAT, MachineLayout.HEAT, "gui.epochsmith.heat")
+            .gaugeOf(152, 17, 3, 16, MachineLayout.FORCE, "gui.epochsmith.force");
+
+    private final MachineItems items = new MachineItems(this::setChanged,
+            (slot, stack) -> slot == INPUT ? canSmelt(stack) : isFuel(stack),
+            MachineItems.Role.INPUT, MachineItems.Role.FUEL, MachineItems.Role.OUTPUT);
     private int heat = 0;
     private int progress = 0;
     private int force = 0;
@@ -84,41 +96,35 @@ public class ForgeBlockEntity extends BlockEntity implements StatusDescriber {
 
     // ---- Loading ----
 
-    public boolean insert(ItemStack stack) {
-        if (input.isEmpty()) {
-            input = stack.split(Math.min(stack.getCount(), MAX_ITEMS));
-            progress = 0;
-            setChanged();
-            return true;
-        }
-        if (ItemStack.isSameItemSameComponents(input, stack) && input.getCount() < MAX_ITEMS) {
-            int moved = Math.min(stack.getCount(), MAX_ITEMS - input.getCount());
-            input.grow(moved);
-            stack.shrink(moved);
-            setChanged();
-            return true;
-        }
-        return false;
-    }
-
-    /** Adds as much fuel as fits. Returns how many items were used. */
-    public int addFuel(int count) {
-        int used = Math.min(count, (MAX_HEAT - heat) / HEAT_PER_FUEL);
-        heat += used * HEAT_PER_FUEL;
-        setChanged();
-        return used;
-    }
-
-    public ItemStack takeInput() {
-        ItemStack taken = input;
-        input = ItemStack.EMPTY;
-        progress = 0;
-        setChanged();
-        return taken;
+    private ItemStack input() {
+        return items.getStackInSlot(INPUT);
     }
 
     public Component describe() {
-        return Component.translatable("message.epochsmith.forge.status", input.getCount(), heat, force);
+        return Component.translatable("message.epochsmith.forge.status", input().getCount(), heat, force);
+    }
+
+    // ---- GUI ----
+
+    @Override
+    public MachineItems getMenuItems() {
+        return items;
+    }
+
+    @Override
+    public MachineLayout getLayout() {
+        return LAYOUT;
+    }
+
+    @Override
+    public int getMenuValue(int index) {
+        return switch (index) {
+            case 0 -> progress;
+            case 1 -> input().isEmpty() ? 1 : workFor(input());
+            case 2 -> heat;
+            case 3 -> force;
+            default -> 0;
+        };
     }
 
     // ---- Ticking ----
@@ -127,7 +133,15 @@ public class ForgeBlockEntity extends BlockEntity implements StatusDescriber {
         if (level.getGameTime() % POWER_CHECK_INTERVAL == 0) {
             forge.force = MechanicalPower.forceAt(level, pos);
         }
-        boolean working = !forge.input.isEmpty() && forge.force >= MIN_FORCE && forge.heat >= heatFor(forge.input);
+        // Burn fuel from the fuel slot whenever there's room for its heat
+        if (forge.heat + HEAT_PER_FUEL <= MAX_HEAT && !forge.items.getStackInSlot(FUEL).isEmpty()) {
+            forge.items.extractItem(FUEL, 1, false);
+            forge.heat += HEAT_PER_FUEL;
+            forge.setChanged();
+        }
+        ItemStack input = forge.input();
+        boolean working = !input.isEmpty() && forge.force >= MIN_FORCE && forge.heat >= heatFor(input)
+                && forge.items.fitsOutput(resultFor(input).copyWithCount(2));
         if (state.getValue(BlockStateProperties.LIT) != working) {
             level.setBlock(pos, state.setValue(BlockStateProperties.LIT, working), Block.UPDATE_ALL);
         }
@@ -135,15 +149,15 @@ public class ForgeBlockEntity extends BlockEntity implements StatusDescriber {
             return;
         }
         forge.progress += forge.force;
-        if (forge.progress >= workFor(forge.input)) {
+        if (forge.progress >= workFor(input)) {
             forge.progress = 0;
-            forge.heat -= heatFor(forge.input);
-            ItemStack result = resultFor(forge.input);
-            if (!isSteel(forge.input) && level.random.nextBoolean()) {
+            forge.heat -= heatFor(input);
+            ItemStack result = resultFor(input);
+            if (!isSteel(input) && level.random.nextBoolean()) {
                 result.grow(1);
             }
-            forge.input.shrink(1);
-            Block.popResource(level, pos.above(), result);
+            forge.items.extractItem(INPUT, 1, false);
+            forge.items.addOutput(result);
             level.playSound(null, pos, SoundEvents.LAVA_EXTINGUISH, SoundSource.BLOCKS, 0.4F, 1.4F);
         }
         forge.setChanged();
@@ -152,7 +166,7 @@ public class ForgeBlockEntity extends BlockEntity implements StatusDescriber {
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
-        tag.put("Input", input.saveOptional(registries));
+        tag.put("Items", items.serializeNBT(registries));
         tag.putInt("Heat", heat);
         tag.putInt("Progress", progress);
     }
@@ -160,7 +174,7 @@ public class ForgeBlockEntity extends BlockEntity implements StatusDescriber {
     @Override
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
-        input = ItemStack.parseOptional(registries, tag.getCompound("Input"));
+        items.deserializeNBT(registries, tag.getCompound("Items"));
         heat = tag.getInt("Heat");
         progress = tag.getInt("Progress");
     }

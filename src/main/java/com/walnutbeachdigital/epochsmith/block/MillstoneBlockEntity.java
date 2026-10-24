@@ -1,5 +1,8 @@
 package com.walnutbeachdigital.epochsmith.block;
 
+import com.walnutbeachdigital.epochsmith.menu.MachineLayout;
+import com.walnutbeachdigital.epochsmith.menu.MachineItems;
+import com.walnutbeachdigital.epochsmith.menu.MachineGui;
 import com.walnutbeachdigital.epochsmith.power.MechanicalPower;
 
 import net.minecraft.core.BlockPos;
@@ -19,14 +22,19 @@ import net.minecraft.world.level.block.state.BlockState;
  * Grinds one item at a time while turned by rotation power. More force grinds faster:
  * at force 4 (a water wheel in flowing water) each item takes 2.5 seconds.
  */
-public class MillstoneBlockEntity extends BlockEntity implements StatusDescriber {
+public class MillstoneBlockEntity extends BlockEntity implements StatusDescriber, MachineGui {
 
     public static final int WORK_PER_ITEM = 200;
     public static final int MIN_FORCE = 2;
     public static final int MAX_ITEMS = 16;
     private static final int POWER_CHECK_INTERVAL = 10;
 
-    private ItemStack input = ItemStack.EMPTY;
+    public static final MachineLayout LAYOUT = new MachineLayout(4)
+            .input(56, 35).output(116, 35).arrow(79, 34, 0, 1)
+            .gaugeOf(152, 17, 2, 16, MachineLayout.FORCE, "gui.epochsmith.force");
+
+    private final MachineItems items = new MachineItems(this::setChanged, (slot, stack) -> canGrind(stack),
+            MachineItems.Role.INPUT, MachineItems.Role.OUTPUT);
     private int progress = 0;
     private int force = 0;
 
@@ -60,41 +68,38 @@ public class MillstoneBlockEntity extends BlockEntity implements StatusDescriber
     // ---- Contents ----
 
     public ItemStack getInput() {
-        return input;
+        return items.getStackInSlot(0);
     }
 
     public int getForce() {
         return force;
     }
 
-    public boolean insert(ItemStack stack) {
-        if (input.isEmpty()) {
-            input = stack.split(Math.min(stack.getCount(), MAX_ITEMS));
-            progress = 0;
-            setChanged();
-            return true;
-        }
-        if (ItemStack.isSameItemSameComponents(input, stack) && input.getCount() < MAX_ITEMS) {
-            int moved = Math.min(stack.getCount(), MAX_ITEMS - input.getCount());
-            input.grow(moved);
-            stack.shrink(moved);
-            setChanged();
-            return true;
-        }
-        return false;
-    }
-
-    public ItemStack takeAll() {
-        ItemStack taken = input;
-        input = ItemStack.EMPTY;
-        progress = 0;
-        setChanged();
-        return taken;
-    }
-
     /** A short status line, e.g. "Millstone: 6 left, force 4". */
     public Component describe() {
-        return Component.translatable("message.epochsmith.millstone.status", input.getCount(), force);
+        return Component.translatable("message.epochsmith.millstone.status", getInput().getCount(), force);
+    }
+
+    // ---- GUI ----
+
+    @Override
+    public MachineItems getMenuItems() {
+        return items;
+    }
+
+    @Override
+    public MachineLayout getLayout() {
+        return LAYOUT;
+    }
+
+    @Override
+    public int getMenuValue(int index) {
+        return switch (index) {
+            case 0 -> progress;
+            case 1 -> WORK_PER_ITEM;
+            case 2 -> force;
+            default -> 0;
+        };
     }
 
     // ---- Ticking ----
@@ -103,7 +108,8 @@ public class MillstoneBlockEntity extends BlockEntity implements StatusDescriber
         if (level.getGameTime() % POWER_CHECK_INTERVAL == 0) {
             mill.force = MechanicalPower.forceAt(level, pos);
         }
-        boolean working = !mill.input.isEmpty() && mill.force >= MIN_FORCE;
+        boolean working = !mill.getInput().isEmpty() && mill.force >= MIN_FORCE
+                && mill.items.fitsOutput(resultFor(mill.getInput()));
         if (state.getValue(MillstoneBlock.ACTIVE) != working) {
             level.setBlock(pos, state.setValue(MillstoneBlock.ACTIVE, working), Block.UPDATE_ALL);
         }
@@ -116,8 +122,8 @@ public class MillstoneBlockEntity extends BlockEntity implements StatusDescriber
         }
         if (mill.progress >= WORK_PER_ITEM) {
             mill.progress = 0;
-            Block.popResource(level, pos.above(), resultFor(mill.input));
-            mill.input.shrink(1);
+            mill.items.addOutput(resultFor(mill.getInput()));
+            mill.items.extractItem(0, 1, false);
         }
         mill.setChanged();
     }
@@ -125,14 +131,14 @@ public class MillstoneBlockEntity extends BlockEntity implements StatusDescriber
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
-        tag.put("Input", input.saveOptional(registries));
+        tag.put("Items", items.serializeNBT(registries));
         tag.putInt("Progress", progress);
     }
 
     @Override
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
-        input = ItemStack.parseOptional(registries, tag.getCompound("Input"));
+        items.deserializeNBT(registries, tag.getCompound("Items"));
         progress = tag.getInt("Progress");
     }
 }

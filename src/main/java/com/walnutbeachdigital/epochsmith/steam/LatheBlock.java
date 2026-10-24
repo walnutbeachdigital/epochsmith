@@ -1,5 +1,7 @@
 package com.walnutbeachdigital.epochsmith.steam;
 
+import com.walnutbeachdigital.epochsmith.menu.MachineMenus;
+import com.walnutbeachdigital.epochsmith.menu.MachineGui;
 import javax.annotation.Nullable;
 
 import com.mojang.serialization.MapCodec;
@@ -83,44 +85,23 @@ public class LatheBlock extends BaseEntityBlock implements SteamConnectable {
                 : createTickerHelper(type, ModBlockEntities.LATHE.get(), LatheBlockEntity::serverTick);
     }
 
+    /** Right-click opens the machine's GUI (whatever you're holding). */
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        return MachineMenus.open(state, level, pos, player, Era.INDUSTRIAL, "message.epochsmith.lathe.unknown");
+    }
+
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
                                               Player player, InteractionHand hand, BlockHitResult hit) {
-        if (!LatheBlockEntity.canWork(stack)) {
-            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-        }
-        if (!level.isClientSide() && level.getBlockEntity(pos) instanceof LatheBlockEntity lathe) {
-            if (!EraManager.hasReached(player, Era.INDUSTRIAL)) {
-                player.displayClientMessage(Component.translatable("message.epochsmith.lathe.unknown"), true);
-            } else if (lathe.place(stack)) {
-                level.playSound(null, pos, SoundEvents.CHAIN_PLACE, SoundSource.BLOCKS, 0.7F, 1.2F);
-                player.displayClientMessage(lathe.describe(), true);
-            } else {
-                player.displayClientMessage(Component.translatable("message.epochsmith.lathe.busy"), true);
-            }
-        }
-        return ItemInteractionResult.sidedSuccess(level.isClientSide());
+        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
 
-    @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        if (!level.isClientSide() && level.getBlockEntity(pos) instanceof LatheBlockEntity lathe) {
-            if (player.isShiftKeyDown() && !lathe.getWorkpiece().isEmpty()) {
-                ItemStack taken = lathe.takeAll();
-                if (!player.getInventory().add(taken)) {
-                    player.drop(taken, false);
-                }
-            } else {
-                player.displayClientMessage(lathe.describe(), true);
-            }
-        }
-        return InteractionResult.sidedSuccess(level.isClientSide());
-    }
-
+    /** Breaking the machine drops everything inside. */
     @Override
     protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
-        if (!state.is(newState.getBlock()) && level.getBlockEntity(pos) instanceof LatheBlockEntity lathe) {
-            Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), lathe.takeAll());
+        if (!state.is(newState.getBlock()) && level.getBlockEntity(pos) instanceof MachineGui gui) {
+            MachineMenus.dropAll(level, pos, gui.getMenuItems());
         }
         super.onRemove(state, level, pos, newState, movedByPiston);
     }

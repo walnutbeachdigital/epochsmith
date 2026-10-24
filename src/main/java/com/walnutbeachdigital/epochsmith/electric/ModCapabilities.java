@@ -25,6 +25,27 @@ public final class ModCapabilities {
                 (panel, side) -> panel.getEnergy());
         event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, ModBlockEntities.FUSION_REACTOR.get(),
                 (reactor, side) -> reactor.getEnergy());
+        // Machines with GUIs: hoppers fill their input and fuel slots and empty their output slots
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ModBlockEntities.PIT_KILN.get(),
+                (kiln, side) -> kiln.getMenuItems().automation());
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ModBlockEntities.BLOOMERY.get(),
+                (bloomery, side) -> bloomery.getMenuItems().automation());
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ModBlockEntities.MILLSTONE.get(),
+                (mill, side) -> mill.getMenuItems().automation());
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ModBlockEntities.FORGE.get(),
+                (forge, side) -> forge.getMenuItems().automation());
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ModBlockEntities.COKE_OVEN.get(),
+                (oven, side) -> oven.getMenuItems().automation());
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ModBlockEntities.LATHE.get(),
+                (lathe, side) -> lathe.getMenuItems().automation());
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ModBlockEntities.BLAST_FURNACE.get(),
+                (furnace, side) -> furnace.getMenuItems().automation());
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ModBlockEntities.ARC_FURNACE.get(),
+                (furnace, side) -> furnace.getMenuItems().automation());
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ModBlockEntities.FABRICATOR.get(),
+                (fab, side) -> fab.getMenuItems().automation());
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ModBlockEntities.NANOFABRICATOR.get(),
+                (fab, side) -> fab.getMenuItems().automation());
         // Hoppers and item pipes can feed (and empty) the sorting cabinet
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ModBlockEntities.SORTING_CABINET.get(),
                 (cabinet, side) -> cabinet.getHandler());

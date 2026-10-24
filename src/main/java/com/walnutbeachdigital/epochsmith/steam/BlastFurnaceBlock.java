@@ -1,5 +1,7 @@
 package com.walnutbeachdigital.epochsmith.steam;
 
+import com.walnutbeachdigital.epochsmith.menu.MachineMenus;
+import com.walnutbeachdigital.epochsmith.menu.MachineGui;
 import javax.annotation.Nullable;
 
 import com.mojang.serialization.MapCodec;
@@ -85,55 +87,23 @@ public class BlastFurnaceBlock extends BaseEntityBlock implements SteamConnectab
                 : createTickerHelper(type, ModBlockEntities.BLAST_FURNACE.get(), BlastFurnaceBlockEntity::serverTick);
     }
 
+    /** Right-click opens the machine's GUI (whatever you're holding). */
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        return MachineMenus.open(state, level, pos, player, Era.INDUSTRIAL, "message.epochsmith.blast_furnace.unknown");
+    }
+
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
                                               Player player, InteractionHand hand, BlockHitResult hit) {
-        boolean coke = stack.is(ModItems.COKE.get());
-        if (!coke && !BlastFurnaceBlockEntity.canSmelt(stack)) {
-            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-        }
-        if (level.isClientSide() || !(level.getBlockEntity(pos) instanceof BlastFurnaceBlockEntity furnace)) {
-            return ItemInteractionResult.sidedSuccess(level.isClientSide());
-        }
-        if (!EraManager.hasReached(player, Era.INDUSTRIAL)) {
-            player.displayClientMessage(Component.translatable("message.epochsmith.blast_furnace.unknown"), true);
-        } else if (coke) {
-            int used = furnace.addCoke(stack.getCount());
-            if (used > 0) {
-                if (!player.getAbilities().instabuild) {
-                    stack.shrink(used);
-                }
-                level.playSound(null, pos, SoundEvents.FIRECHARGE_USE, SoundSource.BLOCKS, 0.5F, 1.0F);
-            }
-            player.displayClientMessage(furnace.describe(), true);
-        } else if (furnace.insert(stack)) {
-            level.playSound(null, pos, SoundEvents.CHAIN_PLACE, SoundSource.BLOCKS, 0.6F, 1.0F);
-            player.displayClientMessage(furnace.describe(), true);
-        } else {
-            player.displayClientMessage(Component.translatable("message.epochsmith.blast_furnace.busy"), true);
-        }
-        return ItemInteractionResult.sidedSuccess(level.isClientSide());
+        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
 
-    @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        if (!level.isClientSide() && level.getBlockEntity(pos) instanceof BlastFurnaceBlockEntity furnace) {
-            if (player.isShiftKeyDown()) {
-                ItemStack taken = furnace.takeInput();
-                if (!taken.isEmpty() && !player.getInventory().add(taken)) {
-                    player.drop(taken, false);
-                }
-            } else {
-                player.displayClientMessage(furnace.describe(), true);
-            }
-        }
-        return InteractionResult.sidedSuccess(level.isClientSide());
-    }
-
+    /** Breaking the machine drops everything inside. */
     @Override
     protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
-        if (!state.is(newState.getBlock()) && level.getBlockEntity(pos) instanceof BlastFurnaceBlockEntity furnace) {
-            Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), furnace.takeInput());
+        if (!state.is(newState.getBlock()) && level.getBlockEntity(pos) instanceof MachineGui gui) {
+            MachineMenus.dropAll(level, pos, gui.getMenuItems());
         }
         super.onRemove(state, level, pos, newState, movedByPiston);
     }

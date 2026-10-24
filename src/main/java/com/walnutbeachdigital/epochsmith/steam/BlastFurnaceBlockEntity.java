@@ -1,5 +1,8 @@
 package com.walnutbeachdigital.epochsmith.steam;
 
+import com.walnutbeachdigital.epochsmith.menu.MachineLayout;
+import com.walnutbeachdigital.epochsmith.menu.MachineItems;
+import com.walnutbeachdigital.epochsmith.menu.MachineGui;
 import com.walnutbeachdigital.epochsmith.block.StatusDescriber;
 import com.walnutbeachdigital.epochsmith.block.ModBlockEntities;
 import com.walnutbeachdigital.epochsmith.item.ModItems;
@@ -24,7 +27,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
  *  - Iron ingot: 1 crucible steel ingot (steel from ordinary iron, like the Bessemer process).
  * 2 seconds per item while it has steam; each item uses 1 heat, each coke adds 8.
  */
-public class BlastFurnaceBlockEntity extends BlockEntity implements StatusDescriber {
+public class BlastFurnaceBlockEntity extends BlockEntity implements StatusDescriber, MachineGui {
 
     public static final int WORK_PER_ITEM = 40;
     public static final int MAX_ITEMS = 16;
@@ -32,7 +35,16 @@ public class BlastFurnaceBlockEntity extends BlockEntity implements StatusDescri
     public static final int MAX_HEAT = 64;
     private static final int CHECK_INTERVAL = 10;
 
-    private ItemStack input = ItemStack.EMPTY;
+    private static final int INPUT = 0, FUEL = 1;
+
+    public static final MachineLayout LAYOUT = new MachineLayout(5)
+            .input(56, 17).fuel(56, 53).output(116, 35).arrow(79, 34, 0, 1)
+            .gaugeOf(30, 17, 2, MAX_HEAT, MachineLayout.HEAT, "gui.epochsmith.heat")
+            .status(8, 72 - 12, 3, "gui.epochsmith.steam_status");
+
+    private final MachineItems items = new MachineItems(this::setChanged,
+            (slot, stack) -> slot == INPUT ? canSmelt(stack) : stack.is(ModItems.COKE.get()),
+            MachineItems.Role.INPUT, MachineItems.Role.FUEL, MachineItems.Role.OUTPUT);
     private int heat = 0;
     private int progress = 0;
     private boolean steam = false;
@@ -64,41 +76,33 @@ public class BlastFurnaceBlockEntity extends BlockEntity implements StatusDescri
         return !resultFor(stack).isEmpty();
     }
 
-    public boolean insert(ItemStack stack) {
-        if (input.isEmpty()) {
-            input = stack.split(Math.min(stack.getCount(), MAX_ITEMS));
-            progress = 0;
-            setChanged();
-            return true;
-        }
-        if (ItemStack.isSameItemSameComponents(input, stack) && input.getCount() < MAX_ITEMS) {
-            int moved = Math.min(stack.getCount(), MAX_ITEMS - input.getCount());
-            input.grow(moved);
-            stack.shrink(moved);
-            setChanged();
-            return true;
-        }
-        return false;
+    private ItemStack input() {
+        return items.getStackInSlot(INPUT);
     }
 
-    /** Adds coke until full. Returns how many were used. */
-    public int addCoke(int count) {
-        int used = Math.min(count, (MAX_HEAT - heat) / HEAT_PER_COKE);
-        heat += used * HEAT_PER_COKE;
-        setChanged();
-        return used;
+    @Override
+    public MachineItems getMenuItems() {
+        return items;
     }
 
-    public ItemStack takeInput() {
-        ItemStack taken = input;
-        input = ItemStack.EMPTY;
-        progress = 0;
-        setChanged();
-        return taken;
+    @Override
+    public MachineLayout getLayout() {
+        return LAYOUT;
+    }
+
+    @Override
+    public int getMenuValue(int index) {
+        return switch (index) {
+            case 0 -> progress;
+            case 1 -> WORK_PER_ITEM;
+            case 2 -> heat;
+            case 3 -> steam ? 1 : 0;
+            default -> 0;
+        };
     }
 
     public Component describe() {
-        return Component.translatable("message.epochsmith.blast_furnace.status", input.getCount(), heat,
+        return Component.translatable("message.epochsmith.blast_furnace.status", input().getCount(), heat,
                 Component.translatable(steam ? "message.epochsmith.blast_furnace.steam_on" : "message.epochsmith.blast_furnace.steam_off"));
     }
 
@@ -106,7 +110,14 @@ public class BlastFurnaceBlockEntity extends BlockEntity implements StatusDescri
         if (level.getGameTime() % CHECK_INTERVAL == 0) {
             furnace.steam = SteamNetwork.explore(level, pos).workingBoilers() > 0;
         }
-        boolean working = furnace.steam && furnace.heat > 0 && !furnace.input.isEmpty();
+        // Burn coke from the fuel slot whenever there's room for its heat
+        if (furnace.heat + HEAT_PER_COKE <= MAX_HEAT && !furnace.items.getStackInSlot(FUEL).isEmpty()) {
+            furnace.items.extractItem(FUEL, 1, false);
+            furnace.heat += HEAT_PER_COKE;
+            furnace.setChanged();
+        }
+        ItemStack input = furnace.input();
+        boolean working = furnace.steam && furnace.heat > 0 && !input.isEmpty() && furnace.items.fitsOutput(resultFor(input));
         if (state.getValue(BlockStateProperties.LIT) != working) {
             level.setBlock(pos, state.setValue(BlockStateProperties.LIT, working), Block.UPDATE_ALL);
         }
@@ -117,8 +128,8 @@ public class BlastFurnaceBlockEntity extends BlockEntity implements StatusDescri
         if (furnace.progress >= WORK_PER_ITEM) {
             furnace.progress = 0;
             furnace.heat--;
-            Block.popResource(level, pos.above(), resultFor(furnace.input));
-            furnace.input.shrink(1);
+            furnace.items.addOutput(resultFor(input));
+            furnace.items.extractItem(INPUT, 1, false);
             level.playSound(null, pos, SoundEvents.LAVA_EXTINGUISH, SoundSource.BLOCKS, 0.4F, 1.2F);
         }
         furnace.setChanged();
@@ -127,7 +138,7 @@ public class BlastFurnaceBlockEntity extends BlockEntity implements StatusDescri
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
-        tag.put("Input", input.saveOptional(registries));
+        tag.put("Items", items.serializeNBT(registries));
         tag.putInt("Heat", heat);
         tag.putInt("Progress", progress);
     }
@@ -135,7 +146,7 @@ public class BlastFurnaceBlockEntity extends BlockEntity implements StatusDescri
     @Override
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
-        input = ItemStack.parseOptional(registries, tag.getCompound("Input"));
+        items.deserializeNBT(registries, tag.getCompound("Items"));
         heat = tag.getInt("Heat");
         progress = tag.getInt("Progress");
     }

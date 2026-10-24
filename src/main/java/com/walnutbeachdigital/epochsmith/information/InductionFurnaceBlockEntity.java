@@ -1,5 +1,10 @@
 package com.walnutbeachdigital.epochsmith.information;
 
+import net.neoforged.neoforge.items.IItemHandlerModifiable;
+import net.neoforged.neoforge.items.wrapper.CombinedInvWrapper;
+import com.walnutbeachdigital.epochsmith.menu.MachineLayout;
+import com.walnutbeachdigital.epochsmith.menu.MachineItems;
+import com.walnutbeachdigital.epochsmith.menu.MachineGui;
 import com.walnutbeachdigital.epochsmith.block.StatusDescriber;
 import java.util.List;
 
@@ -30,7 +35,7 @@ import net.neoforged.neoforge.items.ItemStackHandler;
  *
  * Fully automatable: hoppers and pipes put items in from any side and pull results out.
  */
-public class InductionFurnaceBlockEntity extends BlockEntity implements StatusDescriber {
+public class InductionFurnaceBlockEntity extends BlockEntity implements StatusDescriber, MachineGui {
 
     public static final int SLOTS = 4;
     public static final int ENERGY_PER_ITEM = 160;
@@ -87,12 +92,41 @@ public class InductionFurnaceBlockEntity extends BlockEntity implements StatusDe
         }
     };
 
+    public static final MachineLayout LAYOUT = new MachineLayout(3)
+            .input(38, 26).input(56, 26).input(38, 44).input(56, 44)
+            .output(110, 26).output(128, 26).output(110, 44).output(128, 44)
+            .arrow(79, 35, 0, 1)
+            .gaugeOf(156, 17, 2, ENERGY_PER_TICK, MachineLayout.ENERGY, "gui.epochsmith.power");
+
+    /** What the GUI shows: the four inputs, then the four outputs. */
+    private final IItemHandlerModifiable menuItems = new CombinedInvWrapper(inputs, outputs);
+    private int lastDrawn = 0;
     private int progress = 0;
     private int nextSlot = 0;
     private List<BlockPos> sources = List.of();
 
     public InductionFurnaceBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.INDUCTION_FURNACE.get(), pos, state);
+    }
+
+    @Override
+    public IItemHandlerModifiable getMenuItems() {
+        return menuItems;
+    }
+
+    @Override
+    public MachineLayout getLayout() {
+        return LAYOUT;
+    }
+
+    @Override
+    public int getMenuValue(int index) {
+        return switch (index) {
+            case 0 -> progress;
+            case 1 -> ENERGY_PER_ITEM;
+            case 2 -> lastDrawn;
+            default -> 0;
+        };
     }
 
     public IItemHandler getAutomation() {
@@ -179,8 +213,10 @@ public class InductionFurnaceBlockEntity extends BlockEntity implements StatusDe
             furnace.sources = ElectricNetwork.findSources(level, pos);
         }
         boolean working = false;
+        furnace.lastDrawn = 0;
         if (furnace.findWork(level) >= 0) {
             int drawn = ElectricNetwork.draw(level, furnace.sources, ENERGY_PER_TICK, false);
+            furnace.lastDrawn = drawn;
             working = drawn > 0;
             furnace.progress += drawn;
             int slot;

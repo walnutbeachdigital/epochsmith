@@ -1,5 +1,7 @@
 package com.walnutbeachdigital.epochsmith.block;
 
+import com.walnutbeachdigital.epochsmith.menu.MachineMenus;
+import com.walnutbeachdigital.epochsmith.menu.MachineGui;
 import javax.annotation.Nullable;
 
 import com.mojang.serialization.MapCodec;
@@ -52,10 +54,7 @@ public class BloomeryBlock extends BaseEntityBlock {
     public static final MapCodec<BloomeryBlock> CODEC = simpleCodec(BloomeryBlock::new);
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
-    public static final int CHARCOAL_PER_FIRING = 2;
 
-    private static final TagKey<Item> TIN_INGOTS =
-            TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("c", "ingots/tin"));
 
     public BloomeryBlock(Properties properties) {
         super(properties);
@@ -96,102 +95,27 @@ public class BloomeryBlock extends BaseEntityBlock {
                 : createTickerHelper(type, ModBlockEntities.BLOOMERY.get(), BloomeryBlockEntity::serverTick);
     }
 
-    // ---- Using the bloomery ----
 
-    private static boolean isRelevant(ItemStack stack) {
-        return stack.is(Items.COPPER_INGOT) || stack.is(TIN_INGOTS) || stack.is(Items.RAW_IRON)
-                || stack.is(Items.CHARCOAL) || stack.is(Items.COAL);
+
+
+
+    /** Right-click opens the machine's GUI (whatever you're holding). */
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        return MachineMenus.open(state, level, pos, player, Era.BRONZE_IRON, "message.epochsmith.bloomery.unknown");
     }
 
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
                                               Player player, InteractionHand hand, BlockHitResult hit) {
-        if (!isRelevant(stack)) {
-            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-        }
-        if (level.isClientSide() || !(level.getBlockEntity(pos) instanceof BloomeryBlockEntity bloomery)) {
-            return ItemInteractionResult.sidedSuccess(level.isClientSide());
-        }
-
-        Component message;
-        if (!EraManager.hasReached(player, Era.BRONZE_IRON)) {
-            message = Component.translatable("message.epochsmith.bloomery.unknown");
-        } else if (state.getValue(LIT)) {
-            message = Component.translatable("message.epochsmith.bloomery.burning");
-        } else if (stack.is(Items.COAL)) {
-            message = Component.translatable("message.epochsmith.bloomery.not_coal");
-        } else if (stack.is(Items.CHARCOAL)) {
-            message = tryLight(stack, state, level, pos, player, bloomery);
-        } else if (bloomery.hasOutput()) {
-            message = Component.translatable("message.epochsmith.bloomery.take_output");
-        } else {
-            message = tryLoad(stack, level, pos, player, bloomery);
-        }
-        player.displayClientMessage(message, true);
-        return ItemInteractionResult.sidedSuccess(level.isClientSide());
+        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
 
-    private static Component tryLight(ItemStack stack, BlockState state, Level level, BlockPos pos,
-                                      Player player, BloomeryBlockEntity bloomery) {
-        if (!bloomery.hasValidCharge()) {
-            return Component.translatable("message.epochsmith.bloomery.no_charge");
-        }
-        if (stack.getCount() < CHARCOAL_PER_FIRING) {
-            return Component.translatable("message.epochsmith.bloomery.more_charcoal", CHARCOAL_PER_FIRING);
-        }
-        if (!player.getAbilities().instabuild) {
-            stack.shrink(CHARCOAL_PER_FIRING);
-        }
-        bloomery.ignite(player);
-        level.setBlock(pos, state.setValue(LIT, true), Block.UPDATE_ALL);
-        level.playSound(null, pos, SoundEvents.FIRECHARGE_USE, SoundSource.BLOCKS, 0.9F, 0.8F);
-        return Component.translatable("message.epochsmith.bloomery.lit");
-    }
-
-    private static Component tryLoad(ItemStack stack, Level level, BlockPos pos, Player player, BloomeryBlockEntity bloomery) {
-        int moved;
-        if (stack.is(Items.RAW_IRON)) {
-            if (bloomery.hasCopperOrTin()) {
-                return Component.translatable("message.epochsmith.bloomery.no_mixing");
-            }
-            moved = bloomery.addRawIron(stack.getCount());
-        } else {
-            if (bloomery.hasIron()) {
-                return Component.translatable("message.epochsmith.bloomery.no_mixing");
-            }
-            moved = stack.is(Items.COPPER_INGOT) ? bloomery.addCopper(stack.getCount()) : bloomery.addTin(stack.getCount());
-        }
-        if (moved == 0) {
-            return Component.translatable("message.epochsmith.bloomery.full");
-        }
-        if (!player.getAbilities().instabuild) {
-            stack.shrink(moved);
-        }
-        level.playSound(null, pos, SoundEvents.CHAIN_PLACE, SoundSource.BLOCKS, 0.7F, 1.0F);
-        return bloomery.describe();
-    }
-
-    /** Empty hand: take everything out (only while it isn't burning). */
-    @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        if (level.isClientSide()) {
-            return InteractionResult.SUCCESS;
-        }
-        if (state.getValue(LIT)) {
-            player.displayClientMessage(Component.translatable("message.epochsmith.bloomery.burning"), true);
-        } else if (level.getBlockEntity(pos) instanceof BloomeryBlockEntity bloomery) {
-            bloomery.emptyInto(player);
-            level.playSound(null, pos, SoundEvents.ITEM_PICKUP, SoundSource.PLAYERS, 0.4F, 1.0F);
-        }
-        return InteractionResult.CONSUME;
-    }
-
+    /** Breaking the machine drops everything inside. */
     @Override
     protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
-        if (!state.is(newState.getBlock()) && level.getBlockEntity(pos) instanceof BloomeryBlockEntity bloomery) {
-            for (ItemStack stack : bloomery.contentsForDrop()) {
-                Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), stack);
-            }
+        if (!state.is(newState.getBlock()) && level.getBlockEntity(pos) instanceof MachineGui gui) {
+            MachineMenus.dropAll(level, pos, gui.getMenuItems());
         }
         super.onRemove(state, level, pos, newState, movedByPiston);
     }

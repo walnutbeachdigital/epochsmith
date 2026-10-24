@@ -1,5 +1,8 @@
 package com.walnutbeachdigital.epochsmith.electric;
 
+import com.walnutbeachdigital.epochsmith.menu.MachineLayout;
+import com.walnutbeachdigital.epochsmith.menu.MachineItems;
+import com.walnutbeachdigital.epochsmith.menu.MachineGui;
 import com.walnutbeachdigital.epochsmith.block.StatusDescriber;
 import java.util.List;
 import java.util.Optional;
@@ -32,14 +35,21 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
  *  - Iron ingot: crucible steel.
  *  - Anything else a vanilla furnace can smelt: the normal result.
  */
-public class ArcFurnaceBlockEntity extends BlockEntity implements StatusDescriber {
+public class ArcFurnaceBlockEntity extends BlockEntity implements StatusDescriber, MachineGui {
 
     public static final int ENERGY_PER_ITEM = 320;
     public static final int ENERGY_PER_TICK = 32;
     public static final int MAX_ITEMS = 64;
     private static final int REFRESH_INTERVAL = 20;
 
-    private ItemStack input = ItemStack.EMPTY;
+    public static final MachineLayout LAYOUT = new MachineLayout(3)
+            .input(56, 35).output(116, 35).arrow(79, 34, 0, 1)
+            .gaugeOf(152, 17, 2, ENERGY_PER_TICK, MachineLayout.ENERGY, "gui.epochsmith.power");
+
+    private final MachineItems items = new MachineItems(this::setChanged,
+            (slot, stack) -> level != null && !resultFor(level, stack).isEmpty(),
+            MachineItems.Role.INPUT, MachineItems.Role.OUTPUT);
+    private int lastDrawn = 0;
     private int progress = 0;
     private List<BlockPos> sources = List.of();
 
@@ -63,33 +73,30 @@ public class ArcFurnaceBlockEntity extends BlockEntity implements StatusDescribe
         return recipe.map(holder -> holder.value().getResultItem(level.registryAccess()).copy()).orElse(ItemStack.EMPTY);
     }
 
-    public boolean insert(ItemStack stack) {
-        if (input.isEmpty()) {
-            input = stack.split(Math.min(stack.getCount(), MAX_ITEMS));
-            progress = 0;
-            setChanged();
-            return true;
-        }
-        if (ItemStack.isSameItemSameComponents(input, stack) && input.getCount() < MAX_ITEMS) {
-            int moved = Math.min(stack.getCount(), MAX_ITEMS - input.getCount());
-            input.grow(moved);
-            stack.shrink(moved);
-            setChanged();
-            return true;
-        }
-        return false;
+    // ---- GUI ----
+
+    @Override
+    public MachineItems getMenuItems() {
+        return items;
     }
 
-    public ItemStack takeInput() {
-        ItemStack taken = input;
-        input = ItemStack.EMPTY;
-        progress = 0;
-        setChanged();
-        return taken;
+    @Override
+    public MachineLayout getLayout() {
+        return LAYOUT;
+    }
+
+    @Override
+    public int getMenuValue(int index) {
+        return switch (index) {
+            case 0 -> progress;
+            case 1 -> ENERGY_PER_ITEM;
+            case 2 -> lastDrawn;
+            default -> 0;
+        };
     }
 
     public Component describe() {
-        return Component.translatable("message.epochsmith.arc_furnace.status", input.getCount(),
+        return Component.translatable("message.epochsmith.arc_furnace.status", items.getStackInSlot(0).getCount(),
                 getBlockState().getValue(BlockStateProperties.LIT)
                         ? Component.translatable("message.epochsmith.arc_furnace.powered")
                         : Component.translatable("message.epochsmith.arc_furnace.unpowered"));
@@ -100,17 +107,18 @@ public class ArcFurnaceBlockEntity extends BlockEntity implements StatusDescribe
             furnace.sources = ElectricNetwork.findSources(level, pos);
         }
         boolean working = false;
-        if (!furnace.input.isEmpty()) {
+        ItemStack input = furnace.items.getStackInSlot(0);
+        furnace.lastDrawn = 0;
+        if (!input.isEmpty() && furnace.items.fitsOutput(resultFor(level, input))) {
             int drawn = ElectricNetwork.draw(level, furnace.sources, ENERGY_PER_TICK, false);
+            furnace.lastDrawn = drawn;
             working = drawn > 0;
             furnace.progress += drawn;
             if (furnace.progress >= ENERGY_PER_ITEM) {
                 furnace.progress -= ENERGY_PER_ITEM;
-                ItemStack result = resultFor(level, furnace.input);
-                furnace.input.shrink(1);
-                if (!result.isEmpty()) {
-                    Block.popResource(level, pos.above(), result);
-                }
+                ItemStack result = resultFor(level, input);
+                furnace.items.extractItem(0, 1, false);
+                furnace.items.addOutput(result);
                 if (level.getGameTime() % 4 == 0) {
                     level.playSound(null, pos, SoundEvents.BEACON_AMBIENT, SoundSource.BLOCKS, 0.3F, 1.8F);
                 }
@@ -125,14 +133,14 @@ public class ArcFurnaceBlockEntity extends BlockEntity implements StatusDescribe
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
-        tag.put("Input", input.saveOptional(registries));
+        tag.put("Items", items.serializeNBT(registries));
         tag.putInt("Progress", progress);
     }
 
     @Override
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
-        input = ItemStack.parseOptional(registries, tag.getCompound("Input"));
+        items.deserializeNBT(registries, tag.getCompound("Items"));
         progress = tag.getInt("Progress");
     }
 }

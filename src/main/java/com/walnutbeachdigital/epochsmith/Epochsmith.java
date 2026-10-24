@@ -195,6 +195,7 @@ public class Epochsmith {
         ModBlocks.init();
         BLOCKS.register(modEventBus);
         ModBlockEntities.BLOCK_ENTITIES.register(modEventBus);
+        com.walnutbeachdigital.epochsmith.menu.ModMenus.MENUS.register(modEventBus);
         // Load Epochsmith's item list, then register all items
         ModItems.init();
         ITEMS.register(modEventBus);

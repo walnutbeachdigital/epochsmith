@@ -1,5 +1,10 @@
 package com.walnutbeachdigital.epochsmith.future;
 
+import net.neoforged.neoforge.items.IItemHandlerModifiable;
+import net.neoforged.neoforge.items.wrapper.CombinedInvWrapper;
+import com.walnutbeachdigital.epochsmith.menu.MachineLayout;
+import com.walnutbeachdigital.epochsmith.menu.MachineItems;
+import com.walnutbeachdigital.epochsmith.menu.MachineGui;
 import com.walnutbeachdigital.epochsmith.block.StatusDescriber;
 import java.util.List;
 import java.util.Optional;
@@ -35,7 +40,7 @@ import net.neoforged.neoforge.items.ItemStackHandler;
  *
  * Fully automatable: hoppers and pipes put in items and plasma cells from any side and pull results out.
  */
-public class PlasmaSmelterBlockEntity extends BlockEntity implements StatusDescriber {
+public class PlasmaSmelterBlockEntity extends BlockEntity implements StatusDescriber, MachineGui {
 
     public static final int SLOTS = 4;
     public static final int SMELTS_PER_CELL = 512;
@@ -112,11 +117,40 @@ public class PlasmaSmelterBlockEntity extends BlockEntity implements StatusDescr
     };
 
     /** Smelts left from the plasma cell currently burning. */
+    public static final MachineLayout LAYOUT = new MachineLayout(3)
+            .input(34, 17).input(52, 17).input(34, 35).input(52, 35)
+            .fuel(8, 53)
+            .output(110, 26).output(128, 26).output(110, 44).output(128, 44)
+            .flame(9, 35, 0, 1).arrow(79, 35, 2, 1);
+
+    /** What the GUI shows: four inputs, the plasma cell slot, then four outputs. */
+    private final IItemHandlerModifiable menuItems = new CombinedInvWrapper(inputs, fuel, outputs);
+    private boolean working = false;
     private int plasma = 0;
     private int nextSlot = 0;
 
     public PlasmaSmelterBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.PLASMA_SMELTER.get(), pos, state);
+    }
+
+    @Override
+    public IItemHandlerModifiable getMenuItems() {
+        return menuItems;
+    }
+
+    @Override
+    public MachineLayout getLayout() {
+        return LAYOUT;
+    }
+
+    @Override
+    public int getMenuValue(int index) {
+        return switch (index) {
+            case 0 -> plasma;
+            case 1 -> SMELTS_PER_CELL;
+            case 2 -> working ? 1 : 0;
+            default -> 0;
+        };
     }
 
     public IItemHandler getAutomation() {
@@ -245,6 +279,7 @@ public class PlasmaSmelterBlockEntity extends BlockEntity implements StatusDescr
                 level.playSound(null, pos, SoundEvents.FIRECHARGE_USE, SoundSource.BLOCKS, 0.3F, 1.6F);
             }
         }
+        smelter.working = working;
         if (state.getValue(BlockStateProperties.LIT) != working) {
             level.setBlock(pos, state.setValue(BlockStateProperties.LIT, working), Block.UPDATE_ALL);
         }

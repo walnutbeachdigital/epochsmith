@@ -1,5 +1,11 @@
 package com.walnutbeachdigital.epochsmith.information;
 
+import net.minecraft.world.entity.player.Player;
+import net.neoforged.neoforge.items.IItemHandlerModifiable;
+import net.neoforged.neoforge.items.wrapper.CombinedInvWrapper;
+import com.walnutbeachdigital.epochsmith.menu.MachineLayout;
+import com.walnutbeachdigital.epochsmith.menu.MachineItems;
+import com.walnutbeachdigital.epochsmith.menu.MachineGui;
 import com.walnutbeachdigital.epochsmith.block.StatusDescriber;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +44,7 @@ import net.neoforged.neoforge.items.ItemStackHandler;
  * then feed it ingredients (by hand, hopper or pipe). Each craft costs 320 energy,
  * at up to 64 energy per tick, so about four crafts a second on full power.
  */
-public class AssemblerBlockEntity extends BlockEntity implements WorkpieceHolder, StatusDescriber {
+public class AssemblerBlockEntity extends BlockEntity implements WorkpieceHolder, StatusDescriber, MachineGui {
 
     public static final int SLOTS = 9;
     public static final int ENERGY_PER_CRAFT = 320;
@@ -102,11 +108,85 @@ public class AssemblerBlockEntity extends BlockEntity implements WorkpieceHolder
         }
     };
 
+    /** The item to make: put one in this slot to program the assembler (it isn't used up). */
+    private final ItemStackHandler pattern = new ItemStackHandler(1) {
+        @Override
+        public int getSlotLimit(int slot) {
+            return 1;
+        }
+
+        @Override
+        protected void onContentsChanged(int slot) {
+            setChanged();
+        }
+    };
+    private ItemStack lastPattern = ItemStack.EMPTY;
+
+    public static final int NEXT_RECIPE_BUTTON = 0;
+    public static final MachineLayout LAYOUT = new MachineLayout(3)
+            .input(8, 17).input(26, 17).input(44, 17)
+            .input(8, 35).input(26, 35).input(44, 35)
+            .input(8, 53).input(26, 53).input(44, 53)
+            .pattern(80, 16)
+            .output(116, 17).output(134, 17).output(152, 17)
+            .output(116, 35).output(134, 35).output(152, 35)
+            .output(116, 53).output(134, 53).output(152, 53)
+            .arrow(77, 36, 0, 1)
+            .button(66, 57, 46, 13, NEXT_RECIPE_BUTTON, "gui.epochsmith.next_recipe");
+
+    /** What the GUI shows: nine ingredient slots, the pattern slot, then nine output slots. */
+    private final IItemHandlerModifiable menuItems = new CombinedInvWrapper(ingredients, pattern, outputs);
+    private int lastDrawn = 0;
     private int progress = 0;
     private List<BlockPos> sources = List.of();
 
     public AssemblerBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.ASSEMBLER.get(), pos, state);
+    }
+
+    @Override
+    public IItemHandlerModifiable getMenuItems() {
+        return menuItems;
+    }
+
+    @Override
+    public MachineLayout getLayout() {
+        return LAYOUT;
+    }
+
+    @Override
+    public int getMenuValue(int index) {
+        return switch (index) {
+            case 0 -> progress;
+            case 1 -> ENERGY_PER_CRAFT;
+            case 2 -> lastDrawn;
+            default -> 0;
+        };
+    }
+
+    /** "Next recipe": switches to the pattern item's next crafting recipe, if it has more than one. */
+    @Override
+    public boolean onMenuButton(Player player, int id) {
+        ItemStack wanted = pattern.getStackInSlot(0);
+        if (id == NEXT_RECIPE_BUTTON && !wanted.isEmpty()) {
+            player.displayClientMessage(program(wanted), true);
+            return true;
+        }
+        return false;
+    }
+
+    /** Follows the pattern slot: a new item programs its recipe, an empty slot clears it. */
+    private void followPattern() {
+        ItemStack wanted = pattern.getStackInSlot(0);
+        if (ItemStack.isSameItemSameComponents(wanted, lastPattern)) {
+            return;
+        }
+        lastPattern = wanted.copy();
+        if (wanted.isEmpty()) {
+            setRecipe(null);
+        } else {
+            program(wanted);
+        }
     }
 
     public IItemHandler getAutomation() {
@@ -364,10 +444,13 @@ public class AssemblerBlockEntity extends BlockEntity implements WorkpieceHolder
         if (level.getGameTime() % REFRESH_INTERVAL == 0) {
             assembler.sources = ElectricNetwork.findSources(level, pos);
         }
+        assembler.followPattern();
         boolean working = false;
+        assembler.lastDrawn = 0;
         int[] use = assembler.isProgrammed() ? assembler.findIngredients() : null;
         if (use != null && assembler.fits(assembler.resultsFor(use))) {
             int drawn = ElectricNetwork.draw(level, assembler.sources, ENERGY_PER_TICK, false);
+            assembler.lastDrawn = drawn;
             working = drawn > 0;
             assembler.progress += drawn;
             if (assembler.progress >= ENERGY_PER_CRAFT) {
@@ -409,6 +492,7 @@ public class AssemblerBlockEntity extends BlockEntity implements WorkpieceHolder
         tag.put("Target", target.saveOptional(registries));
         tag.put("Ingredients", ingredients.serializeNBT(registries));
         tag.put("Outputs", outputs.serializeNBT(registries));
+        tag.put("Pattern", pattern.serializeNBT(registries));
         tag.putInt("Progress", progress);
     }
 
@@ -420,6 +504,10 @@ public class AssemblerBlockEntity extends BlockEntity implements WorkpieceHolder
         target = ItemStack.parseOptional(registries, tag.getCompound("Target"));
         ingredients.deserializeNBT(registries, tag.getCompound("Ingredients"));
         outputs.deserializeNBT(registries, tag.getCompound("Outputs"));
+        if (tag.contains("Pattern")) {
+            pattern.deserializeNBT(registries, tag.getCompound("Pattern"));
+            lastPattern = pattern.getStackInSlot(0).copy();
+        }
         progress = tag.getInt("Progress");
     }
 

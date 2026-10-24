@@ -1,5 +1,7 @@
 package com.walnutbeachdigital.epochsmith.block;
 
+import com.walnutbeachdigital.epochsmith.menu.MachineMenus;
+import com.walnutbeachdigital.epochsmith.menu.MachineGui;
 import javax.annotation.Nullable;
 
 import com.mojang.serialization.MapCodec;
@@ -84,48 +86,23 @@ public class MillstoneBlock extends BaseEntityBlock {
                 : createTickerHelper(type, ModBlockEntities.MILLSTONE.get(), MillstoneBlockEntity::serverTick);
     }
 
+    /** Right-click opens the machine's GUI (whatever you're holding). */
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        return MachineMenus.open(state, level, pos, player, Era.MECHANICAL, "message.epochsmith.millstone.unknown");
+    }
+
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
                                               Player player, InteractionHand hand, BlockHitResult hit) {
-        if (!MillstoneBlockEntity.canGrind(stack)) {
-            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-        }
-        if (!level.isClientSide() && level.getBlockEntity(pos) instanceof MillstoneBlockEntity mill) {
-            if (!EraManager.hasReached(player, Era.MECHANICAL)) {
-                player.displayClientMessage(Component.translatable("message.epochsmith.millstone.unknown"), true);
-            } else if (mill.insert(stack)) {
-                level.playSound(null, pos, SoundEvents.GRAVEL_PLACE, SoundSource.BLOCKS, 0.6F, 1.0F);
-                player.displayClientMessage(mill.getForce() >= MillstoneBlockEntity.MIN_FORCE
-                        ? mill.describe()
-                        : Component.translatable("message.epochsmith.millstone.no_power"), true);
-            } else {
-                player.displayClientMessage(Component.translatable("message.epochsmith.millstone.busy"), true);
-            }
-        }
-        return ItemInteractionResult.sidedSuccess(level.isClientSide());
+        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
 
-    @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        if (!level.isClientSide() && level.getBlockEntity(pos) instanceof MillstoneBlockEntity mill) {
-            if (player.isShiftKeyDown() || mill.getInput().isEmpty()) {
-                player.displayClientMessage(mill.getForce() >= MillstoneBlockEntity.MIN_FORCE
-                        ? mill.describe()
-                        : Component.translatable("message.epochsmith.millstone.no_power"), true);
-            } else {
-                ItemStack taken = mill.takeAll();
-                if (!player.getInventory().add(taken)) {
-                    player.drop(taken, false);
-                }
-            }
-        }
-        return InteractionResult.sidedSuccess(level.isClientSide());
-    }
-
+    /** Breaking the machine drops everything inside. */
     @Override
     protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
-        if (!state.is(newState.getBlock()) && level.getBlockEntity(pos) instanceof MillstoneBlockEntity mill) {
-            Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), mill.takeAll());
+        if (!state.is(newState.getBlock()) && level.getBlockEntity(pos) instanceof MachineGui gui) {
+            MachineMenus.dropAll(level, pos, gui.getMenuItems());
         }
         super.onRemove(state, level, pos, newState, movedByPiston);
     }

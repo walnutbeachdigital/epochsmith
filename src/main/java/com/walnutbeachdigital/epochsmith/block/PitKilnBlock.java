@@ -1,5 +1,7 @@
 package com.walnutbeachdigital.epochsmith.block;
 
+import com.walnutbeachdigital.epochsmith.menu.MachineMenus;
+import com.walnutbeachdigital.epochsmith.menu.MachineGui;
 import javax.annotation.Nullable;
 
 import com.mojang.serialization.MapCodec;
@@ -47,7 +49,6 @@ public class PitKilnBlock extends BaseEntityBlock {
     public static final MapCodec<PitKilnBlock> CODEC = simpleCodec(PitKilnBlock::new);
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
     private static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 8, 16);
-    private static final int STICKS_PER_FIRING = 4;
 
     public PitKilnBlock(Properties properties) {
         super(properties);
@@ -88,79 +89,25 @@ public class PitKilnBlock extends BaseEntityBlock {
                 : createTickerHelper(type, ModBlockEntities.PIT_KILN.get(), PitKilnBlockEntity::serverTick);
     }
 
-    // ---- Using the kiln ----
 
-    private static boolean isFuel(ItemStack stack) {
-        return stack.is(Items.COAL) || stack.is(Items.CHARCOAL)
-                || (stack.is(Items.STICK) && stack.getCount() >= STICKS_PER_FIRING);
+
+    /** Right-click opens the machine's GUI (whatever you're holding). */
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        return MachineMenus.open(state, level, pos, player, Era.PRIMITIVE, "message.epochsmith.kiln.unknown");
     }
 
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
                                               Player player, InteractionHand hand, BlockHitResult hit) {
-        boolean relevant = isFuel(stack) || stack.is(Items.STICK) || PitKilnBlockEntity.canFire(stack);
-        if (!relevant) {
-            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-        }
-        if (level.isClientSide() || !(level.getBlockEntity(pos) instanceof PitKilnBlockEntity kiln)) {
-            return ItemInteractionResult.sidedSuccess(level.isClientSide());
-        }
-
-        if (!EraManager.hasReached(player, Era.PRIMITIVE)) {
-            player.displayClientMessage(Component.translatable("message.epochsmith.kiln.unknown"), true);
-        } else if (state.getValue(LIT)) {
-            player.displayClientMessage(Component.translatable("message.epochsmith.kiln.burning"), true);
-        } else if (stack.is(Items.STICK) && !isFuel(stack)) {
-            player.displayClientMessage(Component.translatable("message.epochsmith.kiln.more_sticks", STICKS_PER_FIRING), true);
-        } else if (isFuel(stack)) {
-            if (!kiln.hasFirableContents()) {
-                player.displayClientMessage(Component.translatable("message.epochsmith.kiln.empty"), true);
-            } else {
-                if (!player.getAbilities().instabuild) {
-                    stack.shrink(stack.is(Items.STICK) ? STICKS_PER_FIRING : 1);
-                }
-                kiln.ignite(player);
-                level.setBlock(pos, state.setValue(LIT, true), Block.UPDATE_ALL);
-                level.playSound(null, pos, SoundEvents.FIRECHARGE_USE, SoundSource.BLOCKS, 0.7F, 1.0F);
-                player.displayClientMessage(Component.translatable("message.epochsmith.kiln.lit"), true);
-            }
-        } else {
-            // A firable item: clay or logs
-            if (kiln.insert(stack)) {
-                level.playSound(null, pos, SoundEvents.GRAVEL_PLACE, SoundSource.BLOCKS, 0.6F, 1.2F);
-            } else {
-                player.displayClientMessage(Component.translatable("message.epochsmith.kiln.full"), true);
-            }
-        }
-        return ItemInteractionResult.sidedSuccess(level.isClientSide());
+        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
 
-    /** Empty hand: take everything out (only while it isn't burning). */
-    @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        if (level.isClientSide()) {
-            return InteractionResult.SUCCESS;
-        }
-        if (state.getValue(LIT)) {
-            player.displayClientMessage(Component.translatable("message.epochsmith.kiln.burning"), true);
-            return InteractionResult.CONSUME;
-        }
-        if (level.getBlockEntity(pos) instanceof PitKilnBlockEntity kiln && !kiln.getContents().isEmpty()) {
-            ItemStack taken = kiln.takeAll();
-            if (!player.getInventory().add(taken)) {
-                player.drop(taken, false);
-            }
-            level.playSound(null, pos, SoundEvents.ITEM_PICKUP, SoundSource.PLAYERS, 0.4F, 1.0F);
-            return InteractionResult.CONSUME;
-        }
-        return InteractionResult.PASS;
-    }
-
-    /** Breaking the kiln drops whatever is inside. */
+    /** Breaking the machine drops everything inside. */
     @Override
     protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
-        if (!state.is(newState.getBlock()) && level.getBlockEntity(pos) instanceof PitKilnBlockEntity kiln) {
-            Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), kiln.takeAll());
+        if (!state.is(newState.getBlock()) && level.getBlockEntity(pos) instanceof MachineGui gui) {
+            MachineMenus.dropAll(level, pos, gui.getMenuItems());
         }
         super.onRemove(state, level, pos, newState, movedByPiston);
     }
