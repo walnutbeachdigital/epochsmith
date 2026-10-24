@@ -27,6 +27,7 @@
     "epochsmith:induction_furnace",
     "epochsmith:data_vault",
     "epochsmith:automated_assembler",
-    "epochsmith:nanofabricator"
+    "epochsmith:nanofabricator",
+    "epochsmith:fusion_reactor"
   ]
 }

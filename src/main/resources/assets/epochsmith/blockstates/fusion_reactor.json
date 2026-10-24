@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "lit=false": {
+      "model": "epochsmith:block/fusion_reactor"
+    },
+    "lit=true": {
+      "model": "epochsmith:block/fusion_reactor_on"
+    }
+  }
+}

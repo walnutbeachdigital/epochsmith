@@ -23,6 +23,8 @@ public final class ModCapabilities {
                 (battery, side) -> battery.getEnergy());
         event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, ModBlockEntities.SOLAR_PANEL.get(),
                 (panel, side) -> panel.getEnergy());
+        event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, ModBlockEntities.FUSION_REACTOR.get(),
+                (reactor, side) -> reactor.getEnergy());
         // Hoppers and item pipes can feed (and empty) the sorting cabinet
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ModBlockEntities.SORTING_CABINET.get(),
                 (cabinet, side) -> cabinet.getHandler());

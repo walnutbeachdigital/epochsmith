@@ -1,7 +1,24 @@
 {
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
-  "key": { "S": { "item": "epochsmith:steel_ingot" }, "R": { "item": "epochsmith:rivets" }, "P": { "item": "epochsmith:steam_piston" }, "G": { "item": "epochsmith:pressure_gauge" } },
-  "pattern": ["SRS", "S S", "S S"],
-  "result": { "count": 1, "id": "epochsmith:steam_leggings" }
+  "key": {
+    "S": {
+      "item": "epochsmith:steel_ingot"
+    },
+    "R": {
+      "item": "epochsmith:rivets"
+    },
+    "P": {
+      "item": "epochsmith:steam_piston"
+    }
+  },
+  "pattern": [
+    "SRS",
+    "P P",
+    "S S"
+  ],
+  "result": {
+    "count": 1,
+    "id": "epochsmith:steam_leggings"
+  }
 }

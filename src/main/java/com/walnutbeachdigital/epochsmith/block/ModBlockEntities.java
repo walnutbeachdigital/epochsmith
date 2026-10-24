@@ -1,6 +1,7 @@
 package com.walnutbeachdigital.epochsmith.block;
 
 import com.walnutbeachdigital.epochsmith.Epochsmith;
+import com.walnutbeachdigital.epochsmith.future.FusionReactorBlockEntity;
 import com.walnutbeachdigital.epochsmith.future.NanofabricatorBlockEntity;
 import com.walnutbeachdigital.epochsmith.information.AssemblerBlockEntity;
 import com.walnutbeachdigital.epochsmith.information.ComputerCoreBlockEntity;
@@ -151,6 +152,10 @@ public final class ModBlockEntities {
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<NanofabricatorBlockEntity>> NANOFABRICATOR =
             BLOCK_ENTITIES.register("nanofabricator",
                     () -> BlockEntityType.Builder.of(NanofabricatorBlockEntity::new, ModBlocks.NANOFABRICATOR.get()).build(null));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<FusionReactorBlockEntity>> FUSION_REACTOR =
+            BLOCK_ENTITIES.register("fusion_reactor",
+                    () -> BlockEntityType.Builder.of(FusionReactorBlockEntity::new, ModBlocks.FUSION_REACTOR.get()).build(null));
 
     private ModBlockEntities() {
     }

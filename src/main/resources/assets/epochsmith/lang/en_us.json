@@ -305,5 +305,14 @@
   "message.epochsmith.nanofabricator.unknown": "You don't know how to use a nanofabricator yet. Reach the Future era first.",
   "message.epochsmith.nanofabricator.busy": "Something else is in the nanofabricator. Sneak and right-click with an empty hand to take it out.",
   "message.epochsmith.nanofabricator.working": "Nanofabricator: building, %s left.",
-  "message.epochsmith.nanofabricator.idle": "Nanofabricator: %s loaded. No power: connect copper wire from a generator or battery."
+  "message.epochsmith.nanofabricator.idle": "Nanofabricator: %s loaded. No power: connect copper wire from a generator or battery.",
+  "block.epochsmith.fusion_reactor": "Fusion Reactor",
+  "message.epochsmith.fusion.unknown": "You don't know how to run a fusion reactor yet. Reach the Future era first.",
+  "message.epochsmith.fusion.full": "The reactor holds 16 plasma cells at most.",
+  "message.epochsmith.fusion.no_fuel": "Fusion Reactor: no fuel. Right-click with plasma cells.",
+  "message.epochsmith.fusion.igniting": "Fusion Reactor: igniting, %s%%. %s plasma cells loaded. Ignition needs 50,000 energy from the wires.",
+  "message.epochsmith.fusion.lit": "Fusion Reactor: making %s energy per tick. %s cells left, current cell %ss. Stored %s / %s.",
+  "message.epochsmith.fusion.finale": "Fusion Achieved",
+  "message.epochsmith.fusion.finale_sub": "From flint to the power of the stars",
+  "message.epochsmith.fusion.finale_chat": "You've built a working fusion reactor: the end goal of Epochsmith. From knapped flint to the power of the stars. Thank you for playing!"
 }

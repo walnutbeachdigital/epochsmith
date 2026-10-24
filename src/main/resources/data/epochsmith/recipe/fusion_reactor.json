@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "S": {
+      "item": "epochsmith:superconductor_coil"
+    },
+    "N": {
+      "item": "minecraft:nether_star"
+    },
+    "B": {
+      "item": "epochsmith:nanobots"
+    },
+    "C": {
+      "item": "epochsmith:computer_core"
+    }
+  },
+  "pattern": [
+    "BSB",
+    "SNS",
+    "BCB"
+  ],
+  "result": {
+    "count": 1,
+    "id": "epochsmith:fusion_reactor"
+  }
+}

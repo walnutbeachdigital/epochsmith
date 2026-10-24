@@ -114,3 +114,38 @@ write_png(f"{root}/block/nanofabricator_side.png", nanofab_side())
 write_png(f"{root}/block/nanofabricator_front.png", nanofab_front(False))
 write_png(f"{root}/block/nanofabricator_front_on.png", nanofab_front(True))
 print("future textures written")
+
+
+def reactor_side(lit):
+    """A ring of superconducting magnets around a viewport into the plasma."""
+    px = [[(60, 64, 78, 255) if (x + y) % 3 else (52, 56, 70, 255) for x in range(16)] for y in range(16)]
+    for i in range(16):
+        px[0][i] = px[i][0] = (120, 126, 144, 255)
+        px[15][i] = px[i][15] = (30, 32, 40, 255)
+    for y in range(16):
+        for x in range(16):
+            d = ((x - 7.5) ** 2 + (y - 7.5) ** 2) ** 0.5
+            if 5.0 <= d < 6.5:
+                px[y][x] = (70, 170, 240, 255) if (x + y) % 2 else (40, 110, 200, 255)
+            elif d < 5.0:
+                if lit:
+                    px[y][x] = (255, 240, 255, 255) if d < 2 else (240, 140, 255, 255) if d < 3.5 else (170, 70, 240, 255)
+                else:
+                    px[y][x] = (24, 20, 34, 255)
+    return px
+
+
+def reactor_top():
+    px = [[(70, 74, 90, 255) for _ in range(16)] for _ in range(16)]
+    for i in range(16):
+        px[0][i] = px[i][0] = px[15][i] = px[i][15] = (36, 38, 48, 255)
+    for y in range(3, 13):
+        for x in range(3, 13):
+            px[y][x] = (40, 110, 200, 255) if x in (3, 12) or y in (3, 12) else (46, 50, 64, 255)
+    return px
+
+
+write_png(f"{root}/block/fusion_reactor_side.png", reactor_side(False))
+write_png(f"{root}/block/fusion_reactor_side_on.png", reactor_side(True))
+write_png(f"{root}/block/fusion_reactor_top.png", reactor_top())
+print("fusion reactor textures written")

@@ -1,6 +1,7 @@
 package com.walnutbeachdigital.epochsmith.block;
 
 import com.walnutbeachdigital.epochsmith.Epochsmith;
+import com.walnutbeachdigital.epochsmith.future.FusionReactorBlock;
 import com.walnutbeachdigital.epochsmith.future.NanofabricatorBlock;
 import com.walnutbeachdigital.epochsmith.information.AssemblerBlock;
 import com.walnutbeachdigital.epochsmith.information.ComputerCoreBlock;
@@ -28,6 +29,7 @@ import com.walnutbeachdigital.epochsmith.steam.SteamPipeBlock;
 
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -312,6 +314,13 @@ public final class ModBlocks {
     public static final DeferredBlock<NanofabricatorBlock> NANOFABRICATOR = Epochsmith.BLOCKS.register("nanofabricator",
             () -> new NanofabricatorBlock(metal().lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 12 : 0)));
     public static final DeferredItem<BlockItem> NANOFABRICATOR_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("nanofabricator", NANOFABRICATOR);
+
+    /** The Future era's signature invention and Epochsmith's end goal: fusion power from plasma cells. */
+    public static final DeferredBlock<FusionReactorBlock> FUSION_REACTOR = Epochsmith.BLOCKS.register("fusion_reactor",
+            () -> new FusionReactorBlock(metal().strength(10.0F, 1200.0F)
+                    .lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 15 : 0)));
+    public static final DeferredItem<BlockItem> FUSION_REACTOR_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("fusion_reactor", FUSION_REACTOR,
+            new Item.Properties().rarity(Rarity.EPIC));
 
     /** Called from the main mod class so this file loads before blocks are registered. */
     public static void init() {
