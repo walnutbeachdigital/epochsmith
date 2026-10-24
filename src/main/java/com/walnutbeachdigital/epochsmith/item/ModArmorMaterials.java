@@ -123,6 +123,26 @@ public final class ModArmorMaterials {
                     2.5F,
                     0.05F));
 
+    /**
+     * Composite tactical armor: netherite-level protection (total 20), 3 toughness, some knockback resistance.
+     * Repaired with steel ingots.
+     */
+    public static final DeferredHolder<ArmorMaterial, ArmorMaterial> COMPOSITE = ARMOR_MATERIALS.register("composite",
+            () -> new ArmorMaterial(
+                    Util.make(new EnumMap<>(ArmorItem.Type.class), defense -> {
+                        defense.put(ArmorItem.Type.BOOTS, 3);
+                        defense.put(ArmorItem.Type.LEGGINGS, 6);
+                        defense.put(ArmorItem.Type.CHESTPLATE, 8);
+                        defense.put(ArmorItem.Type.HELMET, 3);
+                        defense.put(ArmorItem.Type.BODY, 11);
+                    }),
+                    15,
+                    SoundEvents.ARMOR_EQUIP_NETHERITE,
+                    () -> Ingredient.of(ModItems.STEEL_INGOT.get()),
+                    List.of(new ArmorMaterial.Layer(ResourceLocation.fromNamespaceAndPath(Epochsmith.MODID, "composite"))),
+                    3.0F,
+                    0.1F));
+
     private ModArmorMaterials() {
     }
 }

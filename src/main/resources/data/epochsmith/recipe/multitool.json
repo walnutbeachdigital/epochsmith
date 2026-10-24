@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "D": {
+      "item": "epochsmith:electric_drill"
+    },
+    "X": {
+      "item": "epochsmith:chainsaw"
+    },
+    "C": {
+      "item": "epochsmith:circuit_board"
+    },
+    "I": {
+      "item": "epochsmith:steel_ingot"
+    }
+  },
+  "pattern": [
+    "CDC",
+    "IXI",
+    " I "
+  ],
+  "result": {
+    "count": 1,
+    "id": "epochsmith:multitool"
+  }
+}

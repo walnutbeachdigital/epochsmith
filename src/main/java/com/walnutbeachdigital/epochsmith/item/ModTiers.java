@@ -73,6 +73,18 @@ public final class ModTiers {
             14,
             () -> Ingredient.of(ModItems.STEEL_INGOT.get()));
 
+    /**
+     * Information-era tools: netherite level, 2400 durability, speed 12.
+     * Repaired with steel ingots.
+     */
+    public static final Tier COMPOSITE = new SimpleTier(
+            BlockTags.INCORRECT_FOR_NETHERITE_TOOL,
+            2400,
+            12.0F,
+            4.0F,
+            15,
+            () -> Ingredient.of(ModItems.STEEL_INGOT.get()));
+
     private ModTiers() {
     }
 }

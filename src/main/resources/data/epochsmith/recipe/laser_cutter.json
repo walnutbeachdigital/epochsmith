@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "G": {
+      "item": "minecraft:glass"
+    },
+    "C": {
+      "item": "epochsmith:circuit_board"
+    },
+    "D": {
+      "item": "epochsmith:electric_drill"
+    },
+    "I": {
+      "item": "epochsmith:steel_ingot"
+    },
+    "S": {
+      "item": "epochsmith:silicon"
+    }
+  },
+  "pattern": [
+    "SGS",
+    "CDC",
+    " I "
+  ],
+  "result": {
+    "count": 1,
+    "id": "epochsmith:laser_cutter"
+  }
+}

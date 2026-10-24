@@ -254,6 +254,32 @@ public final class ModItems {
     public static final DeferredItem<Item> TRANSISTOR = Epochsmith.ITEMS.registerSimpleItem("transistor");
     public static final DeferredItem<Item> CIRCUIT_BOARD = Epochsmith.ITEMS.registerSimpleItem("circuit_board");
 
+    // ---- Information era: laser cutter, multitool and composite tactical armor
+    public static final TagKey<Block> MULTITOOL_MINEABLE = TagKey.create(Registries.BLOCK,
+            ResourceLocation.fromNamespaceAndPath(Epochsmith.MODID, "mineable/multitool"));
+
+    public static final DeferredItem<LaserCutterItem> LASER_CUTTER = Epochsmith.ITEMS.register("laser_cutter",
+            () -> new LaserCutterItem(ModTiers.COMPOSITE, HAND_DRILL_MINEABLE, new Item.Properties()
+                    .attributes(DiggerItem.createAttributes(ModTiers.COMPOSITE, 1.0F, -2.8F))));
+    public static final DeferredItem<MultitoolItem> MULTITOOL = Epochsmith.ITEMS.register("multitool",
+            () -> new MultitoolItem(ModTiers.COMPOSITE, MULTITOOL_MINEABLE, new Item.Properties()
+                    .attributes(DiggerItem.createAttributes(ModTiers.COMPOSITE, 4.0F, -2.8F))));
+
+    private static final int COMPOSITE_DURABILITY = 40;
+    /** Shows coordinates and the nearest ore while charged. */
+    public static final DeferredItem<CompositeHelmetItem> COMPOSITE_HELMET = Epochsmith.ITEMS.register("composite_helmet",
+            () -> new CompositeHelmetItem(ModArmorMaterials.COMPOSITE, new Item.Properties().fireResistant()
+                    .durability(ArmorItem.Type.HELMET.getDurability(COMPOSITE_DURABILITY))));
+    public static final DeferredItem<ArmorItem> COMPOSITE_CHESTPLATE = Epochsmith.ITEMS.register("composite_chestplate",
+            () -> new ArmorItem(ModArmorMaterials.COMPOSITE, ArmorItem.Type.CHESTPLATE, new Item.Properties().fireResistant()
+                    .durability(ArmorItem.Type.CHESTPLATE.getDurability(COMPOSITE_DURABILITY))));
+    public static final DeferredItem<ArmorItem> COMPOSITE_LEGGINGS = Epochsmith.ITEMS.register("composite_leggings",
+            () -> new ArmorItem(ModArmorMaterials.COMPOSITE, ArmorItem.Type.LEGGINGS, new Item.Properties().fireResistant()
+                    .durability(ArmorItem.Type.LEGGINGS.getDurability(COMPOSITE_DURABILITY))));
+    public static final DeferredItem<ArmorItem> COMPOSITE_BOOTS = Epochsmith.ITEMS.register("composite_boots",
+            () -> new ArmorItem(ModArmorMaterials.COMPOSITE, ArmorItem.Type.BOOTS, new Item.Properties().fireResistant()
+                    .durability(ArmorItem.Type.BOOTS.getDurability(COMPOSITE_DURABILITY))));
+
     /** Called from the main mod class so this file loads before items are registered. */
     public static void init() {
     }

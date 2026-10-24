@@ -58,10 +58,35 @@ public final class PoweredToolEvents {
         if (!PoweredTools.hasPower(tool)) {
             return;
         }
-        if (tool.getItem() instanceof PoweredTools.AreaDrill) {
-            drill(player, tool, event.getPos());
-        } else if (tool.getItem() instanceof PoweredTools.TreeFeller && event.getState().is(BlockTags.LOGS)) {
+        // Tree felling comes first, so a multitool in area mode fells trees instead of cutting 3x3 through them
+        if (tool.getItem() instanceof PoweredTools.TreeFeller feller && feller.fellsTrees(tool)
+                && event.getState().is(BlockTags.LOGS)) {
             fellTree(player, tool, event.getPos());
+        } else if (tool.getItem() instanceof PoweredTools.AreaDrill drill && drill.drillsArea(tool)) {
+            drill(player, tool, event.getPos());
+        } else if (tool.getItem() instanceof PoweredTools.TunnelBorer) {
+            tunnel(player, tool, event.getPos());
+        }
+    }
+
+    /** Laser cutter: also cuts the two blocks behind the one you mined, straight ahead. */
+    private static void tunnel(ServerPlayer player, ItemStack tool, BlockPos center) {
+        Direction face = faceHit(player, center);
+        if (face == null) {
+            return;
+        }
+        Level level = player.level();
+        for (int depth = 1; depth <= 2; depth++) {
+            BlockPos pos = center.relative(face.getOpposite(), depth);
+            BlockState state = level.getBlockState(pos);
+            float hardness = state.getDestroySpeed(level, pos);
+            if (state.isAir() || hardness < 0 || !tool.isCorrectToolForDrops(state)) {
+                return;
+            }
+            if (tool.isEmpty() || !PoweredTools.usePower(tool)) {
+                return;
+            }
+            breakAsPlayer(player, pos);
         }
     }
 
@@ -145,6 +170,11 @@ public final class PoweredToolEvents {
     public static void onPlayerTick(PlayerTickEvent.Post event) {
         if (!(event.getEntity() instanceof ServerPlayer player) || player.level().getGameTime() % 20 != 0) {
             return;
+        }
+        // Composite helmet: the HUD uses one charge every ten seconds
+        ItemStack helmet = player.getItemBySlot(EquipmentSlot.HEAD);
+        if (helmet.getItem() instanceof CompositeHelmetItem && player.level().getGameTime() % 200 == 0) {
+            ElectricPowered.use(helmet, 1);
         }
         ItemStack boots = player.getItemBySlot(EquipmentSlot.FEET);
         if (!(boots.getItem() instanceof SteamBootsItem) || SteamPowered.getSteam(boots) <= 0) {

@@ -31,6 +31,11 @@ public final class ModDataComponents {
             COMPONENTS.registerComponentType("vault_contents",
                     builder -> builder.persistent(CustomData.CODEC).networkSynchronized(CustomData.STREAM_CODEC));
 
+    /** Which mode a multitool is in (0 = precise, 1 = area). */
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<Integer>> TOOL_MODE =
+            COMPONENTS.registerComponentType("tool_mode",
+                    builder -> builder.persistent(Codec.INT).networkSynchronized(ByteBufCodecs.VAR_INT));
+
     private ModDataComponents() {
     }
 }

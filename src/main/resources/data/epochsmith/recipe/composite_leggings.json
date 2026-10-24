@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "P": {
+      "item": "epochsmith:coil_leggings"
+    },
+    "C": {
+      "item": "epochsmith:circuit_board"
+    },
+    "I": {
+      "item": "epochsmith:steel_ingot"
+    },
+    "S": {
+      "item": "epochsmith:silicon"
+    }
+  },
+  "pattern": [
+    "ISI",
+    "CPC",
+    "ISI"
+  ],
+  "result": {
+    "count": 1,
+    "id": "epochsmith:composite_leggings"
+  }
+}

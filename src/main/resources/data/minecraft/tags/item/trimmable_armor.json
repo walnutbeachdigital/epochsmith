@@ -15,6 +15,10 @@
     "epochsmith:coil_helmet",
     "epochsmith:coil_chestplate",
     "epochsmith:coil_leggings",
-    "epochsmith:coil_boots"
+    "epochsmith:coil_boots",
+    "epochsmith:composite_helmet",
+    "epochsmith:composite_chestplate",
+    "epochsmith:composite_leggings",
+    "epochsmith:composite_boots"
   ]
 }

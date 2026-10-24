@@ -224,3 +224,73 @@ write_png(f"{root}/block/assembler_side.png", assembler_side())
 write_png(f"{root}/block/assembler_front.png", assembler_front(False))
 write_png(f"{root}/block/assembler_front_on.png", assembler_front(True))
 print("assembler textures written")
+
+
+# ---- Laser cutter, multitool and composite tactical armor
+TOOL = {"O": (16, 18, 24, 255), "D": (44, 50, 62, 255), "M": (82, 92, 110, 255), "H": (150, 166, 190, 255),
+        "B": (60, 200, 255, 255), "b": (30, 120, 200, 255), "R": (255, 70, 60, 255), "Y": (230, 190, 40, 255)}
+
+LASER_CUTTER = [
+    "................",
+    "................",
+    "...........OO...",
+    "..........ObBO..",
+    ".........ObBBO..",
+    "...OOOOOOOMBO...",
+    "..OHHMMMMMDO....",
+    "..OHMMMMMDDO....",
+    "..ODDDOODDO.....",
+    "...OOOODRDO.....",
+    "......ODDO......",
+    "......ODDO......",
+    "......OHDO......",
+    ".......OO.......",
+]
+
+MULTITOOL = [
+    "................",
+    "..OOO.....OOOO..",
+    ".OHHMO...OHMMDO.",
+    ".OMMMDO.OHMDDO..",
+    "..ODDMDOMMDOO...",
+    "...OODMMMDO.....",
+    ".....OMBMO......",
+    "....OMDbDMO.....",
+    "...OMDO.ODMO....",
+    "..OYDO...OO.....",
+    ".OYDO...........",
+    ".ODO............",
+    "..O.............",
+]
+
+COMPOSITE = {"O": (14, 16, 20, 255), "D": (40, 46, 54, 255), "M": (64, 72, 84, 255), "H": (110, 124, 140, 255),
+             "W": (60, 200, 255, 255), "w": (30, 120, 200, 255)}
+
+
+def composite_layer(skip_hat):
+    """Matte charcoal plates with thin cyan circuit traces."""
+    px = []
+    for y in range(32):
+        row = []
+        for x in range(64):
+            if skip_hat and x >= 32 and y < 16:
+                row.append((0, 0, 0, 0))
+            elif (x % 8 == 0 and y % 4 != 3) or (y % 8 == 4 and x % 16 < 9):
+                row.append((40, 170, 230, 255))
+            elif (x + y) % 5 == 0:
+                row.append((52, 58, 68, 255))
+            else:
+                row.append((40, 46, 54, 255) if (x // 4 + y // 4) % 2 else (46, 52, 62, 255))
+        px.append(row)
+    return px
+
+
+import make_bronze_gear_textures as gear
+
+write_png(f"{root}/item/laser_cutter.png", from_map(LASER_CUTTER, TOOL))
+write_png(f"{root}/item/multitool.png", from_map(MULTITOOL, TOOL))
+for piece in ("helmet", "chestplate", "leggings", "boots"):
+    write_png(f"{root}/item/composite_{piece}.png", from_map(gear.ICONS[piece], COMPOSITE))
+write_png(f"{root}/models/armor/composite_layer_1.png", composite_layer(True))
+write_png(f"{root}/models/armor/composite_layer_2.png", composite_layer(False))
+print("information gear textures written")

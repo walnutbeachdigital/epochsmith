@@ -5,6 +5,8 @@
     "epochsmith:steel_pickaxe",
     "epochsmith:hand_drill",
     "epochsmith:steam_drill",
-    "epochsmith:electric_drill"
+    "epochsmith:electric_drill",
+    "epochsmith:laser_cutter",
+    "epochsmith:multitool"
   ]
 }
