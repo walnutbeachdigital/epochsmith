@@ -147,14 +147,131 @@ def tool(path, palette):
     return recolor(px, palette, mask)
 
 
+# ---- Details painted on top of the recolored armor (positions follow vanilla's iron armor layout)
+GLOW = (200, 250, 255)
+CYAN = (60, 210, 255)
+CYAN_DIM = (34, 130, 180)
+JOINT = (34, 36, 50)
+SEAM = (196, 198, 212)
+
+
+def paint(px, spots, color):
+    """Paints the given (x, y) spots, but only where the armor is visible (never into empty space)."""
+    for x, y in spots:
+        if 0 <= y < len(px) and 0 <= x < len(px[0]) and px[y][x][3] > 0:
+            px[y][x] = color + (px[y][x][3],)
+
+
+def line(x0, x1, y):
+    return [(x, y) for x in range(x0, x1 + 1)]
+
+
+def column(x, y0, y1):
+    return [(x, y) for y in range(y0, y1 + 1)]
+
+
+def composite_icon(piece, px):
+    if piece == "helmet":
+        paint(px, line(5, 10, 7), CYAN)            # visor
+        paint(px, line(6, 9, 8), CYAN_DIM)
+        paint(px, [(7, 7), (8, 7)], GLOW)
+    elif piece == "chestplate":
+        paint(px, column(7, 9, 12) + column(8, 9, 12), CYAN_DIM)  # circuit trace
+        paint(px, [(7, 7), (8, 7), (7, 8), (8, 8)], CYAN)       # chest light
+        paint(px, [(7, 7)], GLOW)
+        paint(px, [(3, 4), (12, 4)], CYAN)                        # shoulder lights
+    elif piece == "leggings":
+        paint(px, column(4, 5, 10) + column(11, 5, 10), CYAN_DIM)  # side stripes
+        paint(px, [(5, 8), (10, 8)], CYAN)                          # knee lights
+    elif piece == "boots":
+        paint(px, line(2, 5, 11) + line(10, 13, 11), CYAN)          # toe lights
+        paint(px, [(4, 5), (11, 5)], CYAN_DIM)
+
+
+def composite_layer(layer, px):
+    if layer == 1:
+        paint(px, line(8, 15, 9), CYAN)                     # visor, front
+        paint(px, line(8, 15, 10), CYAN_DIM)
+        paint(px, [(11, 9), (12, 9)], GLOW)
+        paint(px, line(0, 7, 9) + line(16, 23, 9), CYAN_DIM)  # visor wraps round the sides
+        paint(px, column(21, 21, 30) + column(26, 21, 30) + line(21, 26, 26), CYAN_DIM)  # chest traces
+        paint(px, [(23, 22), (24, 22), (23, 23), (24, 23)], CYAN)                      # chest light
+        paint(px, [(23, 22)], GLOW)
+        paint(px, column(35, 21, 30) + column(36, 21, 30), CYAN_DIM)                   # power spine
+        paint(px, [(35, 23), (36, 26), (35, 29)], CYAN)
+        paint(px, line(44, 47, 22) + line(40, 43, 22) + line(48, 51, 22), CYAN_DIM)    # arm stripes
+        paint(px, line(4, 7, 30) + line(0, 3, 30) + line(8, 11, 30), CYAN)             # boot toe lights
+    else:
+        paint(px, column(7, 21, 27) + column(4, 21, 27), CYAN_DIM)  # leg stripes
+        paint(px, [(5, 24), (6, 24)], CYAN)                          # knee lights
+        paint(px, line(16, 39, 27), CYAN_DIM)                        # belt trace
+
+
+def exosuit_icon(piece, px):
+    if piece == "helmet":
+        paint(px, line(4, 11, 7) + line(5, 10, 8) + line(5, 10, 9), JOINT)  # dark visor
+        paint(px, line(6, 9, 8), CYAN)                                       # scan line
+        paint(px, [(7, 8)], GLOW)
+    elif piece == "chestplate":
+        ring = [(7, 5), (8, 5), (6, 6), (9, 6), (6, 7), (9, 7), (7, 8), (8, 8)]
+        paint(px, ring, JOINT)                                   # core housing
+        paint(px, [(7, 6), (8, 6), (7, 7), (8, 7)], CYAN)        # power core
+        paint(px, [(7, 6)], GLOW)
+        paint(px, line(5, 10, 10) + line(5, 10, 12), SEAM)       # ab plates
+        paint(px, [(2, 4), (3, 4), (12, 4), (13, 4)], JOINT)     # shoulder joints
+    elif piece == "leggings":
+        paint(px, line(4, 11, 3), JOINT)                         # belt
+        paint(px, [(7, 3), (8, 3)], CYAN)
+        paint(px, [(4, 8), (5, 8), (10, 8), (11, 8)], JOINT)     # knee joints
+        paint(px, [(5, 8), (10, 8)], CYAN)
+    elif piece == "boots":
+        paint(px, [(4, 7), (5, 7), (10, 7), (11, 7)], JOINT)     # ankle joints
+        paint(px, line(2, 5, 11) + line(10, 13, 11), CYAN)       # thrusters
+        paint(px, [(3, 11), (12, 11)], GLOW)
+
+
+def exosuit_layer(layer, px):
+    if layer == 1:
+        paint(px, line(8, 15, 9) + line(8, 15, 10) + line(0, 7, 9) + line(16, 23, 9), JOINT)  # visor
+        paint(px, line(9, 14, 10), CYAN)
+        paint(px, [(11, 10), (12, 10)], GLOW)
+        paint(px, column(11, 1, 6) + column(12, 1, 6), SEAM)                                # crest
+        ring = [(23, 21), (24, 21), (22, 22), (25, 22), (22, 23), (25, 23), (23, 24), (24, 24)]
+        paint(px, ring, JOINT)                                                               # core housing
+        paint(px, [(23, 22), (24, 22), (23, 23), (24, 23)], CYAN)                            # power core
+        paint(px, [(23, 22)], GLOW)
+        paint(px, line(20, 27, 26) + line(21, 26, 28), SEAM)                                 # ab plates
+        paint(px, column(35, 21, 30) + column(36, 21, 30), JOINT)                            # powered spine
+        paint(px, [(35, 22), (36, 25), (35, 28)], CYAN)
+        paint(px, line(40, 55, 25), JOINT)                                                   # elbow joints
+        paint(px, [(45, 25), (41, 25), (49, 25)], CYAN)
+        paint(px, line(0, 15, 28), JOINT)                                                    # ankle joints
+        paint(px, line(0, 15, 31), CYAN)                                                     # thrusters
+        paint(px, [(5, 31), (6, 31)], GLOW)
+    else:
+        paint(px, line(16, 39, 27), JOINT)                                                   # belt
+        paint(px, [(23, 27), (24, 27)], CYAN)
+        paint(px, line(0, 15, 24), JOINT)                                                    # knee joints
+        paint(px, [(5, 24), (6, 24), (1, 24), (9, 24), (13, 24)], CYAN)
+
+
+DETAILS = {"composite": (composite_icon, composite_layer), "exosuit": (exosuit_icon, exosuit_layer)}
+
+
 def armor_set(name, base, palette, material=None):
     """Item icons and the worn-armor textures for one armor set, recolored from a vanilla set.
     The worn textures are named after the armor material, which is usually the same as the set's name."""
+    icon_details, layer_details = DETAILS.get(name, (None, None))
     for piece in PIECES:
-        write_png(f"{OUT}/item/{name}_{piece}.png", recolor(vanilla(f"item/{base}_{piece}"), palette))
+        px = recolor(vanilla(f"item/{base}_{piece}"), palette)
+        if icon_details:
+            icon_details(piece, px)
+        write_png(f"{OUT}/item/{name}_{piece}.png", px)
     for layer in (1, 2):
-        write_png(f"{OUT}/models/armor/{material or name}_layer_{layer}.png",
-                  recolor(vanilla(f"models/armor/{base}_layer_{layer}"), palette))
+        px = recolor(vanilla(f"models/armor/{base}_layer_{layer}"), palette)
+        if layer_details:
+            layer_details(layer, px)
+        write_png(f"{OUT}/models/armor/{material or name}_layer_{layer}.png", px)
 
 
 if __name__ == "__main__":
