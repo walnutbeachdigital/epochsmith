@@ -132,7 +132,7 @@ public class AssemblerBlockEntity extends BlockEntity implements WorkpieceHolder
             .output(116, 35).output(134, 35).output(152, 35)
             .output(116, 53).output(134, 53).output(152, 53)
             .arrow(77, 36, 0, 1)
-            .button(66, 57, 46, 13, NEXT_RECIPE_BUTTON, "gui.epochsmith.next_recipe");
+            .button(62, 57, 40, 13, NEXT_RECIPE_BUTTON, "gui.epochsmith.next_recipe");
 
     /** What the GUI shows: nine ingredient slots, the pattern slot, then nine output slots. */
     private final IItemHandlerModifiable menuItems = new CombinedInvWrapper(ingredients, pattern, outputs);

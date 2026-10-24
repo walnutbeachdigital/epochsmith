@@ -404,7 +404,7 @@
   "gui.epochsmith.heat": "Heat",
   "gui.epochsmith.power": "Power (energy per tick)",
   "gui.epochsmith.matter": "Matter",
-  "gui.epochsmith.steam_status.0": "No steam: connect a working boiler",
-  "gui.epochsmith.steam_status.1": "Steam: on",
-  "gui.epochsmith.next_recipe": "Recipe \u21bb"
+  "gui.epochsmith.steam_status.0": "No steam",
+  "gui.epochsmith.steam_status.1": "Steam on",
+  "gui.epochsmith.next_recipe": "Next \u21bb"
 }

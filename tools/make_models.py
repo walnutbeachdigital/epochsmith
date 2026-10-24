@@ -450,6 +450,82 @@ def hover_pad(on):
     model("hover_pad_on" if on else "hover_pad", t, els)
 
 
+# ---------------- Added: blast furnace, arc furnace, strongbox, dynamo, induction furnace ----------------
+
+def steam_blast_furnace(lit):
+    t = {"particle": E + "boiler_side", "brick": E + "coke_oven_side", "shell": E + "boiler_side", "cap": E + "boiler_top",
+         "front": M + ("blast_furnace_front_on" if lit else "blast_furnace_front"), "pipe": E + "steam_pipe",
+         "brass": M + "gold_block", "hot": M + ("magma" if lit else "coal_block")}
+    els = [box((0, 0, 0), (16, 7, 16), {"side": "#brick", "top": "#brick", "north": "#front"}, uv={"north": [0, 4, 16, 11]}),
+           box((1, 7, 1), (15, 13, 15), {"side": "#shell", "top": "#cap"}),
+           box((0.5, 8, 0.5), (15.5, 9, 15.5), "#brass", skip=("up", "down")),                    # brass bands
+           box((0.5, 11, 0.5), (15.5, 12, 15.5), "#brass", skip=("up", "down")),
+           box((3, 13, 3), (13, 15, 13), {"side": "#shell", "top": "#cap"}),
+           box((5, 15, 5), (11, 16, 11), {"side": "#shell", "top": "#hot"}),
+           box((6, 15.95, 6), (10, 16, 10), {"up": "#hot"}, glow=lit),
+           box((12, 7, 14), (14, 16, 16), "#pipe"),                                                   # steam feed
+           box((2, 7, 14), (4, 13, 16), "#pipe")]
+    if lit:
+        els.append(box((4, 1, -0.01), (12, 6, 0), {"north": "#front"}, uv={"north": [4, 8, 12, 13]}, glow=True))
+    model("steam_blast_furnace_lit" if lit else "steam_blast_furnace", t, els)
+
+
+def arc_furnace(on):
+    t = {"particle": E + "arc_furnace_side", "side": E + "arc_furnace_side", "front": E + ("arc_furnace_front_on" if on else "arc_furnace_front"),
+         "top": E + "arc_furnace_top", "graphite": M + "polished_basalt_side", "graphite_top": M + "polished_basalt_top",
+         "tip": M + ("white_concrete" if on else "gray_concrete"), "copper": M + "copper_block", "leg": M + "polished_blackstone"}
+    els = frame(1, 15, 0, 2, 2, "#leg")
+    els += [box((1, 2, 1), (15, 11, 15), {"side": "#side", "north": "#front", "top": "#top"}, uv={"north": [1, 3, 15, 12]}),
+            box((2, 11, 2), (14, 13, 14), {"side": "#side", "top": "#top"})]
+    for x, z in ((4, 4), (10, 5), (6, 10)):                                                         # graphite electrodes
+        els += [box((x, 13, z), (x + 2, 16, z + 2), {"side": "#graphite", "top": "#graphite_top"}),
+                box((x + 0.5, 15.5, z + 0.5), (x + 1.5, 16, z + 1.5), {"up": "#tip"}, glow=on)]
+    for z in (5, 10):                                                                               # copper busbars
+        els.append(box((0, 3, z), (1, 12, z + 1), "#copper"))
+        els.append(box((15, 3, z), (16, 12, z + 1), "#copper"))
+    model("arc_furnace_on" if on else "arc_furnace", t, els)
+
+
+def strongbox():
+    t = {"particle": E + "strongbox_side", "side": E + "strongbox_side", "front": E + "strongbox_front",
+         "dark": M + "polished_blackstone", "brass": M + "gold_block", "iron": M + "iron_block"}
+    els = frame(1, 15, 0, 1, 2, "#dark")                                                            # little feet
+    els += [box((1, 1, 1), (15, 15, 15), {"side": "#side", "north": "#front", "top": "#side"}, uv={"north": [1, 1, 15, 15]}),
+            box((0.5, 14, 0.5), (15.5, 15.5, 15.5), "#dark"),                                       # heavy lid rim
+            box((9, 6, 0.5), (12, 9, 1), "#brass"),                                                 # combination dial
+            box((10, 7, 0), (11, 8, 0.5), "#iron"),
+            box((3, 7, 0.5), (7, 8, 1), "#iron"),                                                   # handle
+            box((1.5, 3, 0.5), (2.5, 6, 1), "#dark"), box((1.5, 10, 0.5), (2.5, 13, 1), "#dark")]   # hinges
+    model("strongbox", t, els)
+
+
+def dynamo():
+    t = {"particle": E + "dynamo_side", "side": E + "dynamo_side", "top": E + "dynamo_top", "base": M + "polished_blackstone",
+         "copper": M + "copper_block", "iron": M + "iron_block", "brass": M + "gold_block"}
+    els = [box((0, 0, 0), (16, 2, 16), "#base"),
+           box((2, 2, 2), (14, 13, 14), {"side": "#side", "top": "#top"}, uv={s: [2, 2, 14, 14] for s in SIDES}),
+           box((1.5, 4, 1.5), (14.5, 6, 14.5), "#copper", skip=("up", "down")),                    # field windings
+           box((1.5, 9, 1.5), (14.5, 11, 14.5), "#copper", skip=("up", "down")),
+           box((7, 7, 0), (9, 9, 2), "#iron"), box((7, 7, 14), (9, 9, 16), "#iron"),               # shaft ends on every side
+           box((0, 7, 7), (2, 9, 9), "#iron"), box((14, 7, 7), (16, 9, 9), "#iron"),
+           box((4, 13, 6), (5, 15, 7), "#brass"), box((11, 13, 9), (12, 15, 10), "#brass")]       # output terminals
+    model("dynamo", t, els)
+
+
+def induction_furnace(on):
+    t = {"particle": E + "induction_furnace_side", "side": E + "induction_furnace_side", "front": E + ("induction_furnace_front_on" if on else "induction_furnace_front"),
+         "steel": M + "iron_block", "coil": M + "copper_block", "crucible": M + ("magma" if on else "terracotta"),
+         "base": M + "polished_deepslate"}
+    els = [box((0, 0, 0), (16, 3, 16), {"side": "#base", "top": "#steel"}),
+           box((0, 13, 0), (16, 16, 16), {"side": "#side", "top": "#steel"}, uv={s: [0, 0, 16, 3] for s in SIDES})]
+    els += frame(0, 16, 3, 13, 2, "#steel")
+    for y in (4, 6.5, 9, 11.5):                                                                     # copper induction coil
+        els += ring(y, y + 1.5, 3, 13, 1, "#coil")
+    els.append(box((5, 3, 5), (11, 12, 11), {"side": "#crucible", "top": "#crucible"}, glow=on))   # glowing crucible inside
+    els.append(box((5, 13.5, -0.3), (11, 15.5, 0), {"north": "#front"}, uv={"north": [4, 3, 12, 6]}))          # control panel
+    model("induction_furnace_on" if on else "induction_furnace", t, els)
+
+
 if __name__ == "__main__":
     knapping_stone()
     for state in (False, True):
@@ -460,4 +536,7 @@ if __name__ == "__main__":
     for level in range(5):
         battery(level)
     sorting_cabinet(); wireless_node()
+    for state in (False, True):
+        steam_blast_furnace(state); arc_furnace(state); induction_furnace(state)
+    strongbox(); dynamo()
     print("3D block models written")

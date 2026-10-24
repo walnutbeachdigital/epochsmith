@@ -238,21 +238,21 @@ public final class ModBlocks {
 
     /** The Industrial era's smelter: steam blast and coke, 2 ingots per ore, steel from iron. */
     public static final DeferredBlock<BlastFurnaceBlock> STEAM_BLAST_FURNACE = Epochsmith.BLOCKS.register("steam_blast_furnace",
-            () -> new BlastFurnaceBlock(metal().lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 14 : 0)));
+            () -> new BlastFurnaceBlock(metal().lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 14 : 0).noOcclusion()));
     public static final DeferredItem<BlockItem> STEAM_BLAST_FURNACE_ITEM =
             Epochsmith.ITEMS.registerSimpleBlockItem("steam_blast_furnace", STEAM_BLAST_FURNACE);
 
     /** The Industrial era's storage: 54 slots, locked to its owner, blast-proof, hopper-proof. */
     public static final DeferredBlock<StrongboxBlock> STRONGBOX = Epochsmith.BLOCKS.register("strongbox",
             () -> new StrongboxBlock(BlockBehaviour.Properties.of().mapColor(MapColor.METAL)
-                    .requiresCorrectToolForDrops().strength(5.0F, 1200.0F).sound(SoundType.NETHERITE_BLOCK)));
+                    .requiresCorrectToolForDrops().strength(5.0F, 1200.0F).sound(SoundType.NETHERITE_BLOCK).noOcclusion()));
     public static final DeferredItem<BlockItem> STRONGBOX_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("strongbox", STRONGBOX);
 
     // ---- Electrical era ----
 
     /** Rotation in, electricity out. */
     public static final DeferredBlock<DynamoBlock> DYNAMO = Epochsmith.BLOCKS.register("dynamo",
-            () -> new DynamoBlock(metal()));
+            () -> new DynamoBlock(metal().noOcclusion()));
     public static final DeferredItem<BlockItem> DYNAMO_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("dynamo", DYNAMO);
 
     /** Carries electricity; joins up on its own. */
@@ -275,7 +275,7 @@ public final class ModBlocks {
 
     /** The Electrical era's smelter: electric, very fast, smelts anything. */
     public static final DeferredBlock<ArcFurnaceBlock> ARC_FURNACE = Epochsmith.BLOCKS.register("arc_furnace",
-            () -> new ArcFurnaceBlock(metal().lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 15 : 0)));
+            () -> new ArcFurnaceBlock(metal().lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 15 : 0).noOcclusion()));
     public static final DeferredItem<BlockItem> ARC_FURNACE_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("arc_furnace", ARC_FURNACE);
 
     /** The Electrical era's storage: nine labeled drawers of 1,024 that file items for you. */
@@ -301,7 +301,7 @@ public final class ModBlocks {
 
     /** The Information era's smelter: batch smelting, fully automatable. */
     public static final DeferredBlock<InductionFurnaceBlock> INDUCTION_FURNACE = Epochsmith.BLOCKS.register("induction_furnace",
-            () -> new InductionFurnaceBlock(metal().lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 13 : 0)));
+            () -> new InductionFurnaceBlock(metal().lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 13 : 0).noOcclusion()));
     public static final DeferredItem<BlockItem> INDUCTION_FURNACE_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("induction_furnace", INDUCTION_FURNACE);
 
     /** The Information era's storage: 65,536 items as data, with a searchable terminal. */

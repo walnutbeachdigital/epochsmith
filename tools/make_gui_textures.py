@@ -183,17 +183,13 @@ def mechanical():
 
 
 def industrial():
-    """Dark riveted steel plate with brass trim."""
-    px = tiled(base("block/iron_block", [(44, 46, 52), (70, 74, 82), (96, 100, 108), (120, 124, 134)])); soften(px, (78, 82, 90), 0.3)
-    for y in range(8, H - 8, 32):  # plate seams with rivet rows
-        for x in range(6, W - 6):
-            put(px, x, y, (40, 42, 48))
-            put(px, x, y + 1, (120, 124, 132))
-        for x in range(12, W - 12, 8):
-            rivet(px, x, y + 3, IRON)
+    """Dark steel plate with brass trim; rivets only round the edge, so nothing crosses the slots or text."""
+    px = tiled(base("block/iron_block", [(34, 36, 42), (52, 55, 62), (70, 74, 82), (88, 92, 100)])); soften(px, (58, 61, 68), 0.45)
     border(px, BRASS, 5, rivets=BRASS)
+    for x in range(10, W - 10, 8):  # a row of rivets along the top band and above the inventory
+        rivet(px, x, 8, IRON)
     divider(px, 71, BRASS[0], BRASS[3])
-    return sheet(px, slot((26, 27, 31), (150, 154, 162), (52, 54, 60)), output_frame(BRASS))
+    return sheet(px, slot((18, 19, 23), (120, 124, 132), (40, 42, 48)), output_frame(BRASS))
 
 
 def electrical():

@@ -66,10 +66,10 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
         int y = topPos;
         // The era's panel, then its slots (output slots get a raised frame)
         g.blit(background, x, y, 0, 0, imageWidth, imageHeight);
+        for (int[] box : outputGroups()) {
+            nineSlice(g, x + box[0] - 5, y + box[1] - 5, box[2] - box[0] + 26, box[3] - box[1] + 26, 176, 18, 26, 5);
+        }
         for (MachineLayout.SlotDef def : layout.slots) {
-            if (def.role() == MachineItems.Role.OUTPUT) {
-                g.blit(background, x + def.x() - 5, y + def.y() - 5, 176, 18, 26, 26);
-            }
             g.blit(background, x + def.x() - 1, y + def.y() - 1, 176, 0, 18, 18);
             if (def.role() == MachineItems.Role.PATTERN) {
                 g.fill(x + def.x(), y + def.y(), x + def.x() + 16, y + def.y() + 16, 0x3040A0FF);
@@ -100,29 +100,75 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
             }
         }
 
-        // Gauges: a sunken frame that fills from the bottom
+        // Gauges: a sunken slot-style frame that fills from the bottom
         for (MachineLayout.Gauge gauge : layout.gauges) {
             int gx = x + gauge.x();
             int gy = y + gauge.y();
-            g.fill(gx - 1, gy - 1, gx + gauge.width() + 1, gy + gauge.height() + 1, SHADOW);
-            g.fill(gx, gy, gx + gauge.width() + 1, gy + gauge.height() + 1, LIGHT);
-            g.fill(gx, gy, gx + gauge.width(), gy + gauge.height(), 0xFF1E1E1E);
+            nineSlice(g, gx - 1, gy - 1, gauge.width() + 2, gauge.height() + 2, 176, 0, 18, 1);
             int max = gaugeMax(gauge);
             int filled = max <= 0 ? 0 : (int) Math.min(gauge.height(), (long) menu.getValue(gauge.value()) * gauge.height() / max);
             if (filled > 0) {
                 g.fill(gx, gy + gauge.height() - filled, gx + gauge.width(), gy + gauge.height(), gauge.color());
-                g.fill(gx, gy + gauge.height() - filled, gx + 1, gy + gauge.height(), 0x40FFFFFF);
+                g.fill(gx, gy + gauge.height() - filled, gx + 2, gy + gauge.height(), 0x50FFFFFF);
+                g.fill(gx + gauge.width() - 1, gy + gauge.height() - filled, gx + gauge.width(), gy + gauge.height(), 0x40000000);
             }
         }
     }
 
+    /** Groups of output slots that touch each other, as [minX, minY, maxX, maxY] of their top-left corners. */
+    private java.util.List<int[]> outputGroups() {
+        java.util.List<int[]> groups = new java.util.ArrayList<>();
+        for (MachineLayout.SlotDef def : layout.slots) {
+            if (def.role() != MachineItems.Role.OUTPUT) {
+                continue;
+            }
+            int[] joined = null;
+            for (int[] box : groups) {
+                if (def.x() >= box[0] - 18 && def.x() <= box[2] + 18 && def.y() >= box[1] - 18 && def.y() <= box[3] + 18) {
+                    joined = box;
+                    break;
+                }
+            }
+            if (joined == null) {
+                groups.add(new int[] {def.x(), def.y(), def.x(), def.y()});
+            } else {
+                joined[0] = Math.min(joined[0], def.x());
+                joined[1] = Math.min(joined[1], def.y());
+                joined[2] = Math.max(joined[2], def.x());
+                joined[3] = Math.max(joined[3], def.y());
+            }
+        }
+        return groups;
+    }
+
+    /**
+     * Draws a square piece of the era texture stretched to any size, keeping its edges crisp
+     * (the corners are copied as they are; the edges and middle repeat one row or column).
+     */
+    private void nineSlice(GuiGraphics g, int x, int y, int width, int height, int u, int v, int size, int edge) {
+        int mid = size / 2;
+        // corners
+        g.blit(background, x, y, u, v, edge, edge);
+        g.blit(background, x + width - edge, y, u + size - edge, v, edge, edge);
+        g.blit(background, x, y + height - edge, u, v + size - edge, edge, edge);
+        g.blit(background, x + width - edge, y + height - edge, u + size - edge, v + size - edge, edge, edge);
+        // edges and middle: one stretched copy each (the source is a 1-pixel strip, so stretching keeps it crisp)
+        stretch(g, x + edge, y, width - 2 * edge, edge, u + mid, v, 1, edge);
+        stretch(g, x + edge, y + height - edge, width - 2 * edge, edge, u + mid, v + size - edge, 1, edge);
+        stretch(g, x, y + edge, edge, height - 2 * edge, u, v + mid, edge, 1);
+        stretch(g, x + width - edge, y + edge, edge, height - 2 * edge, u + size - edge, v + mid, edge, 1);
+        stretch(g, x + edge, y + edge, width - 2 * edge, height - 2 * edge, u + mid, v + mid, 1, 1);
+    }
+
     @Override
     protected void renderLabels(GuiGraphics g, int mouseX, int mouseY) {
-        g.drawString(font, title, titleLabelX, titleLabelY, textColor, false);
-        g.drawString(font, playerInventoryTitle, inventoryLabelX, inventoryLabelY, textColor, false);
+        boolean shadow = !layout.theme.equals("mechanical") && !layout.theme.equals("information");
+        g.drawString(font, title, titleLabelX, titleLabelY, textColor, shadow);
+        g.drawString(font, playerInventoryTitle, inventoryLabelX, inventoryLabelY, textColor, shadow);
         for (MachineLayout.Status status : layout.statuses) {
+            // Status sits at the right of the title row, so it never covers slots
             Component text = Component.translatable(status.keyPrefix() + "." + menu.getValue(status.value()));
-            g.drawString(font, text, status.x(), status.y(), textColor, false);
+            g.drawString(font, text, imageWidth - 8 - font.width(text), titleLabelY, textColor, shadow);
         }
     }
 
@@ -137,6 +183,12 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
                 g.renderTooltip(font, Component.translatable("gui.epochsmith.gauge", Component.translatable(gauge.label()),
                         String.format("%,d", menu.getValue(gauge.value())), String.format("%,d", gaugeMax(gauge))), mouseX, mouseY);
             }
+        }
+    }
+
+    private void stretch(GuiGraphics g, int x, int y, int width, int height, int u, int v, int uWidth, int vHeight) {
+        if (width > 0 && height > 0) {
+            g.blit(background, x, y, width, height, u, v, uWidth, vHeight, 256, 256);
         }
     }
 
