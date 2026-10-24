@@ -28,6 +28,7 @@
     "epochsmith:data_vault",
     "epochsmith:automated_assembler",
     "epochsmith:nanofabricator",
-    "epochsmith:fusion_reactor"
+    "epochsmith:fusion_reactor",
+    "epochsmith:plasma_smelter"
   ]
 }

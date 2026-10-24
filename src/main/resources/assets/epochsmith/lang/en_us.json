@@ -314,5 +314,9 @@
   "message.epochsmith.fusion.lit": "Fusion Reactor: making %s energy per tick. %s cells left, current cell %ss. Stored %s / %s.",
   "message.epochsmith.fusion.finale": "Fusion Achieved",
   "message.epochsmith.fusion.finale_sub": "From flint to the power of the stars",
-  "message.epochsmith.fusion.finale_chat": "You've built a working fusion reactor: the end goal of Epochsmith. From knapped flint to the power of the stars. Thank you for playing!"
+  "message.epochsmith.fusion.finale_chat": "You've built a working fusion reactor: the end goal of Epochsmith. From knapped flint to the power of the stars. Thank you for playing!",
+  "block.epochsmith.plasma_smelter": "Plasma Smelter",
+  "message.epochsmith.plasma_smelter.unknown": "You don't know how to run a plasma smelter yet. Reach the Future era first.",
+  "message.epochsmith.plasma_smelter.busy": "The plasma smelter is full. Collect what's done, or use four kinds of input at most.",
+  "message.epochsmith.plasma_smelter.status": "Plasma Smelter: %s to smelt, %s done. Fuel: %s plasma cells + %s smelts in the current cell."
 }

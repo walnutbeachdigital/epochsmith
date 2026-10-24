@@ -149,3 +149,34 @@ write_png(f"{root}/block/fusion_reactor_side.png", reactor_side(False))
 write_png(f"{root}/block/fusion_reactor_side_on.png", reactor_side(True))
 write_png(f"{root}/block/fusion_reactor_top.png", reactor_top())
 print("fusion reactor textures written")
+
+
+def smelter_side():
+    """Pearl-white shell with a band of violet plasma vents."""
+    px = nanofab_side()
+    for x in range(1, 15):
+        px[11][x] = (220, 216, 232, 255)
+        if x % 3 == 1:
+            for y in (12, 13):
+                px[y][x] = (150, 60, 220, 255)
+    return px
+
+
+def smelter_front(lit):
+    px = smelter_side()
+    for y in range(2, 10):
+        for x in range(4, 12):
+            d = abs(x - 7.5) + abs(y - 5.5)
+            if y in (2, 9) or x in (4, 11):
+                px[y][x] = (110, 100, 130, 255)
+            elif lit:
+                px[y][x] = (255, 240, 255, 255) if d < 1.5 else (230, 120, 255, 255) if d < 3 else (140, 50, 220, 255)
+            else:
+                px[y][x] = (30, 24, 40, 255)
+    return px
+
+
+write_png(f"{root}/block/plasma_smelter_side.png", smelter_side())
+write_png(f"{root}/block/plasma_smelter_front.png", smelter_front(False))
+write_png(f"{root}/block/plasma_smelter_front_on.png", smelter_front(True))
+print("plasma smelter textures written")

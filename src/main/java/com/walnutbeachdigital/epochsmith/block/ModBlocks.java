@@ -3,6 +3,7 @@ package com.walnutbeachdigital.epochsmith.block;
 import com.walnutbeachdigital.epochsmith.Epochsmith;
 import com.walnutbeachdigital.epochsmith.future.FusionReactorBlock;
 import com.walnutbeachdigital.epochsmith.future.NanofabricatorBlock;
+import com.walnutbeachdigital.epochsmith.future.PlasmaSmelterBlock;
 import com.walnutbeachdigital.epochsmith.information.AssemblerBlock;
 import com.walnutbeachdigital.epochsmith.information.ComputerCoreBlock;
 import com.walnutbeachdigital.epochsmith.information.DataVaultBlock;
@@ -321,6 +322,11 @@ public final class ModBlocks {
                     .lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 15 : 0)));
     public static final DeferredItem<BlockItem> FUSION_REACTOR_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("fusion_reactor", FUSION_REACTOR,
             new Item.Properties().rarity(Rarity.EPIC));
+
+    /** The Future era's smelter: burns plasma cells, triples ores. */
+    public static final DeferredBlock<PlasmaSmelterBlock> PLASMA_SMELTER = Epochsmith.BLOCKS.register("plasma_smelter",
+            () -> new PlasmaSmelterBlock(metal().lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 15 : 0)));
+    public static final DeferredItem<BlockItem> PLASMA_SMELTER_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("plasma_smelter", PLASMA_SMELTER);
 
     /** Called from the main mod class so this file loads before blocks are registered. */
     public static void init() {

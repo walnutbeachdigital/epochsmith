@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "G": {
+      "item": "epochsmith:graphene"
+    },
+    "P": {
+      "item": "epochsmith:plasma_cell"
+    },
+    "F": {
+      "item": "epochsmith:induction_furnace"
+    },
+    "S": {
+      "item": "epochsmith:superconductor_coil"
+    }
+  },
+  "pattern": [
+    "GPG",
+    "SFS",
+    "GPG"
+  ],
+  "result": {
+    "count": 1,
+    "id": "epochsmith:plasma_smelter"
+  }
+}

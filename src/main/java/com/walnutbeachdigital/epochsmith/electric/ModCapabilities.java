@@ -35,6 +35,8 @@ public final class ModCapabilities {
                 (vault, side) -> vault.getAutomation());
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ModBlockEntities.ASSEMBLER.get(),
                 (assembler, side) -> assembler.getAutomation());
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ModBlockEntities.PLASMA_SMELTER.get(),
+                (smelter, side) -> smelter.getAutomation());
     }
 
     private ModCapabilities() {

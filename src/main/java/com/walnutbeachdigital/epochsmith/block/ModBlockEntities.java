@@ -3,6 +3,7 @@ package com.walnutbeachdigital.epochsmith.block;
 import com.walnutbeachdigital.epochsmith.Epochsmith;
 import com.walnutbeachdigital.epochsmith.future.FusionReactorBlockEntity;
 import com.walnutbeachdigital.epochsmith.future.NanofabricatorBlockEntity;
+import com.walnutbeachdigital.epochsmith.future.PlasmaSmelterBlockEntity;
 import com.walnutbeachdigital.epochsmith.information.AssemblerBlockEntity;
 import com.walnutbeachdigital.epochsmith.information.ComputerCoreBlockEntity;
 import com.walnutbeachdigital.epochsmith.information.DataVaultBlockEntity;
@@ -156,6 +157,10 @@ public final class ModBlockEntities {
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<FusionReactorBlockEntity>> FUSION_REACTOR =
             BLOCK_ENTITIES.register("fusion_reactor",
                     () -> BlockEntityType.Builder.of(FusionReactorBlockEntity::new, ModBlocks.FUSION_REACTOR.get()).build(null));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<PlasmaSmelterBlockEntity>> PLASMA_SMELTER =
+            BLOCK_ENTITIES.register("plasma_smelter",
+                    () -> BlockEntityType.Builder.of(PlasmaSmelterBlockEntity::new, ModBlocks.PLASMA_SMELTER.get()).build(null));
 
     private ModBlockEntities() {
     }
