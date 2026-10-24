@@ -36,7 +36,7 @@ public class ForgeBlockEntity extends BlockEntity implements StatusDescriber, Ma
 
     private static final int INPUT = 0, FUEL = 1;
 
-    public static final MachineLayout LAYOUT = new MachineLayout(5)
+    public static final MachineLayout LAYOUT = new MachineLayout(5).theme("mechanical")
             .input(56, 17).fuel(56, 53).output(116, 35).arrow(79, 34, 0, 1)
             .gaugeOf(30, 17, 2, MAX_HEAT, MachineLayout.HEAT, "gui.epochsmith.heat")
             .gaugeOf(152, 17, 3, 16, MachineLayout.FORCE, "gui.epochsmith.force");

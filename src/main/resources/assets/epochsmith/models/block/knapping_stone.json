@@ -1,8 +1,245 @@
 {
-  "parent": "minecraft:block/slab",
+  "parent": "minecraft:block/block",
   "textures": {
-    "bottom": "minecraft:block/cobblestone",
-    "top": "minecraft:block/smooth_stone",
-    "side": "minecraft:block/cobblestone"
-  }
+    "particle": "minecraft:block/cobblestone",
+    "rock": "minecraft:block/cobblestone",
+    "face": "minecraft:block/smooth_stone",
+    "flint": "minecraft:item/flint",
+    "moss": "minecraft:block/mossy_cobblestone"
+  },
+  "elements": [
+    {
+      "from": [
+        1,
+        0,
+        1
+      ],
+      "to": [
+        15,
+        4,
+        15
+      ],
+      "faces": {
+        "north": {
+          "texture": "#rock"
+        },
+        "south": {
+          "texture": "#rock"
+        },
+        "east": {
+          "texture": "#rock"
+        },
+        "west": {
+          "texture": "#rock"
+        },
+        "up": {
+          "texture": "#moss"
+        },
+        "down": {
+          "texture": "#rock"
+        }
+      }
+    },
+    {
+      "from": [
+        2,
+        4,
+        3
+      ],
+      "to": [
+        13,
+        6,
+        13
+      ],
+      "faces": {
+        "north": {
+          "texture": "#rock"
+        },
+        "south": {
+          "texture": "#rock"
+        },
+        "east": {
+          "texture": "#rock"
+        },
+        "west": {
+          "texture": "#rock"
+        },
+        "up": {
+          "texture": "#face"
+        }
+      }
+    },
+    {
+      "from": [
+        3,
+        6,
+        4
+      ],
+      "to": [
+        12,
+        7,
+        12
+      ],
+      "faces": {
+        "north": {
+          "texture": "#face"
+        },
+        "south": {
+          "texture": "#face"
+        },
+        "east": {
+          "texture": "#face"
+        },
+        "west": {
+          "texture": "#face"
+        },
+        "up": {
+          "texture": "#face"
+        }
+      }
+    },
+    {
+      "from": [
+        10,
+        7,
+        5
+      ],
+      "to": [
+        12,
+        7.5,
+        7
+      ],
+      "faces": {
+        "north": {
+          "texture": "#flint"
+        },
+        "south": {
+          "texture": "#flint"
+        },
+        "east": {
+          "texture": "#flint"
+        },
+        "west": {
+          "texture": "#flint"
+        },
+        "up": {
+          "texture": "#flint"
+        },
+        "down": {
+          "texture": "#flint"
+        }
+      },
+      "rotation": {
+        "origin": [
+          11,
+          7,
+          6
+        ],
+        "axis": "y",
+        "angle": 22.5
+      }
+    },
+    {
+      "from": [
+        4,
+        7,
+        9
+      ],
+      "to": [
+        6,
+        7.5,
+        10.5
+      ],
+      "faces": {
+        "north": {
+          "texture": "#flint"
+        },
+        "south": {
+          "texture": "#flint"
+        },
+        "east": {
+          "texture": "#flint"
+        },
+        "west": {
+          "texture": "#flint"
+        },
+        "up": {
+          "texture": "#flint"
+        },
+        "down": {
+          "texture": "#flint"
+        }
+      },
+      "rotation": {
+        "origin": [
+          5,
+          7,
+          10
+        ],
+        "axis": "y",
+        "angle": -22.5
+      }
+    },
+    {
+      "from": [
+        7,
+        7,
+        7
+      ],
+      "to": [
+        8.5,
+        7.5,
+        8.5
+      ],
+      "faces": {
+        "north": {
+          "texture": "#flint"
+        },
+        "south": {
+          "texture": "#flint"
+        },
+        "east": {
+          "texture": "#flint"
+        },
+        "west": {
+          "texture": "#flint"
+        },
+        "up": {
+          "texture": "#flint"
+        },
+        "down": {
+          "texture": "#flint"
+        }
+      }
+    },
+    {
+      "from": [
+        13,
+        0,
+        12
+      ],
+      "to": [
+        15.5,
+        2,
+        14.5
+      ],
+      "faces": {
+        "north": {
+          "texture": "#rock"
+        },
+        "south": {
+          "texture": "#rock"
+        },
+        "east": {
+          "texture": "#rock"
+        },
+        "west": {
+          "texture": "#rock"
+        },
+        "up": {
+          "texture": "#face"
+        }
+      }
+    }
+  ]
 }

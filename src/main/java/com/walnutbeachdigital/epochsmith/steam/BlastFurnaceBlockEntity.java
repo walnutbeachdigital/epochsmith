@@ -37,7 +37,7 @@ public class BlastFurnaceBlockEntity extends BlockEntity implements StatusDescri
 
     private static final int INPUT = 0, FUEL = 1;
 
-    public static final MachineLayout LAYOUT = new MachineLayout(5)
+    public static final MachineLayout LAYOUT = new MachineLayout(5).theme("industrial")
             .input(56, 17).fuel(56, 53).output(116, 35).arrow(79, 34, 0, 1)
             .gaugeOf(30, 17, 2, MAX_HEAT, MachineLayout.HEAT, "gui.epochsmith.heat")
             .status(8, 72 - 12, 3, "gui.epochsmith.steam_status");

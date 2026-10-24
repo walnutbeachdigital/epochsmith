@@ -108,7 +108,7 @@ public final class ModBlocks {
                     .requiresCorrectToolForDrops()
                     .strength(3.0F)
                     .sound(SoundType.MUD_BRICKS)
-                    .lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 13 : 0)));
+                    .lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 13 : 0).noOcclusion()));
     public static final DeferredItem<BlockItem> BLOOMERY_ITEM =
             Epochsmith.ITEMS.registerSimpleBlockItem("bloomery", BLOOMERY);
 
@@ -162,12 +162,12 @@ public final class ModBlocks {
                     .mapColor(MapColor.STONE)
                     .requiresCorrectToolForDrops()
                     .strength(2.5F)
-                    .sound(SoundType.STONE)));
+                    .sound(SoundType.STONE).noOcclusion()));
     public static final DeferredItem<BlockItem> MILLSTONE_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("millstone", MILLSTONE);
 
     /** Passes rotation out of all six sides: turn corners and split power. */
     public static final DeferredBlock<GearboxBlock> GEARBOX = Epochsmith.BLOCKS.register("gearbox",
-            () -> new GearboxBlock(BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).strength(2.0F).sound(SoundType.WOOD)));
+            () -> new GearboxBlock(BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).strength(2.0F).sound(SoundType.WOOD).noOcclusion()));
     public static final DeferredItem<BlockItem> GEARBOX_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("gearbox", GEARBOX);
 
     /** The Mechanical era's crafting station: cuts gears and axles, by hand or with power. */
@@ -193,12 +193,12 @@ public final class ModBlocks {
                     .mapColor(MapColor.TERRACOTTA_ORANGE)
                     .requiresCorrectToolForDrops()
                     .strength(3.0F)
-                    .sound(SoundType.COPPER)));
+                    .sound(SoundType.COPPER).noOcclusion()));
     public static final DeferredItem<BlockItem> GEAR_TRAIN_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("gear_train", GEAR_TRAIN);
 
     /** The Mechanical era's storage: 27 slots, two side by side open as one. */
     public static final DeferredBlock<BandedCrateBlock> BANDED_CRATE = Epochsmith.BLOCKS.register("banded_crate",
-            () -> new BandedCrateBlock(BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).strength(2.5F).sound(SoundType.WOOD)));
+            () -> new BandedCrateBlock(BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).strength(2.5F).sound(SoundType.WOOD).noOcclusion()));
     public static final DeferredItem<BlockItem> BANDED_CRATE_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("banded_crate", BANDED_CRATE);
 
     // ---- Industrial era: steam ----
@@ -212,12 +212,12 @@ public final class ModBlocks {
     public static final DeferredBlock<CokeOvenBlock> COKE_OVEN = Epochsmith.BLOCKS.register("coke_oven",
             () -> new CokeOvenBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_RED).requiresCorrectToolForDrops()
                     .strength(3.0F).sound(SoundType.STONE)
-                    .lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 10 : 0)));
+                    .lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 10 : 0).noOcclusion()));
     public static final DeferredItem<BlockItem> COKE_OVEN_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("coke_oven", COKE_OVEN);
 
     /** Boils water into steam. */
     public static final DeferredBlock<BoilerBlock> BOILER = Epochsmith.BLOCKS.register("boiler",
-            () -> new BoilerBlock(metal().lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 9 : 0)));
+            () -> new BoilerBlock(metal().lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 9 : 0).noOcclusion()));
     public static final DeferredItem<BlockItem> BOILER_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("boiler", BOILER);
 
     /** Carries steam; joins up to neighbours on its own. */
@@ -263,7 +263,7 @@ public final class ModBlocks {
 
     /** Stores 200,000 energy. */
     public static final DeferredBlock<BatteryBlock> BATTERY = Epochsmith.BLOCKS.register("battery",
-            () -> new BatteryBlock(metal()));
+            () -> new BatteryBlock(metal().noOcclusion()));
     public static final DeferredItem<BlockItem> BATTERY_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("battery", BATTERY);
 
     /** Full-brightness electric light. The Electrical era's signature invention. */
@@ -280,7 +280,7 @@ public final class ModBlocks {
 
     /** The Electrical era's storage: nine labeled drawers of 1,024 that file items for you. */
     public static final DeferredBlock<SortingCabinetBlock> SORTING_CABINET = Epochsmith.BLOCKS.register("sorting_cabinet",
-            () -> new SortingCabinetBlock(metal()));
+            () -> new SortingCabinetBlock(metal().noOcclusion()));
     public static final DeferredItem<BlockItem> SORTING_CABINET_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("sorting_cabinet", SORTING_CABINET);
 
     // ---- Information era
@@ -291,12 +291,12 @@ public final class ModBlocks {
 
     /** Etches silicon into transistors. */
     public static final DeferredBlock<FabricatorBlock> FABRICATOR = Epochsmith.BLOCKS.register("circuit_fabricator",
-            () -> new FabricatorBlock(metal().lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 10 : 0)));
+            () -> new FabricatorBlock(metal().lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 10 : 0).noOcclusion()));
     public static final DeferredItem<BlockItem> FABRICATOR_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("circuit_fabricator", FABRICATOR);
 
     /** The Information era's signature invention. Booting one up unlocks the Future era. */
     public static final DeferredBlock<ComputerCoreBlock> COMPUTER_CORE = Epochsmith.BLOCKS.register("computer_core",
-            () -> new ComputerCoreBlock(metal().lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 7 : 0)));
+            () -> new ComputerCoreBlock(metal().lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 7 : 0).noOcclusion()));
     public static final DeferredItem<BlockItem> COMPUTER_CORE_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("computer_core", COMPUTER_CORE);
 
     /** The Information era's smelter: batch smelting, fully automatable. */
@@ -306,42 +306,42 @@ public final class ModBlocks {
 
     /** The Information era's storage: 65,536 items as data, with a searchable terminal. */
     public static final DeferredBlock<DataVaultBlock> DATA_VAULT = Epochsmith.BLOCKS.register("data_vault",
-            () -> new DataVaultBlock(metal().lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 5 : 0)));
+            () -> new DataVaultBlock(metal().lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 5 : 0).noOcclusion()));
     public static final DeferredItem<BlockItem> DATA_VAULT_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("data_vault", DATA_VAULT,
             new Item.Properties().stacksTo(1));
 
     /** The Information era's crafting: teach it a recipe and it crafts on its own. */
     public static final DeferredBlock<AssemblerBlock> ASSEMBLER = Epochsmith.BLOCKS.register("automated_assembler",
-            () -> new AssemblerBlock(metal().lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 6 : 0)));
+            () -> new AssemblerBlock(metal().lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 6 : 0).noOcclusion()));
     public static final DeferredItem<BlockItem> ASSEMBLER_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("automated_assembler", ASSEMBLER);
 
     // ---- Future era
     /** Builds graphene and nanobots atom by atom. */
     public static final DeferredBlock<NanofabricatorBlock> NANOFABRICATOR = Epochsmith.BLOCKS.register("nanofabricator",
-            () -> new NanofabricatorBlock(metal().lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 12 : 0)));
+            () -> new NanofabricatorBlock(metal().lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 12 : 0).noOcclusion()));
     public static final DeferredItem<BlockItem> NANOFABRICATOR_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("nanofabricator", NANOFABRICATOR);
 
     /** The Future era's signature invention and Epochsmith's end goal: fusion power from plasma cells. */
     public static final DeferredBlock<FusionReactorBlock> FUSION_REACTOR = Epochsmith.BLOCKS.register("fusion_reactor",
             () -> new FusionReactorBlock(metal().strength(10.0F, 1200.0F)
-                    .lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 15 : 0)));
+                    .lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 15 : 0).noOcclusion()));
     public static final DeferredItem<BlockItem> FUSION_REACTOR_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("fusion_reactor", FUSION_REACTOR,
             new Item.Properties().rarity(Rarity.EPIC));
 
     /** The Future era's smelter: burns plasma cells, triples ores. */
     public static final DeferredBlock<PlasmaSmelterBlock> PLASMA_SMELTER = Epochsmith.BLOCKS.register("plasma_smelter",
-            () -> new PlasmaSmelterBlock(metal().lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 15 : 0)));
+            () -> new PlasmaSmelterBlock(metal().lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 15 : 0).noOcclusion()));
     public static final DeferredItem<BlockItem> PLASMA_SMELTER_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("plasma_smelter", PLASMA_SMELTER);
 
     /** The Future era's storage: linked cells share one huge inventory, anywhere. */
     public static final DeferredBlock<QuantumCellBlock> QUANTUM_CELL = Epochsmith.BLOCKS.register("quantum_cell",
-            () -> new QuantumCellBlock(metal().lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 8 : 0)));
+            () -> new QuantumCellBlock(metal().lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 8 : 0).noOcclusion()));
     public static final DeferredItem<QuantumCellItem> QUANTUM_CELL_ITEM = Epochsmith.ITEMS.register("quantum_cell",
             () -> new QuantumCellItem(QUANTUM_CELL.get(), new Item.Properties().rarity(Rarity.RARE)));
 
     /** The Future era's crafting: prints copies of scanned items from raw matter. */
     public static final DeferredBlock<MatterPrinterBlock> MATTER_PRINTER = Epochsmith.BLOCKS.register("matter_printer",
-            () -> new MatterPrinterBlock(metal().lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 12 : 0)));
+            () -> new MatterPrinterBlock(metal().lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 12 : 0).noOcclusion()));
     public static final DeferredItem<BlockItem> MATTER_PRINTER_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("matter_printer", MATTER_PRINTER,
             new Item.Properties().rarity(Rarity.RARE));
 

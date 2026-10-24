@@ -47,7 +47,7 @@ public class BloomeryBlockEntity extends BlockEntity implements StatusDescriber,
     public static final TagKey<Item> TIN_INGOTS =
             TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("c", "ingots/tin"));
 
-    public static final MachineLayout LAYOUT = new MachineLayout(3)
+    public static final MachineLayout LAYOUT = new MachineLayout(3).theme("bronze_iron")
             .input(30, 17).input(48, 17).input(66, 17).fuel(48, 53).output(124, 35)
             .flame(48, 36, 2, 1).arrow(88, 34, 0, 1);
 

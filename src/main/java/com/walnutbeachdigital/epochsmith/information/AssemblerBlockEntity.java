@@ -123,7 +123,7 @@ public class AssemblerBlockEntity extends BlockEntity implements WorkpieceHolder
     private ItemStack lastPattern = ItemStack.EMPTY;
 
     public static final int NEXT_RECIPE_BUTTON = 0;
-    public static final MachineLayout LAYOUT = new MachineLayout(3)
+    public static final MachineLayout LAYOUT = new MachineLayout(3).theme("information")
             .input(8, 17).input(26, 17).input(44, 17)
             .input(8, 35).input(26, 35).input(44, 35)
             .input(8, 53).input(26, 53).input(44, 53)

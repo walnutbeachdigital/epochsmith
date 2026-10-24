@@ -37,7 +37,7 @@ public class LatheBlockEntity extends BlockEntity implements WorkpieceHolder, St
     public static final int MAX_PIECES = 16;
     private static final int CHECK_INTERVAL = 10;
 
-    public static final MachineLayout LAYOUT = new MachineLayout(4)
+    public static final MachineLayout LAYOUT = new MachineLayout(4).theme("industrial")
             .input(56, 35).output(116, 35).arrow(79, 34, 0, 1)
             .status(8, 60, 2, "gui.epochsmith.steam_status");
 

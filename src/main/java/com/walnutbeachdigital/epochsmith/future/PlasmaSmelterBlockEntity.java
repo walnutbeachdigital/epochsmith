@@ -117,7 +117,7 @@ public class PlasmaSmelterBlockEntity extends BlockEntity implements StatusDescr
     };
 
     /** Smelts left from the plasma cell currently burning. */
-    public static final MachineLayout LAYOUT = new MachineLayout(3)
+    public static final MachineLayout LAYOUT = new MachineLayout(3).theme("future")
             .input(34, 17).input(52, 17).input(34, 35).input(52, 35)
             .fuel(8, 53)
             .output(110, 26).output(128, 26).output(110, 44).output(128, 44)

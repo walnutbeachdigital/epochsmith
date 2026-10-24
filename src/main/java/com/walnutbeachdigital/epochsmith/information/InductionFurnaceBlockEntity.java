@@ -92,7 +92,7 @@ public class InductionFurnaceBlockEntity extends BlockEntity implements StatusDe
         }
     };
 
-    public static final MachineLayout LAYOUT = new MachineLayout(3)
+    public static final MachineLayout LAYOUT = new MachineLayout(3).theme("information")
             .input(38, 26).input(56, 26).input(38, 44).input(56, 44)
             .output(110, 26).output(128, 26).output(110, 44).output(128, 44)
             .arrow(79, 35, 0, 1)

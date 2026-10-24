@@ -119,7 +119,7 @@ public class MatterPrinterBlockEntity extends BlockEntity implements WorkpieceHo
     private ItemStack lastPattern = ItemStack.EMPTY;
     private int lastDrawn = 0;
 
-    public static final MachineLayout LAYOUT = new MachineLayout(5)
+    public static final MachineLayout LAYOUT = new MachineLayout(5).theme("future")
             .pattern(26, 17).input(26, 53)
             .output(98, 17).output(116, 17).output(134, 17)
             .output(98, 35).output(116, 35).output(134, 35)

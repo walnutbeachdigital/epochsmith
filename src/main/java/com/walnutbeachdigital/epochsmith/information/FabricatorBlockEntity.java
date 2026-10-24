@@ -38,7 +38,7 @@ public class FabricatorBlockEntity extends BlockEntity implements WorkpieceHolde
     public static final int MAX_ITEMS = 64;
     private static final int REFRESH_INTERVAL = 20;
 
-    public static final MachineLayout LAYOUT = new MachineLayout(3)
+    public static final MachineLayout LAYOUT = new MachineLayout(3).theme("information")
             .input(56, 35).output(116, 35).arrow(79, 34, 0, 1)
             .gaugeOf(152, 17, 2, ENERGY_PER_TICK, MachineLayout.ENERGY, "gui.epochsmith.power");
 

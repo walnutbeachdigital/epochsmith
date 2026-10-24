@@ -37,7 +37,7 @@ public class PitKilnBlockEntity extends BlockEntity implements MachineGui {
     public static final int STICKS_PER_FIRING = 4;
     private static final int INPUT = 0, FUEL = 1, OUTPUT = 2;
 
-    public static final MachineLayout LAYOUT = new MachineLayout(3)
+    public static final MachineLayout LAYOUT = new MachineLayout(3).theme("primitive")
             .input(56, 17).fuel(56, 53).output(116, 35)
             .flame(56, 36, 2, 1).arrow(79, 34, 0, 1);
 

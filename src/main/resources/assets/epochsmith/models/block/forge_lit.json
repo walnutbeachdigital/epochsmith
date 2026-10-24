@@ -3,10 +3,11 @@
   "textures": {
     "particle": "minecraft:block/bricks",
     "brick": "minecraft:block/bricks",
-    "front": "minecraft:block/blast_furnace_front_on",
     "hearth": "minecraft:block/magma",
     "bellows": "minecraft:block/brown_wool",
-    "wood": "minecraft:block/oak_planks"
+    "wood": "minecraft:block/oak_planks",
+    "iron": "minecraft:block/iron_block",
+    "dark": "minecraft:block/smooth_basalt"
   },
   "elements": [
     {
@@ -17,223 +18,296 @@
       ],
       "to": [
         16,
-        12,
+        9,
         16
       ],
       "faces": {
         "north": {
-          "uv": [
-            0,
-            4,
-            16,
-            16
-          ],
-          "texture": "#front"
+          "texture": "#brick"
         },
         "south": {
-          "uv": [
-            0,
-            4,
-            16,
-            16
-          ],
           "texture": "#brick"
         },
         "east": {
-          "uv": [
-            0,
-            4,
-            16,
-            16
-          ],
           "texture": "#brick"
         },
         "west": {
-          "uv": [
-            0,
-            4,
-            16,
-            16
-          ],
+          "texture": "#brick"
+        },
+        "up": {
           "texture": "#brick"
         },
         "down": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
           "texture": "#brick",
           "cullface": "down"
-        },
-        "up": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
-          "texture": "#brick"
         }
       }
     },
     {
       "from": [
         2,
-        12,
+        9,
         1
       ],
       "to": [
         14,
-        12.5,
+        10,
         9
       ],
       "faces": {
-        "up": {
-          "uv": [
-            2,
-            1,
-            14,
-            9
-          ],
-          "texture": "#hearth"
-        },
         "north": {
-          "uv": [
-            2,
-            0,
-            14,
-            1
-          ],
+          "texture": "#dark"
+        },
+        "south": {
+          "texture": "#dark"
+        },
+        "east": {
+          "texture": "#dark"
+        },
+        "west": {
+          "texture": "#dark"
+        },
+        "up": {
           "texture": "#hearth"
         }
-      }
+      },
+      "neoforge_data": {
+        "block_light": 15,
+        "sky_light": 15
+      },
+      "shade": false
     },
     {
       "from": [
-        3,
-        12,
-        10
+        1,
+        9,
+        0
       ],
       "to": [
-        13,
         15,
-        15
+        11,
+        1
       ],
       "faces": {
         "north": {
-          "uv": [
-            3,
-            1,
-            13,
-            6
-          ],
-          "texture": "#bellows"
+          "texture": "#brick"
         },
         "south": {
-          "uv": [
-            3,
-            1,
-            13,
-            6
-          ],
-          "texture": "#bellows"
+          "texture": "#brick"
         },
         "east": {
-          "uv": [
-            3,
-            1,
-            13,
-            6
-          ],
-          "texture": "#bellows"
+          "texture": "#brick"
         },
         "west": {
-          "uv": [
-            3,
-            1,
-            13,
-            6
-          ],
-          "texture": "#bellows"
+          "texture": "#brick"
         },
         "up": {
-          "uv": [
-            3,
-            1,
-            13,
-            6
-          ],
-          "texture": "#bellows"
+          "texture": "#brick"
+        },
+        "down": {
+          "texture": "#brick"
         }
       }
     },
     {
       "from": [
-        3,
+        1,
+        9,
+        1
+      ],
+      "to": [
+        2,
+        11,
+        9
+      ],
+      "faces": {
+        "north": {
+          "texture": "#brick"
+        },
+        "south": {
+          "texture": "#brick"
+        },
+        "east": {
+          "texture": "#brick"
+        },
+        "west": {
+          "texture": "#brick"
+        },
+        "up": {
+          "texture": "#brick"
+        },
+        "down": {
+          "texture": "#brick"
+        }
+      }
+    },
+    {
+      "from": [
+        14,
+        9,
+        1
+      ],
+      "to": [
         15,
+        11,
+        9
+      ],
+      "faces": {
+        "north": {
+          "texture": "#brick"
+        },
+        "south": {
+          "texture": "#brick"
+        },
+        "east": {
+          "texture": "#brick"
+        },
+        "west": {
+          "texture": "#brick"
+        },
+        "up": {
+          "texture": "#brick"
+        },
+        "down": {
+          "texture": "#brick"
+        }
+      }
+    },
+    {
+      "from": [
+        4,
+        9,
         10
       ],
       "to": [
-        13,
+        11,
         16,
         15
       ],
       "faces": {
         "north": {
-          "uv": [
-            3,
-            0,
-            13,
-            5
-          ],
+          "texture": "#brick"
+        },
+        "south": {
+          "texture": "#brick"
+        },
+        "east": {
+          "texture": "#brick"
+        },
+        "west": {
+          "texture": "#brick"
+        },
+        "up": {
+          "texture": "#dark"
+        }
+      }
+    },
+    {
+      "from": [
+        11,
+        9,
+        10
+      ],
+      "to": [
+        15,
+        12,
+        15
+      ],
+      "faces": {
+        "north": {
+          "texture": "#bellows"
+        },
+        "south": {
+          "texture": "#bellows"
+        },
+        "east": {
+          "texture": "#bellows"
+        },
+        "west": {
+          "texture": "#bellows"
+        },
+        "up": {
+          "texture": "#wood"
+        }
+      }
+    },
+    {
+      "from": [
+        11,
+        12,
+        10
+      ],
+      "to": [
+        15,
+        13,
+        15
+      ],
+      "faces": {
+        "north": {
           "texture": "#wood"
         },
         "south": {
-          "uv": [
-            3,
-            0,
-            13,
-            5
-          ],
           "texture": "#wood"
         },
         "east": {
-          "uv": [
-            3,
-            0,
-            13,
-            5
-          ],
           "texture": "#wood"
         },
         "west": {
-          "uv": [
-            3,
-            0,
-            13,
-            5
-          ],
           "texture": "#wood"
         },
         "up": {
-          "uv": [
-            3,
-            0,
-            13,
-            5
-          ],
           "texture": "#wood"
         },
         "down": {
-          "uv": [
-            3,
-            0,
-            13,
-            5
-          ],
           "texture": "#wood"
+        }
+      }
+    },
+    {
+      "from": [
+        5,
+        4,
+        -0.5
+      ],
+      "to": [
+        11,
+        8,
+        0
+      ],
+      "faces": {
+        "north": {
+          "texture": "#hearth"
+        }
+      },
+      "neoforge_data": {
+        "block_light": 15,
+        "sky_light": 15
+      },
+      "shade": false
+    },
+    {
+      "from": [
+        0,
+        2,
+        0
+      ],
+      "to": [
+        16,
+        3,
+        16
+      ],
+      "faces": {
+        "north": {
+          "texture": "#iron"
+        },
+        "south": {
+          "texture": "#iron"
+        },
+        "east": {
+          "texture": "#iron"
+        },
+        "west": {
+          "texture": "#iron"
         }
       }
     }

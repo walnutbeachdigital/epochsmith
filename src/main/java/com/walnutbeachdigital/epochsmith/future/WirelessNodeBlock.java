@@ -27,7 +27,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 public class WirelessNodeBlock extends BaseEntityBlock implements ElectricConnectable {
 
     public static final MapCodec<WirelessNodeBlock> CODEC = simpleCodec(WirelessNodeBlock::new);
-    private static final VoxelShape SHAPE = Block.box(4, 0, 4, 12, 14, 12);
+    private static final VoxelShape SHAPE = Block.box(3, 0, 3, 13, 15, 13);
 
     public WirelessNodeBlock(Properties properties) {
         super(properties);

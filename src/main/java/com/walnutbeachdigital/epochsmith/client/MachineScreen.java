@@ -17,7 +17,6 @@ import net.minecraft.world.entity.player.Inventory;
  */
 public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
 
-    private static final ResourceLocation SLOT = ResourceLocation.withDefaultNamespace("container/slot");
     private static final ResourceLocation ARROW = ResourceLocation.withDefaultNamespace("container/furnace/burn_progress");
     private static final ResourceLocation FLAME = ResourceLocation.withDefaultNamespace("container/furnace/lit_progress");
     private static final ResourceLocation FURNACE = ResourceLocation.withDefaultNamespace("textures/gui/container/furnace.png");
@@ -29,6 +28,8 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
     private static final int TEXT = 0xFF404040;
 
     private final MachineLayout layout;
+    private final ResourceLocation background;
+    private final int textColor;
 
     public MachineScreen(MachineMenu menu, Inventory inventory, Component title) {
         super(menu, inventory, title);
@@ -36,6 +37,15 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
         this.imageWidth = 176;
         this.imageHeight = layout.inventoryY + 82;
         this.inventoryLabelY = layout.inventoryY - 11;
+        this.background = ResourceLocation.fromNamespaceAndPath("epochsmith", "textures/gui/era/" + layout.theme + ".png");
+        this.textColor = switch (layout.theme) {
+            case "primitive", "bronze_iron" -> 0xFFF0E0C0;
+            case "mechanical" -> 0xFF3C2814;
+            case "electrical" -> 0xFFF0C096;
+            case "information" -> 0xFF40404A;
+            case "future" -> 0xFFAAE6FF;
+            default -> 0xFFDCE0E6;
+        };
     }
 
     @Override
@@ -54,44 +64,36 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
     protected void renderBg(GuiGraphics g, float partialTick, int mouseX, int mouseY) {
         int x = leftPos;
         int y = topPos;
-        // Panel with vanilla-style bevelled edges
-        g.fill(x + 1, y, x + imageWidth - 1, y + imageHeight, EDGE);
-        g.fill(x, y + 1, x + imageWidth, y + imageHeight - 1, EDGE);
-        g.fill(x + 1, y + 1, x + imageWidth - 1, y + imageHeight - 1, PANEL);
-        g.fill(x + 1, y + 1, x + imageWidth - 2, y + 3, LIGHT);
-        g.fill(x + 1, y + 1, x + 3, y + imageHeight - 2, LIGHT);
-        g.fill(x + 3, y + imageHeight - 3, x + imageWidth - 1, y + imageHeight - 1, SHADOW);
-        g.fill(x + imageWidth - 3, y + 3, x + imageWidth - 1, y + imageHeight - 1, SHADOW);
-
-        // Slots: machine slots, then the player's inventory
+        // The era's panel, then its slots (output slots get a raised frame)
+        g.blit(background, x, y, 0, 0, imageWidth, imageHeight);
         for (MachineLayout.SlotDef def : layout.slots) {
             if (def.role() == MachineItems.Role.OUTPUT) {
-                g.fill(x + def.x() - 2, y + def.y() - 2, x + def.x() + 18, y + def.y() + 18, 0xFF8B8B8B);
+                g.blit(background, x + def.x() - 5, y + def.y() - 5, 176, 18, 26, 26);
             }
-            g.blitSprite(SLOT, x + def.x() - 1, y + def.y() - 1, 18, 18);
+            g.blit(background, x + def.x() - 1, y + def.y() - 1, 176, 0, 18, 18);
             if (def.role() == MachineItems.Role.PATTERN) {
                 g.fill(x + def.x(), y + def.y(), x + def.x() + 16, y + def.y() + 16, 0x3040A0FF);
             }
         }
         for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 9; col++) {
-                g.blitSprite(SLOT, x + 7 + col * 18, y + layout.inventoryY - 1 + row * 18, 18, 18);
+                g.blit(background, x + 7 + col * 18, y + layout.inventoryY - 1 + row * 18, 176, 0, 18, 18);
             }
         }
         for (int col = 0; col < 9; col++) {
-            g.blitSprite(SLOT, x + 7 + col * 18, y + layout.inventoryY + 57, 18, 18);
+            g.blit(background, x + 7 + col * 18, y + layout.inventoryY + 57, 176, 0, 18, 18);
         }
 
-        // Progress arrows and flames (the empty ones come from vanilla's furnace screen)
+        // Progress arrows and flames (empty shapes from the era texture, filled ones from vanilla's furnace sprites)
         for (MachineLayout.Meter arrow : layout.arrows) {
-            g.blit(FURNACE, x + arrow.x(), y + arrow.y(), 79, 34, 24, 17);
+            g.blit(background, x + arrow.x(), y + arrow.y(), 176, 44, 24, 17);
             int width = scaled(arrow, 24);
             if (width > 0) {
                 g.blitSprite(ARROW, 24, 16, 0, 0, x + arrow.x(), y + arrow.y(), width, 16);
             }
         }
         for (MachineLayout.Meter flame : layout.flames) {
-            g.blit(FURNACE, x + flame.x(), y + flame.y(), 56, 36, 14, 14);
+            g.blit(background, x + flame.x(), y + flame.y(), 176, 62, 14, 14);
             int height = scaled(flame, 14);
             if (height > 0) {
                 g.blitSprite(FLAME, 14, 14, 0, 14 - height, x + flame.x(), y + flame.y() + 14 - height, 14, height);
@@ -116,10 +118,11 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
 
     @Override
     protected void renderLabels(GuiGraphics g, int mouseX, int mouseY) {
-        super.renderLabels(g, mouseX, mouseY);
+        g.drawString(font, title, titleLabelX, titleLabelY, textColor, false);
+        g.drawString(font, playerInventoryTitle, inventoryLabelX, inventoryLabelY, textColor, false);
         for (MachineLayout.Status status : layout.statuses) {
             Component text = Component.translatable(status.keyPrefix() + "." + menu.getValue(status.value()));
-            g.drawString(font, text, status.x(), status.y(), TEXT, false);
+            g.drawString(font, text, status.x(), status.y(), textColor, false);
         }
     }
 

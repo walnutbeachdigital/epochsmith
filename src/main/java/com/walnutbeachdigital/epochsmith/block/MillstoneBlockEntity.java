@@ -29,7 +29,7 @@ public class MillstoneBlockEntity extends BlockEntity implements StatusDescriber
     public static final int MAX_ITEMS = 16;
     private static final int POWER_CHECK_INTERVAL = 10;
 
-    public static final MachineLayout LAYOUT = new MachineLayout(4)
+    public static final MachineLayout LAYOUT = new MachineLayout(4).theme("mechanical")
             .input(56, 35).output(116, 35).arrow(79, 34, 0, 1)
             .gaugeOf(152, 17, 2, 16, MachineLayout.FORCE, "gui.epochsmith.force");
 

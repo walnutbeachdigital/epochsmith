@@ -28,7 +28,7 @@ public class CokeOvenBlockEntity extends BlockEntity implements MachineGui {
     public static final int BAKE_TIME = 600;
     public static final int MAX_ITEMS = 16;
 
-    public static final MachineLayout LAYOUT = new MachineLayout(2)
+    public static final MachineLayout LAYOUT = new MachineLayout(2).theme("industrial")
             .input(56, 35).output(116, 35).arrow(79, 34, 0, 1);
 
     private final MachineItems items = new MachineItems(this::setChanged, (slot, stack) -> stack.is(Items.COAL),

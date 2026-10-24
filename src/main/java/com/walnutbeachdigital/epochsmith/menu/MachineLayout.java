@@ -39,9 +39,16 @@ public final class MachineLayout {
     public final List<Status> statuses = new ArrayList<>();
     public final int values;
     public int inventoryY = 84;
+    /** Which era's screen style to use: primitive, bronze_iron, mechanical, industrial, electrical, information or future. */
+    public String theme = "industrial";
 
     public MachineLayout(int values) {
         this.values = values;
+    }
+
+    public MachineLayout theme(String era) {
+        this.theme = era;
+        return this;
     }
 
     public MachineLayout slot(int x, int y, MachineItems.Role role) {
