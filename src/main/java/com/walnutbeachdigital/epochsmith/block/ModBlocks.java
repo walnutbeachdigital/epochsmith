@@ -4,6 +4,8 @@ import com.walnutbeachdigital.epochsmith.Epochsmith;
 import com.walnutbeachdigital.epochsmith.future.FusionReactorBlock;
 import com.walnutbeachdigital.epochsmith.future.NanofabricatorBlock;
 import com.walnutbeachdigital.epochsmith.future.PlasmaSmelterBlock;
+import com.walnutbeachdigital.epochsmith.future.QuantumCellBlock;
+import com.walnutbeachdigital.epochsmith.future.QuantumCellItem;
 import com.walnutbeachdigital.epochsmith.information.AssemblerBlock;
 import com.walnutbeachdigital.epochsmith.information.ComputerCoreBlock;
 import com.walnutbeachdigital.epochsmith.information.DataVaultBlock;
@@ -327,6 +329,12 @@ public final class ModBlocks {
     public static final DeferredBlock<PlasmaSmelterBlock> PLASMA_SMELTER = Epochsmith.BLOCKS.register("plasma_smelter",
             () -> new PlasmaSmelterBlock(metal().lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 15 : 0)));
     public static final DeferredItem<BlockItem> PLASMA_SMELTER_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("plasma_smelter", PLASMA_SMELTER);
+
+    /** The Future era's storage: linked cells share one huge inventory, anywhere. */
+    public static final DeferredBlock<QuantumCellBlock> QUANTUM_CELL = Epochsmith.BLOCKS.register("quantum_cell",
+            () -> new QuantumCellBlock(metal().lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 8 : 0)));
+    public static final DeferredItem<QuantumCellItem> QUANTUM_CELL_ITEM = Epochsmith.ITEMS.register("quantum_cell",
+            () -> new QuantumCellItem(QUANTUM_CELL.get(), new Item.Properties().rarity(Rarity.RARE)));
 
     /** Called from the main mod class so this file loads before blocks are registered. */
     public static void init() {

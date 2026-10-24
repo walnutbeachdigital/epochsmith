@@ -180,3 +180,36 @@ write_png(f"{root}/block/plasma_smelter_side.png", smelter_side())
 write_png(f"{root}/block/plasma_smelter_front.png", smelter_front(False))
 write_png(f"{root}/block/plasma_smelter_front_on.png", smelter_front(True))
 print("plasma smelter textures written")
+
+
+def quantum_side(lit):
+    """A dark crystal lattice with a shimmering violet-and-cyan core."""
+    px = [[(28, 24, 40, 255) for _ in range(16)] for _ in range(16)]
+    for i in range(16):
+        px[0][i] = px[i][0] = (120, 110, 150, 255)
+        px[15][i] = px[i][15] = (16, 14, 24, 255)
+    for y in range(2, 14):
+        for x in range(2, 14):
+            if (x + y) % 4 == 0 or (x - y) % 4 == 0:
+                px[y][x] = (70, 60, 110, 255)
+    for y in range(5, 11):
+        for x in range(5, 11):
+            if lit:
+                px[y][x] = (140, 240, 255, 255) if (x + y) % 2 else (210, 120, 255, 255)
+            else:
+                px[y][x] = (60, 50, 90, 255)
+    return px
+
+
+def quantum_top():
+    px = quantum_side(False)
+    for y in range(6, 10):
+        for x in range(6, 10):
+            px[y][x] = (120, 110, 150, 255)
+    return px
+
+
+write_png(f"{root}/block/quantum_cell_side.png", quantum_side(False))
+write_png(f"{root}/block/quantum_cell_side_on.png", quantum_side(True))
+write_png(f"{root}/block/quantum_cell_top.png", quantum_top())
+print("quantum cell textures written")

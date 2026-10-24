@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "lit=false": {
+      "model": "epochsmith:block/quantum_cell"
+    },
+    "lit=true": {
+      "model": "epochsmith:block/quantum_cell_on"
+    }
+  }
+}

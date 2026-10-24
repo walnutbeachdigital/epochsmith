@@ -29,6 +29,7 @@
     "epochsmith:automated_assembler",
     "epochsmith:nanofabricator",
     "epochsmith:fusion_reactor",
-    "epochsmith:plasma_smelter"
+    "epochsmith:plasma_smelter",
+    "epochsmith:quantum_cell"
   ]
 }

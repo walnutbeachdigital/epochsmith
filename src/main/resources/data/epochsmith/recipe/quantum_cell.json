@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "G": {
+      "item": "epochsmith:graphene"
+    },
+    "E": {
+      "item": "minecraft:ender_eye"
+    },
+    "V": {
+      "item": "epochsmith:data_vault"
+    },
+    "S": {
+      "item": "epochsmith:superconductor_coil"
+    }
+  },
+  "pattern": [
+    "GEG",
+    "SVS",
+    "GEG"
+  ],
+  "result": {
+    "count": 1,
+    "id": "epochsmith:quantum_cell"
+  }
+}

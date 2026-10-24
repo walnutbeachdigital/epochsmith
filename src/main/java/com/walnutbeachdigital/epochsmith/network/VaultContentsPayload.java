@@ -13,11 +13,12 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
 /**
- * Server to player: everything in a data vault, for the terminal screen.
+ * Server to player: everything in a data vault or quantum cell, for the terminal screen.
  * Kinds and counts are sent as two lists, because one item stack can't hold a count above 99.
  * "open" is true when the player just clicked the vault, false when it's a refresh.
  */
-public record VaultContentsPayload(BlockPos pos, List<ItemStack> kinds, List<Integer> counts, boolean open)
+public record VaultContentsPayload(BlockPos pos, List<ItemStack> kinds, List<Integer> counts, boolean open,
+                                   int capacity, int maxTypes)
         implements CustomPacketPayload {
 
     public static final Type<VaultContentsPayload> TYPE =
@@ -28,6 +29,8 @@ public record VaultContentsPayload(BlockPos pos, List<ItemStack> kinds, List<Int
             ItemStack.STREAM_CODEC.apply(ByteBufCodecs.list()), VaultContentsPayload::kinds,
             ByteBufCodecs.VAR_INT.apply(ByteBufCodecs.list()), VaultContentsPayload::counts,
             ByteBufCodecs.BOOL, VaultContentsPayload::open,
+            ByteBufCodecs.VAR_INT, VaultContentsPayload::capacity,
+            ByteBufCodecs.VAR_INT, VaultContentsPayload::maxTypes,
             VaultContentsPayload::new);
 
     @Override

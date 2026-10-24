@@ -5,7 +5,8 @@ import java.util.List;
 
 import com.walnutbeachdigital.epochsmith.Epochsmith;
 import com.walnutbeachdigital.epochsmith.client.ClientHooks;
-import com.walnutbeachdigital.epochsmith.information.DataVaultBlockEntity;
+import com.walnutbeachdigital.epochsmith.information.ItemVault;
+import com.walnutbeachdigital.epochsmith.information.VaultStorage;
 
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
@@ -17,7 +18,7 @@ import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 /**
- * The data vault terminal's messages: the vault's contents going to the player,
+ * The vault terminal's messages (data vault and quantum cells): the vault's contents going to the player,
  * and the player's "take this out" requests coming back.
  */
 @EventBusSubscriber(modid = Epochsmith.MODID, bus = EventBusSubscriber.Bus.MOD)
@@ -33,14 +34,16 @@ public final class VaultNetwork {
                 .playToServer(VaultWithdrawPayload.TYPE, VaultWithdrawPayload.STREAM_CODEC, VaultNetwork::handleWithdraw);
     }
 
-    public static void sendContents(ServerPlayer player, DataVaultBlockEntity vault, boolean open) {
+    public static void sendContents(ServerPlayer player, ItemVault vault, boolean open) {
+        VaultStorage storage = vault.getStorage();
         List<ItemStack> kinds = new ArrayList<>();
         List<Integer> counts = new ArrayList<>();
-        for (DataVaultBlockEntity.Entry entry : vault.getEntries()) {
+        for (VaultStorage.Entry entry : storage.getEntries()) {
             kinds.add(entry.kind.copy());
             counts.add(entry.count);
         }
-        PacketDistributor.sendToPlayer(player, new VaultContentsPayload(vault.getBlockPos(), kinds, counts, open));
+        PacketDistributor.sendToPlayer(player, new VaultContentsPayload(vault.getBlockPos(), kinds, counts, open,
+                storage.getCapacity(), storage.getMaxTypes()));
     }
 
     /** Runs on the player's game. */
@@ -53,12 +56,12 @@ public final class VaultNetwork {
         context.enqueueWork(() -> {
             if (!(context.player() instanceof ServerPlayer player)
                     || player.distanceToSqr(Vec3.atCenterOf(payload.pos())) > REACH * REACH
-                    || !(player.level().getBlockEntity(payload.pos()) instanceof DataVaultBlockEntity vault)
+                    || !(player.level().getBlockEntity(payload.pos()) instanceof ItemVault vault)
                     || !vault.isPowered()) {
                 return;
             }
             int amount = payload.fullStack() ? payload.kind().getMaxStackSize() : 1;
-            ItemStack taken = vault.remove(payload.kind(), amount);
+            ItemStack taken = vault.getStorage().remove(payload.kind(), amount);
             if (!taken.isEmpty() && !player.getInventory().add(taken)) {
                 player.drop(taken, false);
             }

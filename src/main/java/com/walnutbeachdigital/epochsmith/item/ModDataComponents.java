@@ -1,8 +1,11 @@
 package com.walnutbeachdigital.epochsmith.item;
 
+import java.util.UUID;
+
 import com.mojang.serialization.Codec;
 import com.walnutbeachdigital.epochsmith.Epochsmith;
 
+import net.minecraft.core.UUIDUtil;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.world.item.component.CustomData;
@@ -35,6 +38,11 @@ public final class ModDataComponents {
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<Integer>> TOOL_MODE =
             COMPONENTS.registerComponentType("tool_mode",
                     builder -> builder.persistent(Codec.INT).networkSynchronized(ByteBufCodecs.VAR_INT));
+
+    /** Which quantum network a quantum storage cell belongs to. Cells with the same link share items. */
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<UUID>> QUANTUM_LINK =
+            COMPONENTS.registerComponentType("quantum_link",
+                    builder -> builder.persistent(UUIDUtil.CODEC).networkSynchronized(UUIDUtil.STREAM_CODEC));
 
     private ModDataComponents() {
     }

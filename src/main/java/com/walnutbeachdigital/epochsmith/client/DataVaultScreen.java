@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import com.walnutbeachdigital.epochsmith.information.DataVaultBlockEntity;
+import net.minecraft.client.Minecraft;
 import com.walnutbeachdigital.epochsmith.network.VaultContentsPayload;
 import com.walnutbeachdigital.epochsmith.network.VaultWithdrawPayload;
 
@@ -18,7 +18,7 @@ import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 /**
- * The data vault terminal. Type to search, scroll to browse,
+ * The vault terminal (data vault and quantum storage cells). Type to search, scroll to browse,
  * left-click an item to take a stack, right-click to take one.
  */
 public class DataVaultScreen extends Screen {
@@ -37,6 +37,8 @@ public class DataVaultScreen extends Screen {
     private final BlockPos pos;
     private List<ItemStack> kinds;
     private List<Integer> counts;
+    private int capacity;
+    private int maxTypes;
     private final List<Integer> shown = new ArrayList<>();
     private EditBox search;
     private int scrollRow = 0;
@@ -44,10 +46,19 @@ public class DataVaultScreen extends Screen {
     private int top;
 
     public DataVaultScreen(VaultContentsPayload payload) {
-        super(Component.translatable("screen.epochsmith.data_vault"));
+        super(titleFor(payload.pos()));
         this.pos = payload.pos();
         this.kinds = payload.kinds();
         this.counts = payload.counts();
+        this.capacity = payload.capacity();
+        this.maxTypes = payload.maxTypes();
+    }
+
+    /** "Data Vault Terminal" or "Quantum Storage Cell Terminal", from the block being used. */
+    private static Component titleFor(BlockPos pos) {
+        Minecraft mc = Minecraft.getInstance();
+        Component block = mc.level == null ? Component.empty() : mc.level.getBlockState(pos).getBlock().getName();
+        return Component.translatable("screen.epochsmith.terminal", block);
     }
 
     public BlockPos getPos() {
@@ -58,6 +69,8 @@ public class DataVaultScreen extends Screen {
     public void update(VaultContentsPayload payload) {
         this.kinds = payload.kinds();
         this.counts = payload.counts();
+        this.capacity = payload.capacity();
+        this.maxTypes = payload.maxTypes();
         refilter();
     }
 
@@ -158,7 +171,7 @@ public class DataVaultScreen extends Screen {
             total += count;
         }
         Component status = Component.translatable("screen.epochsmith.data_vault.status",
-                total, DataVaultBlockEntity.CAPACITY, kinds.size(), DataVaultBlockEntity.MAX_TYPES);
+                total, capacity, kinds.size(), maxTypes);
         graphics.drawString(font, status, left + 7, top + HEIGHT - 12, TEXT, false);
 
         if (hovered >= 0) {

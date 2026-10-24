@@ -318,5 +318,15 @@
   "block.epochsmith.plasma_smelter": "Plasma Smelter",
   "message.epochsmith.plasma_smelter.unknown": "You don't know how to run a plasma smelter yet. Reach the Future era first.",
   "message.epochsmith.plasma_smelter.busy": "The plasma smelter is full. Collect what's done, or use four kinds of input at most.",
-  "message.epochsmith.plasma_smelter.status": "Plasma Smelter: %s to smelt, %s done. Fuel: %s plasma cells + %s smelts in the current cell."
+  "message.epochsmith.plasma_smelter.status": "Plasma Smelter: %s to smelt, %s done. Fuel: %s plasma cells + %s smelts in the current cell.",
+  "block.epochsmith.quantum_cell": "Quantum Storage Cell",
+  "screen.epochsmith.terminal": "%s Terminal",
+  "message.epochsmith.quantum_cell.status": "Quantum Cell [%s]: %s / %s items, %s / %s kinds.",
+  "message.epochsmith.quantum_cell.linked": "Linked %s quantum cells to network [%s].",
+  "message.epochsmith.quantum_cell.unknown": "You don't know how to use quantum storage yet. Reach the Future era first.",
+  "message.epochsmith.quantum_cell.unpowered": "The terminal has no power: connect copper wire from a generator or battery.",
+  "message.epochsmith.quantum_cell.full": "This quantum network is full.",
+  "tooltip.epochsmith.quantum_cell.unlinked": "Not linked: starts a new network when placed",
+  "tooltip.epochsmith.quantum_cell.linked": "Linked to network [%s]",
+  "tooltip.epochsmith.quantum_cell.help": "Sneak + right-click a placed cell while holding this to link it"
 }
