@@ -23,7 +23,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
  *  - Wrought iron ingot: 1 crucible steel ingot. Costs 2 heat.
  * Each coal or charcoal adds 8 heat (64 max).
  */
-public class ForgeBlockEntity extends BlockEntity {
+public class ForgeBlockEntity extends BlockEntity implements StatusDescriber {
 
     public static final int MIN_FORCE = 4;
     public static final int MAX_ITEMS = 16;

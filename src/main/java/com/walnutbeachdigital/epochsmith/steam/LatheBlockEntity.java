@@ -1,5 +1,6 @@
 package com.walnutbeachdigital.epochsmith.steam;
 
+import com.walnutbeachdigital.epochsmith.block.StatusDescriber;
 import com.walnutbeachdigital.epochsmith.block.ModBlockEntities;
 import com.walnutbeachdigital.epochsmith.block.WorkpieceHolder;
 import com.walnutbeachdigital.epochsmith.item.ModItems;
@@ -28,7 +29,7 @@ import net.minecraft.world.level.block.state.BlockState;
  *  copper ingot -> 1 pressure gauge (6 seconds)
  *  steel ingot -> 1 steam piston (8 seconds)
  */
-public class LatheBlockEntity extends BlockEntity implements WorkpieceHolder {
+public class LatheBlockEntity extends BlockEntity implements WorkpieceHolder, StatusDescriber {
 
     public static final int MAX_PIECES = 16;
     private static final int CHECK_INTERVAL = 10;

@@ -1,5 +1,6 @@
 package com.walnutbeachdigital.epochsmith.information;
 
+import com.walnutbeachdigital.epochsmith.block.StatusDescriber;
 import java.util.List;
 import java.util.UUID;
 import com.walnutbeachdigital.epochsmith.era.Era;
@@ -25,7 +26,7 @@ import net.minecraft.sounds.SoundSource;
  * drawing 64 energy per tick for 10 seconds. Once online it needs only 8 per tick
  * to stay on, and the player who placed it reaches the Future era.
  */
-public class ComputerCoreBlockEntity extends BlockEntity {
+public class ComputerCoreBlockEntity extends BlockEntity implements StatusDescriber {
 
     public static final int BOOT_ENERGY = 12800;
     public static final int BOOT_PER_TICK = 64;

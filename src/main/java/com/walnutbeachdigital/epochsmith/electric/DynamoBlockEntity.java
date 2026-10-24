@@ -1,5 +1,6 @@
 package com.walnutbeachdigital.epochsmith.electric;
 
+import com.walnutbeachdigital.epochsmith.block.StatusDescriber;
 import com.walnutbeachdigital.epochsmith.block.ModBlockEntities;
 import com.walnutbeachdigital.epochsmith.power.MechanicalPower;
 
@@ -16,7 +17,7 @@ import net.minecraft.world.level.block.state.BlockState;
  * Turns rotation into electricity: 8 energy per tick for every point of turning force
  * (a steam engine at force 16 makes 128 per tick). Holds a small buffer of 4,000.
  */
-public class DynamoBlockEntity extends BlockEntity implements EnergySource {
+public class DynamoBlockEntity extends BlockEntity implements EnergySource, StatusDescriber {
 
     public static final int ENERGY_PER_FORCE = 8;
     private static final int CHECK_INTERVAL = 10;

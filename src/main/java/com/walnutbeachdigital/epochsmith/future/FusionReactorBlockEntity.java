@@ -1,5 +1,6 @@
 package com.walnutbeachdigital.epochsmith.future;
 
+import com.walnutbeachdigital.epochsmith.block.StatusDescriber;
 import java.util.List;
 import java.util.UUID;
 
@@ -35,7 +36,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
  * for two minutes making 1,024 energy per tick, and it stays lit as long as it has fuel.
  * If it runs dry, it has to be ignited again.
  */
-public class FusionReactorBlockEntity extends BlockEntity implements EnergySource {
+public class FusionReactorBlockEntity extends BlockEntity implements EnergySource, StatusDescriber {
 
     public static final int MAX_FUEL = 16;
     public static final int IGNITION_ENERGY = 50000;

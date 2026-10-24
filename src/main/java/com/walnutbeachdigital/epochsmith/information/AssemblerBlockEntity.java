@@ -1,5 +1,6 @@
 package com.walnutbeachdigital.epochsmith.information;
 
+import com.walnutbeachdigital.epochsmith.block.StatusDescriber;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +38,7 @@ import net.neoforged.neoforge.items.ItemStackHandler;
  * then feed it ingredients (by hand, hopper or pipe). Each craft costs 320 energy,
  * at up to 64 energy per tick, so about four crafts a second on full power.
  */
-public class AssemblerBlockEntity extends BlockEntity implements WorkpieceHolder {
+public class AssemblerBlockEntity extends BlockEntity implements WorkpieceHolder, StatusDescriber {
 
     public static final int SLOTS = 9;
     public static final int ENERGY_PER_CRAFT = 320;

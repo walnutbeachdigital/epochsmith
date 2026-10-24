@@ -1,5 +1,6 @@
 package com.walnutbeachdigital.epochsmith.future;
 
+import com.walnutbeachdigital.epochsmith.block.StatusDescriber;
 import java.util.List;
 import java.util.UUID;
 
@@ -27,7 +28,7 @@ import net.neoforged.neoforge.items.IItemHandler;
  * so every cell with the same link shares one inventory, anywhere. Breaking a cell loses nothing:
  * the dropped cell keeps its link. The terminal needs 32 energy per tick.
  */
-public class QuantumCellBlockEntity extends BlockEntity implements ItemVault {
+public class QuantumCellBlockEntity extends BlockEntity implements ItemVault, StatusDescriber {
 
     public static final int ENERGY_PER_TICK = 32;
     private static final int REFRESH_INTERVAL = 20;

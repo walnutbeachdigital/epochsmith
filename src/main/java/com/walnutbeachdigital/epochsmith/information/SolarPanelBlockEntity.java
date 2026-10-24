@@ -1,5 +1,6 @@
 package com.walnutbeachdigital.epochsmith.information;
 
+import com.walnutbeachdigital.epochsmith.block.StatusDescriber;
 import com.walnutbeachdigital.epochsmith.block.ModBlockEntities;
 import com.walnutbeachdigital.epochsmith.electric.EnergySource;
 import com.walnutbeachdigital.epochsmith.electric.EpochEnergyStorage;
@@ -15,7 +16,7 @@ import net.minecraft.world.level.block.state.BlockState;
 /**
  * Makes 16 energy per tick in open daylight, 8 while it rains, nothing at night.
  */
-public class SolarPanelBlockEntity extends BlockEntity implements EnergySource {
+public class SolarPanelBlockEntity extends BlockEntity implements EnergySource, StatusDescriber {
 
     public static final int FULL_SUN = 16;
     private static final int CHECK_INTERVAL = 20;

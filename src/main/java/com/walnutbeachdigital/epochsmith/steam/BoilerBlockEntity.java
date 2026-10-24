@@ -1,5 +1,6 @@
 package com.walnutbeachdigital.epochsmith.steam;
 
+import com.walnutbeachdigital.epochsmith.block.StatusDescriber;
 import com.walnutbeachdigital.epochsmith.block.ModBlockEntities;
 import com.walnutbeachdigital.epochsmith.item.ModItems;
 
@@ -24,7 +25,7 @@ import net.minecraft.world.level.material.FluidState;
  *    Boiling uses one bucket every 10 seconds.
  *  - Fuel: coal or charcoal burn 80 seconds, coke 160 seconds. Fuel only burns while there's water.
  */
-public class BoilerBlockEntity extends BlockEntity {
+public class BoilerBlockEntity extends BlockEntity implements StatusDescriber {
 
     public static final int MAX_WATER = 8000;
     public static final int BUCKET = 1000;

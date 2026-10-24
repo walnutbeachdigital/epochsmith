@@ -1,5 +1,6 @@
 package com.walnutbeachdigital.epochsmith.information;
 
+import com.walnutbeachdigital.epochsmith.block.StatusDescriber;
 import java.util.List;
 
 import com.walnutbeachdigital.epochsmith.block.ModBlockEntities;
@@ -25,7 +26,7 @@ import net.neoforged.neoforge.items.IItemHandler;
  * The terminal (right-click with an empty hand) needs 16 energy per tick to run.
  * Hoppers and pipes can put items in and take them out even without power.
  */
-public class DataVaultBlockEntity extends BlockEntity implements ItemVault {
+public class DataVaultBlockEntity extends BlockEntity implements ItemVault, StatusDescriber {
 
     public static final int MAX_TYPES = 256;
     public static final int CAPACITY = 65536;

@@ -28,7 +28,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
  * Bronze: every 3 copper + 1 tin becomes 4 bronze. Leftovers stay in the bloomery.
  * Iron:   every raw iron becomes 1 iron bloom. Copper/tin and iron can't share a charge.
  */
-public class BloomeryBlockEntity extends BlockEntity {
+public class BloomeryBlockEntity extends BlockEntity implements StatusDescriber {
 
     /** One firing takes 30 seconds. */
     public static final int FIRE_TIME = 600;

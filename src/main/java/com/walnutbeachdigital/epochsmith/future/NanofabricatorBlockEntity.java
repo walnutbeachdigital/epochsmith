@@ -1,5 +1,6 @@
 package com.walnutbeachdigital.epochsmith.future;
 
+import com.walnutbeachdigital.epochsmith.block.StatusDescriber;
 import java.util.List;
 
 import com.walnutbeachdigital.epochsmith.block.ModBlockEntities;
@@ -30,7 +31,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
  *  - 1 circuit board -> 4 nanobots
  * Each item uses 4,000 energy at up to 200 per tick (one every second on full power).
  */
-public class NanofabricatorBlockEntity extends BlockEntity implements WorkpieceHolder {
+public class NanofabricatorBlockEntity extends BlockEntity implements WorkpieceHolder, StatusDescriber {
 
     public static final int ENERGY_PER_ITEM = 4000;
     public static final int ENERGY_PER_TICK = 200;

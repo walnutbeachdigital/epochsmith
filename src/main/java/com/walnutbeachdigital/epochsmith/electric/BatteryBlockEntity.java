@@ -1,5 +1,6 @@
 package com.walnutbeachdigital.epochsmith.electric;
 
+import com.walnutbeachdigital.epochsmith.block.StatusDescriber;
 import java.util.List;
 
 import com.walnutbeachdigital.epochsmith.block.ModBlockEntities;
@@ -17,7 +18,7 @@ import net.minecraft.world.level.block.state.BlockState;
  * Stores 200,000 energy. Charges itself from generators (dynamos, solar panels) on its wires (up to 1,024 per tick),
  * and machines draw from it when the dynamos can't keep up. Shows its charge on its sides.
  */
-public class BatteryBlockEntity extends BlockEntity implements EnergySource {
+public class BatteryBlockEntity extends BlockEntity implements EnergySource, StatusDescriber {
 
     public static final int CAPACITY = 200_000;
     public static final int MAX_RATE = 1024;

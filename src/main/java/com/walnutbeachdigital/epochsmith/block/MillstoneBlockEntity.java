@@ -19,7 +19,7 @@ import net.minecraft.world.level.block.state.BlockState;
  * Grinds one item at a time while turned by rotation power. More force grinds faster:
  * at force 4 (a water wheel in flowing water) each item takes 2.5 seconds.
  */
-public class MillstoneBlockEntity extends BlockEntity {
+public class MillstoneBlockEntity extends BlockEntity implements StatusDescriber {
 
     public static final int WORK_PER_ITEM = 200;
     public static final int MIN_FORCE = 2;

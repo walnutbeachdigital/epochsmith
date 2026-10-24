@@ -1,5 +1,6 @@
 package com.walnutbeachdigital.epochsmith.future;
 
+import com.walnutbeachdigital.epochsmith.block.StatusDescriber;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +31,7 @@ import net.neoforged.neoforge.items.ItemStackHandler;
  * and it breaks it down into matter. Scan an item (sneak + right-click with it) and it prints copies,
  * using that item's matter value plus 64 energy per point of matter.
  */
-public class MatterPrinterBlockEntity extends BlockEntity implements WorkpieceHolder {
+public class MatterPrinterBlockEntity extends BlockEntity implements WorkpieceHolder, StatusDescriber {
 
     public static final int SLOTS = 9;
     public static final int MAX_MATTER = 1000000;

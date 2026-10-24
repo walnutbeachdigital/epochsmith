@@ -1,5 +1,6 @@
 package com.walnutbeachdigital.epochsmith.information;
 
+import com.walnutbeachdigital.epochsmith.block.StatusDescriber;
 import java.util.List;
 
 import com.walnutbeachdigital.epochsmith.block.ModBlockEntities;
@@ -29,7 +30,7 @@ import net.neoforged.neoforge.items.ItemStackHandler;
  *
  * Fully automatable: hoppers and pipes put items in from any side and pull results out.
  */
-public class InductionFurnaceBlockEntity extends BlockEntity {
+public class InductionFurnaceBlockEntity extends BlockEntity implements StatusDescriber {
 
     public static final int SLOTS = 4;
     public static final int ENERGY_PER_ITEM = 160;

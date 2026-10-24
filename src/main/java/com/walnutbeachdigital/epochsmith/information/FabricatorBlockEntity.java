@@ -1,5 +1,6 @@
 package com.walnutbeachdigital.epochsmith.information;
 
+import com.walnutbeachdigital.epochsmith.block.StatusDescriber;
 import java.util.List;
 
 import com.walnutbeachdigital.epochsmith.block.ModBlockEntities;
@@ -27,7 +28,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
  * Etches silicon into transistors: 1 silicon -> 4 transistors, using 1,280 energy
  * at up to 64 per tick (one silicon every second on full power).
  */
-public class FabricatorBlockEntity extends BlockEntity implements WorkpieceHolder {
+public class FabricatorBlockEntity extends BlockEntity implements WorkpieceHolder, StatusDescriber {
 
     public static final int ENERGY_PER_ITEM = 1280;
     public static final int ENERGY_PER_TICK = 64;

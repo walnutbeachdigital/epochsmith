@@ -1,5 +1,6 @@
 package com.walnutbeachdigital.epochsmith.steam;
 
+import com.walnutbeachdigital.epochsmith.block.StatusDescriber;
 import com.walnutbeachdigital.epochsmith.block.ModBlockEntities;
 import com.walnutbeachdigital.epochsmith.item.ModItems;
 
@@ -23,7 +24,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
  *  - Iron ingot: 1 crucible steel ingot (steel from ordinary iron, like the Bessemer process).
  * 2 seconds per item while it has steam; each item uses 1 heat, each coke adds 8.
  */
-public class BlastFurnaceBlockEntity extends BlockEntity {
+public class BlastFurnaceBlockEntity extends BlockEntity implements StatusDescriber {
 
     public static final int WORK_PER_ITEM = 40;
     public static final int MAX_ITEMS = 16;

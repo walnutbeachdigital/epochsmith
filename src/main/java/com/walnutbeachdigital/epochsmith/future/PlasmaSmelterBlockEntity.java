@@ -1,5 +1,6 @@
 package com.walnutbeachdigital.epochsmith.future;
 
+import com.walnutbeachdigital.epochsmith.block.StatusDescriber;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,7 +35,7 @@ import net.neoforged.neoforge.items.ItemStackHandler;
  *
  * Fully automatable: hoppers and pipes put in items and plasma cells from any side and pull results out.
  */
-public class PlasmaSmelterBlockEntity extends BlockEntity {
+public class PlasmaSmelterBlockEntity extends BlockEntity implements StatusDescriber {
 
     public static final int SLOTS = 4;
     public static final int SMELTS_PER_CELL = 512;

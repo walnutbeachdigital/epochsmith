@@ -1,5 +1,6 @@
 package com.walnutbeachdigital.epochsmith.electric;
 
+import com.walnutbeachdigital.epochsmith.block.StatusDescriber;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,7 +32,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
  *  - Iron ingot: crucible steel.
  *  - Anything else a vanilla furnace can smelt: the normal result.
  */
-public class ArcFurnaceBlockEntity extends BlockEntity {
+public class ArcFurnaceBlockEntity extends BlockEntity implements StatusDescriber {
 
     public static final int ENERGY_PER_ITEM = 320;
     public static final int ENERGY_PER_TICK = 32;
