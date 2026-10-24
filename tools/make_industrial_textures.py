@@ -277,12 +277,12 @@ write_png(f"{root}/item/rivets.png", from_map(RIVETS, WROUGHT))
 write_png(f"{root}/item/steam_piston.png", from_map(STEAM_PISTON, STEEL))
 write_png(f"{root}/item/pressure_gauge.png", pressure_gauge())
 import make_bronze_gear_textures as gear  # reuse the shared armor icon shapes
-for piece in ("helmet", "chestplate", "leggings", "boots"):
-    write_png(f"{root}/item/steam_{piece}.png", from_map(gear.ICONS[piece], STEAM_GEAR))
+# Now made by tools/recolor_vanilla.py: for piece in ("helmet", "chestplate", "leggings", "boots"):
+#     write_png(f"{root}/item/steam_{piece}.png", from_map(gear.ICONS[piece], STEAM_GEAR))
 write_png(f"{root}/item/steam_drill.png", from_map(STEAM_DRILL, STEAM_GEAR))
 write_png(f"{root}/item/pneumatic_axe.png", from_map(PNEUMATIC_AXE, STEAM_GEAR))
-write_png(f"{root}/models/armor/steam_layer_1.png", steam_armor_layer(True))
-write_png(f"{root}/models/armor/steam_layer_2.png", steam_armor_layer(False))
+# Now made by tools/recolor_vanilla.py: write_png(f"{root}/models/armor/steam_layer_1.png", steam_armor_layer(True))
+# Now made by tools/recolor_vanilla.py: write_png(f"{root}/models/armor/steam_layer_2.png", steam_armor_layer(False))
 write_png(f"{root}/block/strongbox_side.png", strongbox_side())
 write_png(f"{root}/block/strongbox_front.png", strongbox_front())
 print("industrial textures written")

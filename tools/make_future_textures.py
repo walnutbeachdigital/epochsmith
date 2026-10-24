@@ -352,8 +352,8 @@ import make_bronze_gear_textures as gear
 
 write_png(f"{root}/item/nano_multitool.png", from_map(NANO_MULTITOOL, NANO))
 write_png(f"{root}/item/mining_laser.png", from_map(MINING_LASER, NANO))
-for piece in ("helmet", "chestplate", "leggings", "boots"):
-    write_png(f"{root}/item/exosuit_{piece}.png", from_map(gear.ICONS[piece], EXO))
-write_png(f"{root}/models/armor/exosuit_layer_1.png", exo_layer(True))
-write_png(f"{root}/models/armor/exosuit_layer_2.png", exo_layer(False))
+# Now made by tools/recolor_vanilla.py: for piece in ("helmet", "chestplate", "leggings", "boots"):
+#     write_png(f"{root}/item/exosuit_{piece}.png", from_map(gear.ICONS[piece], EXO))
+# Now made by tools/recolor_vanilla.py: write_png(f"{root}/models/armor/exosuit_layer_1.png", exo_layer(True))
+# Now made by tools/recolor_vanilla.py: write_png(f"{root}/models/armor/exosuit_layer_2.png", exo_layer(False))
 print("future gear textures written")

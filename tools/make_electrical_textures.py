@@ -258,12 +258,12 @@ write_png(f"{root}/block/arc_furnace_front_on.png", arc_front(True))
 import make_bronze_gear_textures as gear
 COIL = {"O": (30, 22, 18, 255), "D": (126, 66, 40, 255), "M": (176, 96, 58, 255), "H": (232, 172, 128, 255),
         "W": (120, 86, 48, 255), "w": (84, 58, 32, 255)}
-for piece in ("helmet", "chestplate", "leggings", "boots"):
-    write_png(f"{root}/item/coil_{piece}.png", from_map(gear.ICONS[piece], COIL))
+# Now made by tools/recolor_vanilla.py: for piece in ("helmet", "chestplate", "leggings", "boots"):
+#     write_png(f"{root}/item/coil_{piece}.png", from_map(gear.ICONS[piece], COIL))
 write_png(f"{root}/item/electric_drill.png", from_map(ELECTRIC_DRILL, ELEC))
 write_png(f"{root}/item/chainsaw.png", from_map(CHAINSAW, ELEC))
-write_png(f"{root}/models/armor/coil_layer_1.png", coil_layer(True))
-write_png(f"{root}/models/armor/coil_layer_2.png", coil_layer(False))
+# Now made by tools/recolor_vanilla.py: write_png(f"{root}/models/armor/coil_layer_1.png", coil_layer(True))
+# Now made by tools/recolor_vanilla.py: write_png(f"{root}/models/armor/coil_layer_2.png", coil_layer(False))
 write_png(f"{root}/block/sorting_cabinet_side.png", cabinet_side())
 write_png(f"{root}/block/sorting_cabinet_front.png", cabinet_front())
 print("electrical textures written")

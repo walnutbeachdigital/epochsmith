@@ -22,6 +22,16 @@ BRONZE = [(90, 52, 24), (160, 98, 40), (205, 133, 63), (240, 190, 120)]
 WROUGHT = [(35, 38, 44), (80, 86, 96), (110, 116, 126), (150, 156, 166)]
 STEEL = [(40, 46, 58), (104, 116, 134), (150, 164, 182), (206, 218, 232)]
 COKE = [(22, 22, 24), (54, 54, 60), (82, 82, 90), (124, 124, 134)]
+# Armor and tool materials
+HIDE = [(52, 34, 20), (98, 66, 40), (140, 98, 62), (182, 142, 98)]
+FLINT = [(22, 22, 26), (52, 52, 60), (88, 88, 98), (146, 146, 156)]
+STEAM = [(36, 36, 40), (88, 92, 100), (150, 118, 56), (214, 176, 92)]
+COIL = [(30, 22, 18), (126, 66, 40), (176, 96, 58), (232, 172, 128)]
+COMPOSITE = [(18, 20, 26), (44, 50, 60), (74, 84, 98), (132, 148, 166)]
+EXOSUIT = [(40, 40, 56), (160, 162, 178), (222, 224, 234), (255, 255, 255)]
+
+PIECES = ("helmet", "chestplate", "leggings", "boots")
+TOOLS = ("sword", "pickaxe", "axe", "shovel", "hoe")
 
 
 def read_png(data):
@@ -130,6 +140,23 @@ def ore(ore_path, palette):
     return recolor(ore_px, palette, mask)
 
 
+def tool(path, palette):
+    """Recolors a vanilla tool's head and keeps its wooden handle (the handle is the brown, colorful part)."""
+    px = vanilla(path)
+    mask = [[max(p[:3]) - min(p[:3]) <= 14 for p in row] for row in px]
+    return recolor(px, palette, mask)
+
+
+def armor_set(name, base, palette, material=None):
+    """Item icons and the worn-armor textures for one armor set, recolored from a vanilla set.
+    The worn textures are named after the armor material, which is usually the same as the set's name."""
+    for piece in PIECES:
+        write_png(f"{OUT}/item/{name}_{piece}.png", recolor(vanilla(f"item/{base}_{piece}"), palette))
+    for layer in (1, 2):
+        write_png(f"{OUT}/models/armor/{material or name}_layer_{layer}.png",
+                  recolor(vanilla(f"models/armor/{base}_layer_{layer}"), palette))
+
+
 if __name__ == "__main__":
     write_png(f"{OUT}/block/tin_ore.png", ore("block/iron_ore", TIN_ORE))
     write_png(f"{OUT}/block/deepslate_tin_ore.png", ore("block/deepslate_iron_ore", TIN_ORE))
@@ -139,4 +166,21 @@ if __name__ == "__main__":
     write_png(f"{OUT}/item/wrought_iron_ingot.png", recolor(vanilla("item/iron_ingot"), WROUGHT))
     write_png(f"{OUT}/item/steel_ingot.png", recolor(vanilla("item/iron_ingot"), STEEL))
     write_png(f"{OUT}/item/coke.png", recolor(vanilla("item/coal"), COKE))
+
+    # Armor: shaped like vanilla iron armor (hide armor like leather)
+    armor_set("hide", "leather", HIDE)
+    armor_set("bronze", "iron", BRONZE)
+    armor_set("steel", "iron", STEEL, material="knight")
+    armor_set("steam", "iron", STEAM)
+    armor_set("coil", "iron", COIL)
+    armor_set("composite", "iron", COMPOSITE)
+    armor_set("exosuit", "iron", EXOSUIT)
+
+    # Tools: shaped like vanilla iron tools (flint like stone tools; the flint knife like a stone sword)
+    for kind in TOOLS:
+        write_png(f"{OUT}/item/bronze_{kind}.png", tool(f"item/iron_{kind}", BRONZE))
+        write_png(f"{OUT}/item/steel_{kind}.png", tool(f"item/iron_{kind}", STEEL))
+    for kind in ("pickaxe", "axe", "shovel"):
+        write_png(f"{OUT}/item/flint_{kind}.png", tool(f"item/stone_{kind}", FLINT))
+    write_png(f"{OUT}/item/flint_knife.png", tool("item/stone_sword", FLINT))
     print("recolored textures written")

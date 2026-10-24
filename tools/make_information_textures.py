@@ -289,8 +289,8 @@ import make_bronze_gear_textures as gear
 
 write_png(f"{root}/item/laser_cutter.png", from_map(LASER_CUTTER, TOOL))
 write_png(f"{root}/item/multitool.png", from_map(MULTITOOL, TOOL))
-for piece in ("helmet", "chestplate", "leggings", "boots"):
-    write_png(f"{root}/item/composite_{piece}.png", from_map(gear.ICONS[piece], COMPOSITE))
-write_png(f"{root}/models/armor/composite_layer_1.png", composite_layer(True))
-write_png(f"{root}/models/armor/composite_layer_2.png", composite_layer(False))
+# Now made by tools/recolor_vanilla.py: for piece in ("helmet", "chestplate", "leggings", "boots"):
+#     write_png(f"{root}/item/composite_{piece}.png", from_map(gear.ICONS[piece], COMPOSITE))
+# Now made by tools/recolor_vanilla.py: write_png(f"{root}/models/armor/composite_layer_1.png", composite_layer(True))
+# Now made by tools/recolor_vanilla.py: write_png(f"{root}/models/armor/composite_layer_2.png", composite_layer(False))
 print("information gear textures written")
