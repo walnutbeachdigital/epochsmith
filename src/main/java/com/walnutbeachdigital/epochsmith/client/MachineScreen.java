@@ -13,12 +13,10 @@ import net.minecraft.world.entity.player.Inventory;
 
 /**
  * The screen for every Epochsmith machine, drawn from its layout in vanilla's style:
- * a grey panel, vanilla slots, the furnace arrow and flame, and gauges with tooltips.
+ * a grey panel, vanilla slots, the furnace arrow and flame, and gauges with tooltips. The arrow and flame fill in from the era's own texture.
  */
 public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
 
-    private static final ResourceLocation ARROW = ResourceLocation.withDefaultNamespace("container/furnace/burn_progress");
-    private static final ResourceLocation FLAME = ResourceLocation.withDefaultNamespace("container/furnace/lit_progress");
     private static final ResourceLocation FURNACE = ResourceLocation.withDefaultNamespace("textures/gui/container/furnace.png");
 
     private static final int PANEL = 0xFFC6C6C6;
@@ -84,19 +82,19 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
             g.blit(background, x + 7 + col * 18, y + layout.inventoryY + 57, 176, 0, 18, 18);
         }
 
-        // Progress arrows and flames (empty shapes from the era texture, filled ones from vanilla's furnace sprites)
+        // Progress arrows and flames (empty and filled shapes both come from the era texture)
         for (MachineLayout.Meter arrow : layout.arrows) {
             g.blit(background, x + arrow.x(), y + arrow.y(), 176, 44, 24, 17);
             int width = scaled(arrow, 24);
             if (width > 0) {
-                g.blitSprite(ARROW, 24, 16, 0, 0, x + arrow.x(), y + arrow.y(), width, 16);
+                g.blit(background, x + arrow.x(), y + arrow.y(), 176, 80, width, 17);
             }
         }
         for (MachineLayout.Meter flame : layout.flames) {
             g.blit(background, x + flame.x(), y + flame.y(), 176, 62, 14, 14);
             int height = scaled(flame, 14);
             if (height > 0) {
-                g.blitSprite(FLAME, 14, 14, 0, 14 - height, x + flame.x(), y + flame.y() + 14 - height, 14, height);
+                g.blit(background, x + flame.x(), y + flame.y() + 14 - height, 176, 98 + 14 - height, 14, height);
             }
         }
 

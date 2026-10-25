@@ -5,6 +5,7 @@ import java.util.Deque;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.walnutbeachdigital.epochsmith.multiblock.MultiblockPartBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
@@ -36,7 +37,8 @@ public final class SteamNetwork {
         while (!queue.isEmpty() && seen.size() < MAX_NODES) {
             BlockPos pos = queue.poll();
             BlockState state = level.getBlockState(pos);
-            if (state.getBlock() instanceof SteamPipeBlock) {
+            if (state.getBlock() instanceof SteamPipeBlock
+                    || (state.getBlock() instanceof SteamCylinderBlock && MultiblockPartBlock.isFormed(state))) {
                 enqueueNeighbours(level, pos, seen, queue);
             } else if (state.getBlock() instanceof BoilerBlock) {
                 if (level.getBlockEntity(pos) instanceof BoilerBlockEntity boiler && boiler.isProducing()) {

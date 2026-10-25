@@ -431,6 +431,54 @@ def pneumatic_axe():
     return px
 
 
+def engine_casing():
+    """Heavy riveted iron plate with a cross brace: the steam engine's frame."""
+    px = base("block/iron_block", DARK_IRON)
+    bevel(px, 0, 0, 15, 15, light=0.3, dark=0.5)
+    for i in range(2, 14):  # diagonal braces, raised
+        for x, y in ((i, i), (15 - i, i)):
+            put(px, x, y, IRON[1])
+            lighten(px, x, y - 1, 0.18)
+            darken(px, x, y + 1, 0.3)
+    for x, y in ((1, 1), (13, 1), (1, 13), (13, 13), (7, 7)):
+        rivet(px, x, y, IRON)
+    for x in range(4, 12, 3):
+        stud(px, x, 1, IRON); stud(px, x, 14, IRON)
+    return px
+
+
+def steam_cylinder():
+    """A steel cylinder lying sideways, with brass flange bands and a steam port."""
+    px = base("block/iron_block", STEEL)
+    for y in range(16):  # round: bright in the middle
+        t = math.sin((y + 0.5) / 16 * math.pi)
+        for x in range(16):
+            blend(px, x, y, (0, 0, 0), (1 - t) * 0.5)
+            if 4 <= y <= 5:
+                blend(px, x, y, (255, 255, 255), 0.15)
+    for x in (0, 1, 14, 15):
+        for y in range(16):
+            put(px, x, y, shade(BRASS, 0.15 + 0.65 * math.sin((y + 0.5) / 16 * math.pi)))
+    for y in (3, 8, 12):
+        stud(px, 0, y, BRASS); stud(px, 14, y, BRASS)
+    for x in range(3, 13, 3):
+        stud(px, x, 2, STEEL); stud(px, x, 13, STEEL)
+    return px
+
+
+def steam_cylinder_end():
+    """The end of a steam cylinder: a riveted brass flange round a steam port."""
+    px = base("block/iron_block", STEEL)
+    inset(px, 0, 0, 15, 15, light=0.15, dark=0.4)
+    ring(px, 8, 8, 7.4, 5.0, BRASS)
+    for a in range(8):
+        ang = a * math.pi / 4
+        stud(px, int(8 + math.cos(ang) * 6.2), int(8 + math.sin(ang) * 6.2), BRASS)
+    disc(px, 8, 8, 3.0, COPPER)
+    disc(px, 8, 8, 1.6, [(14, 12, 12), (24, 22, 22), (34, 32, 32), (44, 42, 42)], dome=False)
+    return px
+
+
 if __name__ == "__main__":
     write_png(f"{OUT}/block/amphora.png", amphora())
     write_png(f"{OUT}/block/banded_crate.png", banded_crate())
@@ -447,6 +495,9 @@ if __name__ == "__main__":
     write_png(f"{OUT}/block/coke_oven_front.png", coke_oven_front(False))
     write_png(f"{OUT}/block/coke_oven_front_lit.png", coke_oven_front(True))
     write_png(f"{OUT}/block/steam_pipe.png", steam_pipe())
+    write_png(f"{OUT}/block/engine_casing.png", engine_casing())
+    write_png(f"{OUT}/block/steam_cylinder.png", steam_cylinder())
+    write_png(f"{OUT}/block/steam_cylinder_end.png", steam_cylinder_end())
     write_png(f"{OUT}/item/bronze_plate.png", bronze_plate())
     write_png(f"{OUT}/item/iron_bloom.png", iron_bloom())
     write_png(f"{OUT}/item/iron_gear.png", gear_item(IRON))

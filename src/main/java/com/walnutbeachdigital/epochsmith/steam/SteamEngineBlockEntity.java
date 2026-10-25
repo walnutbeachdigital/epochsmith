@@ -6,6 +6,8 @@ import com.walnutbeachdigital.epochsmith.block.ModBlockEntities;
 import com.walnutbeachdigital.epochsmith.era.Era;
 import com.walnutbeachdigital.epochsmith.era.EraManager;
 
+import com.walnutbeachdigital.epochsmith.multiblock.MultiblockController;
+import com.walnutbeachdigital.epochsmith.multiblock.Multiblocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -46,10 +48,13 @@ public class SteamEngineBlockEntity extends BlockEntity {
         if (level.getGameTime() % CHECK_INTERVAL != 0) {
             return;
         }
-        engine.force = SteamNetwork.engineForce(level, pos);
+        // Only a fully built engine runs
+        engine.force = state.getValue(MultiblockController.FORMED) ? SteamNetwork.engineForce(level, pos) : 0;
         boolean running = engine.force > 0;
         if (state.getValue(SteamEngineBlock.RUNNING) != running) {
-            level.setBlock(pos, state.setValue(SteamEngineBlock.RUNNING, running), Block.UPDATE_ALL);
+            BlockState now = state.setValue(SteamEngineBlock.RUNNING, running);
+            level.setBlock(pos, now, Block.UPDATE_ALL);
+            Multiblocks.setActive(level, pos, now, running);
         }
         if (!running) {
             return;

@@ -1,19 +1,31 @@
 {
   "variants": {
-    "facing=north": {
+    "facing=north,part=main": {
       "model": "epochsmith:block/joiners_bench"
     },
-    "facing=east": {
+    "facing=north,part=side": {
+      "model": "epochsmith:block/joiners_bench_side"
+    },
+    "facing=east,part=main": {
       "model": "epochsmith:block/joiners_bench",
       "y": 90
     },
-    "facing=south": {
+    "facing=east,part=side": {
+      "model": "epochsmith:block/joiners_bench_side"
+    },
+    "facing=south,part=main": {
       "model": "epochsmith:block/joiners_bench",
       "y": 180
     },
-    "facing=west": {
+    "facing=south,part=side": {
+      "model": "epochsmith:block/joiners_bench_side"
+    },
+    "facing=west,part=main": {
       "model": "epochsmith:block/joiners_bench",
       "y": 270
+    },
+    "facing=west,part=side": {
+      "model": "epochsmith:block/joiners_bench_side"
     }
   }
 }

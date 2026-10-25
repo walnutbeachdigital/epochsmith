@@ -2,6 +2,12 @@ package com.walnutbeachdigital.epochsmith.steam;
 
 import com.walnutbeachdigital.epochsmith.menu.MachineMenus;
 import com.walnutbeachdigital.epochsmith.menu.MachineGui;
+import com.walnutbeachdigital.epochsmith.block.ModBlocks;
+import com.walnutbeachdigital.epochsmith.item.SmithsHammerItem;
+import com.walnutbeachdigital.epochsmith.multiblock.MultiblockController;
+import com.walnutbeachdigital.epochsmith.multiblock.MultiblockShape;
+import com.walnutbeachdigital.epochsmith.multiblock.Multiblocks;
+import java.util.Map;
 import javax.annotation.Nullable;
 
 import com.mojang.serialization.MapCodec;
@@ -36,22 +42,33 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 /**
  * Turns coal into coke, a fuel that burns twice as long.
- *  - Right-click with coal to load it (up to 16). It starts baking by itself.
- *  - Right-click with an empty hand to take out the coke (or unbaked coal).
+ * A multiblock: build a 3x3x3 cube of Coke Oven Bricks with this door in the middle of one side,
+ * then strike it with a Smith's Hammer. Right-click any part of the built oven to open it.
  */
-public class CokeOvenBlock extends BaseEntityBlock {
+public class CokeOvenBlock extends BaseEntityBlock implements MultiblockController {
 
     public static final MapCodec<CokeOvenBlock> CODEC = simpleCodec(CokeOvenBlock::new);
-    public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
+    public static final DirectionProperty FACING = MultiblockController.FACING;
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
+
+    /** Layers bottom to top, rows front to back. O is this door, b a Coke Oven Brick. */
+    public static final MultiblockShape SHAPE = new MultiblockShape(new String[][] {
+            {"bbb", "bbb", "bbb"},
+            {"bOb", "bbb", "bbb"},
+            {"bbb", "bbb", "bbb"}},
+            Map.of('b', ModBlocks.COKE_OVEN_BRICKS), 'O', new MultiblockShape.Cell(1, 1, 1));
 
     public CokeOvenBlock(Properties properties) {
         super(properties);
-        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(LIT, false));
+        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(LIT, false)
+                .setValue(FORMED, false));
     }
 
     @Override
@@ -60,8 +77,13 @@ public class CokeOvenBlock extends BaseEntityBlock {
     }
 
     @Override
+    public MultiblockShape shape() {
+        return SHAPE;
+    }
+
+    @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING, LIT);
+        builder.add(FACING, LIT, FORMED);
     }
 
     @Override
@@ -72,6 +94,12 @@ public class CokeOvenBlock extends BaseEntityBlock {
     @Override
     protected RenderShape getRenderShape(BlockState state) {
         return RenderShape.MODEL;
+    }
+
+    /** Once built it lets light through, like the bricks around it. */
+    @Override
+    protected VoxelShape getOcclusionShape(BlockState state, BlockGetter level, BlockPos pos) {
+        return state.getValue(FORMED) ? Shapes.empty() : super.getOcclusionShape(state, level, pos);
     }
 
     @Nullable
@@ -87,31 +115,51 @@ public class CokeOvenBlock extends BaseEntityBlock {
                 : createTickerHelper(type, ModBlockEntities.COKE_OVEN.get(), CokeOvenBlockEntity::serverTick);
     }
 
-    /** Right-click opens the machine's GUI (whatever you're holding). */
+    /** Right-click opens the oven, once it's built. */
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        if (!state.getValue(FORMED)) {
+            if (!level.isClientSide()) {
+                player.displayClientMessage(Component.translatable("message.epochsmith.coke_oven.unbuilt"), true);
+            }
+            return InteractionResult.sidedSuccess(level.isClientSide());
+        }
         return MachineMenus.open(state, level, pos, player, Era.INDUSTRIAL, "message.epochsmith.coke_oven.unknown");
     }
 
+    /** Strike with a Smith's Hammer to build the oven; anything else opens it. */
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
                                               Player player, InteractionHand hand, BlockHitResult hit) {
+        if (stack.getItem() instanceof SmithsHammerItem) {
+            return Multiblocks.strike(level, pos, player, stack, hand);
+        }
         return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
 
-    /** Breaking the machine drops everything inside. */
+    /** Breaking the door drops everything inside and takes the oven apart. */
     @Override
     protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
-        if (!state.is(newState.getBlock()) && level.getBlockEntity(pos) instanceof MachineGui gui) {
-            MachineMenus.dropAll(level, pos, gui.getMenuItems());
+        if (!state.is(newState.getBlock())) {
+            if (level.getBlockEntity(pos) instanceof MachineGui gui) {
+                MachineMenus.dropAll(level, pos, gui.getMenuItems());
+            }
+            if (!level.isClientSide()) {
+                Multiblocks.unform(level, pos, state);
+            }
         }
         super.onRemove(state, level, pos, newState, movedByPiston);
     }
 
+    /** Smoke rises from the chimney while it bakes. */
     @Override
     public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
-        if (state.getValue(LIT)) {
-            level.addParticle(ParticleTypes.LARGE_SMOKE, pos.getX() + 0.5, pos.getY() + 1.05, pos.getZ() + 0.5, 0.0, 0.05, 0.0);
+        if (state.getValue(LIT) && state.getValue(FORMED)) {
+            BlockPos core = Multiblocks.corePos(pos, state);
+            level.addParticle(ParticleTypes.LARGE_SMOKE, core.getX() + 0.5, core.getY() + 2.05, core.getZ() + 0.5, 0.0, 0.07, 0.0);
+            if (random.nextInt(3) == 0) {
+                level.addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, core.getX() + 0.5, core.getY() + 2.1, core.getZ() + 0.5, 0.0, 0.05, 0.0);
+            }
         }
     }
 }

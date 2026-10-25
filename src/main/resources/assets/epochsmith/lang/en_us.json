@@ -396,7 +396,7 @@
   "jei.epochsmith.info.wireless_node": "Works like copper wire, and also links to every other node within 32 blocks.",
   "jei.epochsmith.info.hover_pad": "While powered, stand on it to float up to 16 blocks. Sneak to drift down.",
   "jei.epochsmith.info.solar_panel": "Makes 16 energy per tick in open daylight, 8 in rain, none at night.",
-  "jei.epochsmith.info.steam_engine": "Turns steam from boilers into rotation power. Running one enters the Electrical era.",
+  "jei.epochsmith.info.steam_engine": "A multiblock, 3 wide, 3 tall and 2 deep. Front: the Steam Engine in the middle, Engine Casing all round it. Back: Engine Casing with three Steam Cylinders across the middle row. Strike it with a Smith's Hammer, pipe steam from boilers into a cylinder, and take rotation from the front. Running one enters the Electrical era.",
   "jei.epochsmith.info.dynamo": "Turns rotation power into electricity: 8 energy per tick for each point of force.",
   "config.jade.plugin_epochsmith.machine_status": "Epochsmith machine status",
   "gui.epochsmith.gauge": "%s: %s / %s",
@@ -406,5 +406,18 @@
   "gui.epochsmith.matter": "Matter",
   "gui.epochsmith.steam_status.0": "No steam",
   "gui.epochsmith.steam_status.1": "Steam on",
-  "gui.epochsmith.next_recipe": "Next \u21bb"
+  "gui.epochsmith.next_recipe": "Next ↻",
+  "block.epochsmith.coke_oven_bricks": "Coke Oven Bricks",
+  "block.epochsmith.engine_casing": "Engine Casing",
+  "block.epochsmith.steam_cylinder": "Steam Cylinder",
+  "message.epochsmith.multiblock.formed": "%s built!",
+  "message.epochsmith.multiblock.already": "This machine is already built.",
+  "message.epochsmith.multiblock.problem": "Not built right: %s needed at %s, %s, %s (%s blocks wrong or missing).",
+  "message.epochsmith.coke_oven.unbuilt": "Build a 3x3x3 cube of Coke Oven Bricks with this door in the middle of one side, then strike it with a Smith's Hammer.",
+  "message.epochsmith.engine.unbuilt": "Not built yet. Surround this with Engine Casing (3 wide, 3 tall), add a wall behind it with three Steam Cylinders across the middle, then strike it with a Smith's Hammer.",
+  "jei.epochsmith.info.coke_oven": "A multiblock. Build a 3x3x3 cube of 26 Coke Oven Bricks with the Coke Oven in the middle of one side, then strike it with a Smith's Hammer. Breaking any block takes it apart again.",
+  "jei.epochsmith.info.coke_oven_bricks": "Builds the walls of the Coke Oven: 26 bricks around a Coke Oven door, struck with a Smith's Hammer.",
+  "jei.epochsmith.info.engine_casing": "The frame of the Steam Engine. It takes 14.",
+  "jei.epochsmith.info.steam_cylinder": "The Steam Engine needs three, across the middle of its back wall. Steam pipes join onto them.",
+  "message.epochsmith.gear_train.full_tomorrow": "Full moon tomorrow night."
 }

@@ -6,6 +6,7 @@ blockstates turn it to face the player. Faces pick their textures from a small d
 "all", "side", "top", "bottom", or a face name ("north", "south", "east", "west", "up", "down").
 """
 import json
+import math
 import os
 
 OUT = "src/main/resources/assets/epochsmith/models/block"
@@ -71,8 +72,12 @@ def ring(y0, y1, lo, hi, t, key, glow=False):
             box((lo, y0, lo + t), (lo + t, y1, hi - t), key, glow), box((hi - t, y0, lo + t), (hi, y1, hi - t), key, glow)]
 
 
-def model(name, textures, elements, cutout=False, translucent=False):
+def model(name, textures, elements, cutout=False, translucent=False, ao=True, display=None):
     data = {"parent": "minecraft:block/block", "textures": textures, "elements": elements}
+    if not ao:
+        data["ambientocclusion"] = False
+    if display:
+        data["display"] = display
     if cutout:
         data["render_type"] = "minecraft:cutout"
     if translucent:
@@ -526,17 +531,224 @@ def induction_furnace(on):
     model("induction_furnace_on" if on else "induction_furnace", t, els)
 
 
+# ---------------- Big models (multiblocks and two-block machines) ----------------
+# Models can reach one block out on every side (-16 to 32). Big boxes are cut on the block grid so each
+# piece shows its texture once per block, the way a wall of real blocks would. No faces are culled.
+
+def pick(tex, face):
+    if isinstance(tex, str):
+        return tex
+    return tex.get(face) or (tex.get("top") if face == "up" else None) or (tex.get("bottom") if face == "down" else None) \
+        or (tex.get("side") if face in SIDES else None) or tex.get("all")
+
+
+def local_uv(face, f, t):
+    """Vanilla's automatic UVs, for a piece whose corners f..t are given inside its own block (0-16)."""
+    return {"north": [16 - t[0], 16 - t[1], 16 - f[0], 16 - f[1]], "south": [f[0], 16 - t[1], t[0], 16 - f[1]],
+            "west": [f[2], 16 - t[1], t[2], 16 - f[1]], "east": [16 - t[2], 16 - t[1], 16 - f[2], 16 - f[1]],
+            "up": [f[0], f[2], t[0], t[2]], "down": [f[0], 16 - t[2], t[0], 16 - f[2]]}[face]
+
+
+def tiled(frm, to, tex, glow=False, skip=()):
+    """A box of any size up to three blocks, textured block by block."""
+    def cuts(a, b):
+        points = [a]
+        k = (math.floor(a / 16) + 1) * 16
+        while k < b:
+            points.append(k)
+            k += 16
+        points.append(b)
+        return list(zip(points, points[1:]))
+    out = []
+    for x0, x1 in cuts(frm[0], to[0]):
+        for y0, y1 in cuts(frm[1], to[1]):
+            for z0, z1 in cuts(frm[2], to[2]):
+                origin = [math.floor((a + b) / 32) * 16 for a, b in ((x0, x1), (y0, y1), (z0, z1))]
+                f = [x0 - origin[0], y0 - origin[1], z0 - origin[2]]
+                t = [x1 - origin[0], y1 - origin[1], z1 - origin[2]]
+                outer = {"north": z0 == frm[2], "south": z1 == to[2], "west": x0 == frm[0], "east": x1 == to[0],
+                         "down": y0 == frm[1], "up": y1 == to[1]}
+                faces = {}
+                for face in FACES:
+                    key = pick(tex, face)
+                    if outer[face] and face not in skip and key:
+                        faces[face] = {"texture": key, "uv": local_uv(face, f, t)}
+                if faces:
+                    element = {"from": [x0, y0, z0], "to": [x1, y1, z1], "faces": faces}
+                    if glow:
+                        element["neoforge_data"] = {"block_light": 15, "sky_light": 15}
+                        element["shade"] = False
+                    out.append(element)
+    return out
+
+
+def part(frm, to, tex, glow=False, rotation=None, skip=()):
+    """One piece (any size) with its texture squeezed to fit, for small or rotated parts of big models."""
+    dims = {"north": (0, 1), "south": (0, 1), "east": (2, 1), "west": (2, 1), "up": (0, 2), "down": (0, 2)}
+    faces = {}
+    for face in FACES:
+        key = pick(tex, face)
+        if key and face not in skip:
+            a, b = dims[face]
+            w, h = min(16, to[a] - frm[a]), min(16, to[b] - frm[b])
+            faces[face] = {"texture": key, "uv": [0, 0, round(w, 3), round(h, 3)]}
+    element = {"from": list(frm), "to": list(to), "faces": faces}
+    if rotation:
+        element["rotation"] = rotation
+    if glow:
+        element["neoforge_data"] = {"block_light": 15, "sky_light": 15}
+        element["shade"] = False
+    return element
+
+
+def hidden(name, particle):
+    """Draws nothing: the invisible parts of a built multiblock (the core part draws the whole machine)."""
+    os.makedirs(OUT, exist_ok=True)
+    with open(f"{OUT}/{name}.json", "w") as f:
+        json.dump({"textures": {"particle": particle}, "elements": []}, f, indent=2)
+        f.write("\n")
+
+
+def cube(name, textures):
+    """A plain full block (the parts of a multiblock before it's built)."""
+    model(name, dict(textures, particle=textures.get("particle") or textures.get("side") or textures.get("all")),
+          [box((0, 0, 0), (16, 16, 16), {k: "#" + k for k in textures if k != "particle"})])
+
+
+def coke_oven_formed(lit):
+    """The built 3x3x3 coke oven, drawn by its centre brick (the door is in the middle of the front)."""
+    t = {"particle": E + "coke_oven_side", "brick": E + "coke_oven_side", "base": M + "polished_blackstone_bricks",
+         "iron": M + "anvil", "dark": M + "polished_basalt_side", "front": E + ("coke_oven_front_lit" if lit else "coke_oven_front"),
+         "vent": M + ("magma" if lit else "coal_block"), "cap": M + "polished_blackstone"}
+    els = tiled((-15.5, -16, -15), (31.5, -12, 31.5), "#base")                                 # plinth (posts stand proud of it)
+    els += tiled((-15.5, -12, -14), (31.5, 26, 31.5), "#brick")                                # oven body
+    els += tiled((-12, 26, -10), (28, 30, 28), "#brick")                                       # domed roof
+    els += tiled((-15.75, 26, -14.5), (31.75, 27, 31.75), {"side": "#cap", "top": "#cap"})    # cap course
+    els += [part((2, 30, 2), (14, 32, 14), {"side": "#cap", "top": "#vent"}),                  # chimney
+            part((4, 31.9, 4), (12, 32, 12), {"up": "#vent"}, glow=lit)]
+    for x in (-16, 28):                                                                        # iron corner posts
+        for z in (-16, 28):
+            els += tiled((x, -16, z), (x + 4, 27.5, z + 4), "#dark")
+    els += tiled((-12, 22, -15.5), (28, 24, -14), "#iron")   # (bolts below sit just in front of these bars)                                       # front tie bar
+    els += tiled((-12, -12, -15.5), (28, -10, -14), "#iron")
+    els += [part((-3, -12, -16), (0, 19, -14), "#iron"), part((16, -12, -16), (19, 19, -14), "#iron"),   # door frame
+            part((-3, 16, -16), (19, 19, -13.5), "#iron"),
+            part((0, -10, -14.05), (16, 16, -14), {"north": "#front"}, glow=lit)]                # the oven door
+    for x in (-8, 24):                                                                         # tie-rod bolts
+        for y in (-11, 23):
+            els.append(part((x - 1, y - 1, -16), (x + 1, y + 1, -15.4), "#iron"))
+    model("coke_oven_formed_lit" if lit else "coke_oven_formed", t, els, ao=False)
+
+
+def steam_engine_formed():
+    """The built steam engine, drawn by its middle cylinder. Front slab: the flywheel round the output axle.
+    Back slab: the cylinder on its bed, with the valve chest and exhaust stack on top."""
+    t = {"particle": E + "boiler_side", "bed": M + "polished_blackstone_bricks", "cyl": E + "steam_cylinder",
+         "end": E + "steam_cylinder_end", "iron": M + "anvil", "dark": E + "engine_casing", "brass": M + "gold_block",
+         "axle": M + "stripped_oak_log", "pipe": E + "steam_pipe", "glass": M + "white_stained_glass"}
+    els = tiled((-16, -16, -16), (32, -11, 16), {"side": "#bed", "top": "#bed"})               # engine bed
+    # Back slab: the cylinder lying along the engine
+    els += tiled((-12, -6, 1), (28, 14, 15), {"side": "#cyl", "east": "#end", "west": "#end"})
+    els += [part((-14, -7, 1), (-12, 15, 15), {"east": "#end", "west": "#end", "side": "#dark"}),        # end covers
+            part((28, -7, 1), (30, 15, 15), {"east": "#end", "west": "#end", "side": "#dark"}),
+            part((-11, -11, 3), (-5, -6, 13), "#dark"), part((21, -11, 3), (27, -6, 13), "#dark")]   # feet
+    els += tiled((-6, 14, 3), (22, 20, 13), "#dark")                                           # valve chest
+    els += [part((4, 20, 4), (12, 32, 12), {"side": "#pipe", "top": "#iron"}),                 # exhaust stack
+            part((3, 29, 3), (13, 31, 13), "#brass"),
+            part((-4, 17, 1), (2, 23, 3), {"north": "#glass", "side": "#brass"}),             # pressure gauge
+            part((-2.5, 18.5, 0.9), (0.5, 21.5, 1), {"north": "#iron"}, glow=True)]
+    # Front slab: bearing pedestal, axle and flywheel
+    els += [part((2, -11, -6), (14, 2, 0), "#dark"), part((4, 2, -5), (12, 4, -1), "#brass")]
+    els += [part((5, 5, -16), (11, 11, -1), "#axle"), part((3, 3, -13), (13, 13, -5), "#brass")]
+    a, w = 22, 4                                     # flywheel: an octagon rim 4 px thick
+    side = 2 * a * math.tan(math.radians(22.5))
+    z0, z1 = -12, -7
+    els += [part((8 - side / 2, 8 + a - w, z0), (8 + side / 2, 8 + a, z1), "#iron"),
+            part((8 - side / 2, 8 - a, z0), (8 + side / 2, 8 - a + w, z1), "#iron"),
+            part((8 - a, 8 - side / 2, z0), (8 - a + w, 8 + side / 2, z1), "#iron"),
+            part((8 + a - w, 8 - side / 2, z0), (8 + a, 8 + side / 2, z1), "#iron")]
+    r = (a - w / 2) * math.cos(math.radians(45))
+    for sx, sy in ((1, 1), (-1, 1), (1, -1), (-1, -1)):
+        cx, cy = 8 + sx * r, 8 + sy * r
+        els.append(part((cx - side / 2 - 0.6, cy - w / 2, z0), (cx + side / 2 + 0.6, cy + w / 2, z1), "#iron",
+                        rotation={"origin": [cx, cy, (z0 + z1) / 2], "axis": "z", "angle": -45 if sx == sy else 45}))
+    els += [part((8 - a + w, 6.5, -11), (8 + a - w, 9.5, -8), "#dark"), part((6.5, 8 - a + w, -11), (9.5, 8 + a - w, -8), "#dark")]
+    for angle in (45, -45):                                                                    # diagonal spokes
+        els.append(part((8 - a + w + 2, 6.5, -11), (8 + a - w - 2, 9.5, -8), "#dark",
+                        rotation={"origin": [8, 8, -9.5], "axis": "z", "angle": angle}))
+    model("steam_engine_formed", t, els, ao=False)
+
+
+def joiners_bench_wide():
+    """The joiner's bench, two blocks wide: the main half (with the vise) is 0-16, the rest reaches to -16."""
+    t = {"particle": M + "oak_planks", "top": M + "stripped_oak_log", "wood": M + "oak_planks", "leg": M + "stripped_spruce_log",
+         "iron": M + "iron_block", "dark": M + "dark_oak_planks", "handle": M + "stripped_birch_log"}
+    els = tiled((-16, 13, 0), (16, 16, 16), {"side": "#wood", "top": "#top", "bottom": "#wood"})
+    for x in (-15, 12):
+        for z in (1, 12):
+            els.append(part((x, 0, z), (x + 3, 13, z + 3), "#leg"))
+    els += tiled((-14, 4, 2), (14, 5, 14), "#dark")                                           # lower shelf
+    els += [part((-15, 10, 1), (15, 13, 2), "#dark"),                                         # front apron
+            part((-15, 2, 13), (15, 4, 14), "#leg"), part((-15, 2, 2), (15, 4, 3), "#leg"),     # stretchers
+            part((11, 11, -0.5), (15, 14, 1.5), "#iron"),                                      # front vise
+            part((12.5, 11.5, -1.5), (13.5, 12.5, -0.5), "#iron"),
+            part((10, 12, -2), (16, 13, -1.5), "#handle"),
+            part((-15, 11, -0.5), (-11, 14, 1.5), "#iron"),                                    # tail vise
+            part((-13.5, 11.5, -1.5), (-12.5, 12.5, -0.5), "#iron"),
+            part((-14, 16, 13), (-1, 19, 15), "#dark"),                                        # tool rack at the back
+            part((-12, 16, 4), (-8, 18.5, 7), "#dark"),                                        # mallet head
+            part((-11, 16.5, 7), (-9, 17.5, 12), "#handle"),
+            part((-5, 16, 5), (-4, 16.5, 11), "#iron"),                                        # chisel
+            part((-5.5, 16, 10), (-3.5, 17, 12.5), "#handle"),
+            part((-12, 5, 4), (-4, 7, 10), "#wood"), part((-11, 7, 5), (-6, 8, 9), "#top")]    # offcuts on the shelf
+    for x in (-10, -4, 4):                                                                     # bench dog holes
+        els.append(part((x, 15.95, 3), (x + 1, 16, 4), {"up": "#dark"}))
+    model("joiners_bench", t, els)
+    # The item: the same bench moved to the middle of the slot and shrunk to fit
+    shifted = json.loads(json.dumps(els))
+    for e in shifted:
+        e["from"][0] += 8; e["to"][0] += 8
+        if "rotation" in e:
+            e["rotation"]["origin"][0] += 8
+    display = {"gui": {"rotation": [30, 225, 0], "translation": [0, 1, 0], "scale": [0.42, 0.42, 0.42]},
+               "ground": {"rotation": [0, 0, 0], "translation": [0, 3, 0], "scale": [0.18, 0.18, 0.18]},
+               "fixed": {"rotation": [0, 0, 0], "translation": [0, 0, 0], "scale": [0.4, 0.4, 0.4]},
+               "thirdperson_righthand": {"rotation": [75, 45, 0], "translation": [0, 2.5, 0], "scale": [0.25, 0.25, 0.25]},
+               "firstperson_righthand": {"rotation": [0, 45, 0], "translation": [0, 0, 0], "scale": [0.3, 0.3, 0.3]},
+               "firstperson_lefthand": {"rotation": [0, 225, 0], "translation": [0, 0, 0], "scale": [0.3, 0.3, 0.3]}}
+    model("joiners_bench_item", t, shifted, display=display)
+    hidden("joiners_bench_side", M + "oak_planks")
+
+
+def multiblock_parts():
+    cube("coke_oven", {"side": E + "coke_oven_side", "top": E + "coke_oven_side", "bottom": E + "coke_oven_side",
+                            "north": E + "coke_oven_front", "particle": E + "coke_oven_side"})
+    cube("coke_oven_bricks", {"all": E + "coke_oven_side"})
+    cube("engine_casing", {"all": E + "engine_casing"})
+    cube("steam_cylinder", {"side": E + "steam_cylinder", "top": E + "steam_cylinder", "bottom": E + "steam_cylinder",
+                            "east": E + "steam_cylinder_end", "west": E + "steam_cylinder_end"})
+    hidden("coke_oven_hidden", E + "coke_oven_side")
+    hidden("engine_casing_hidden", E + "engine_casing")
+    hidden("steam_cylinder_hidden", E + "steam_cylinder")
+    hidden("steam_engine_hidden", E + "boiler_side")
+
+
 if __name__ == "__main__":
     knapping_stone()
     for state in (False, True):
-        pit_kiln(state); bloomery(state); millstone(state); forge(state); gear_train(state); coke_oven(state); boiler(state)
+        pit_kiln(state); bloomery(state); millstone(state); forge(state); gear_train(state); boiler(state)
         circuit_fabricator(state); computer_core(state); data_vault(state); automated_assembler(state); nanofabricator(state)
         fusion_reactor(state); plasma_smelter(state); quantum_cell(state); matter_printer(state); hover_pad(state)
-    woven_basket(); stone_anvil(); joiners_bench(); gearbox(); banded_crate(); steam_engine(); lathe()
+    woven_basket(); stone_anvil(); joiners_bench_wide(); gearbox(); banded_crate(); steam_engine(); lathe()
     for level in range(5):
         battery(level)
     sorting_cabinet(); wireless_node()
     for state in (False, True):
         steam_blast_furnace(state); arc_furnace(state); induction_furnace(state)
     strongbox(); dynamo()
+    for state in (False, True):
+        coke_oven_formed(state)
+    steam_engine_formed(); multiblock_parts()
+    import fix_flicker
+    fix_flicker.run()
     print("3D block models written")

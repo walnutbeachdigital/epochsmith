@@ -1,0 +1,82 @@
+{
+  "variants": {
+    "active=false,facing=north,form=none": {
+      "model": "epochsmith:block/coke_oven_bricks"
+    },
+    "active=false,facing=north,form=hidden": {
+      "model": "epochsmith:block/coke_oven_hidden"
+    },
+    "active=false,facing=north,form=core": {
+      "model": "epochsmith:block/coke_oven_formed"
+    },
+    "active=true,facing=north,form=none": {
+      "model": "epochsmith:block/coke_oven_bricks"
+    },
+    "active=true,facing=north,form=hidden": {
+      "model": "epochsmith:block/coke_oven_hidden"
+    },
+    "active=true,facing=north,form=core": {
+      "model": "epochsmith:block/coke_oven_formed_lit"
+    },
+    "active=false,facing=east,form=none": {
+      "model": "epochsmith:block/coke_oven_bricks"
+    },
+    "active=false,facing=east,form=hidden": {
+      "model": "epochsmith:block/coke_oven_hidden"
+    },
+    "active=false,facing=east,form=core": {
+      "model": "epochsmith:block/coke_oven_formed",
+      "y": 90
+    },
+    "active=true,facing=east,form=none": {
+      "model": "epochsmith:block/coke_oven_bricks"
+    },
+    "active=true,facing=east,form=hidden": {
+      "model": "epochsmith:block/coke_oven_hidden"
+    },
+    "active=true,facing=east,form=core": {
+      "model": "epochsmith:block/coke_oven_formed_lit",
+      "y": 90
+    },
+    "active=false,facing=south,form=none": {
+      "model": "epochsmith:block/coke_oven_bricks"
+    },
+    "active=false,facing=south,form=hidden": {
+      "model": "epochsmith:block/coke_oven_hidden"
+    },
+    "active=false,facing=south,form=core": {
+      "model": "epochsmith:block/coke_oven_formed",
+      "y": 180
+    },
+    "active=true,facing=south,form=none": {
+      "model": "epochsmith:block/coke_oven_bricks"
+    },
+    "active=true,facing=south,form=hidden": {
+      "model": "epochsmith:block/coke_oven_hidden"
+    },
+    "active=true,facing=south,form=core": {
+      "model": "epochsmith:block/coke_oven_formed_lit",
+      "y": 180
+    },
+    "active=false,facing=west,form=none": {
+      "model": "epochsmith:block/coke_oven_bricks"
+    },
+    "active=false,facing=west,form=hidden": {
+      "model": "epochsmith:block/coke_oven_hidden"
+    },
+    "active=false,facing=west,form=core": {
+      "model": "epochsmith:block/coke_oven_formed",
+      "y": 270
+    },
+    "active=true,facing=west,form=none": {
+      "model": "epochsmith:block/coke_oven_bricks"
+    },
+    "active=true,facing=west,form=hidden": {
+      "model": "epochsmith:block/coke_oven_hidden"
+    },
+    "active=true,facing=west,form=core": {
+      "model": "epochsmith:block/coke_oven_formed_lit",
+      "y": 270
+    }
+  }
+}

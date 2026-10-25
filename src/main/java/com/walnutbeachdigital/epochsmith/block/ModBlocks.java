@@ -33,6 +33,8 @@ import com.walnutbeachdigital.epochsmith.steam.LatheBlock;
 import com.walnutbeachdigital.epochsmith.steam.SteamEngineBlock;
 import com.walnutbeachdigital.epochsmith.steam.SteamPipeBlock;
 
+import com.walnutbeachdigital.epochsmith.multiblock.MultiblockPartBlock;
+import com.walnutbeachdigital.epochsmith.steam.SteamCylinderBlock;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
@@ -40,6 +42,7 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredItem;
 
@@ -173,7 +176,7 @@ public final class ModBlocks {
     /** The Mechanical era's crafting station: cuts gears and axles, by hand or with power. */
     public static final DeferredBlock<JoinersBenchBlock> JOINERS_BENCH = Epochsmith.BLOCKS.register("joiners_bench",
             () -> new JoinersBenchBlock(BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).strength(2.5F)
-                    .sound(SoundType.WOOD).noOcclusion()));
+                    .sound(SoundType.WOOD).noOcclusion().pushReaction(PushReaction.BLOCK)));
     public static final DeferredItem<BlockItem> JOINERS_BENCH_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("joiners_bench", JOINERS_BENCH);
 
     /** The Mechanical era's smelter: powered bellows, extra ore, and crucible steel. */
@@ -212,8 +215,15 @@ public final class ModBlocks {
     public static final DeferredBlock<CokeOvenBlock> COKE_OVEN = Epochsmith.BLOCKS.register("coke_oven",
             () -> new CokeOvenBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_RED).requiresCorrectToolForDrops()
                     .strength(3.0F).sound(SoundType.STONE)
-                    .lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 10 : 0).noOcclusion()));
+                    .lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 10 : 0)));
     public static final DeferredItem<BlockItem> COKE_OVEN_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("coke_oven", COKE_OVEN);
+
+    /** The walls of the coke oven multiblock. */
+    public static final DeferredBlock<MultiblockPartBlock> COKE_OVEN_BRICKS = Epochsmith.BLOCKS.register("coke_oven_bricks",
+            () -> new MultiblockPartBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_RED).requiresCorrectToolForDrops()
+                    .strength(2.0F, 6.0F).sound(SoundType.STONE)
+                    .lightLevel(state -> state.getValue(MultiblockPartBlock.ACTIVE) ? 8 : 0)));
+    public static final DeferredItem<BlockItem> COKE_OVEN_BRICKS_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("coke_oven_bricks", COKE_OVEN_BRICKS);
 
     /** Boils water into steam. */
     public static final DeferredBlock<BoilerBlock> BOILER = Epochsmith.BLOCKS.register("boiler",
@@ -230,6 +240,16 @@ public final class ModBlocks {
     public static final DeferredBlock<SteamEngineBlock> STEAM_ENGINE = Epochsmith.BLOCKS.register("steam_engine",
             () -> new SteamEngineBlock(metal().noOcclusion()));
     public static final DeferredItem<BlockItem> STEAM_ENGINE_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("steam_engine", STEAM_ENGINE);
+
+    /** The frame of the steam engine multiblock. */
+    public static final DeferredBlock<MultiblockPartBlock> ENGINE_CASING = Epochsmith.BLOCKS.register("engine_casing",
+            () -> new MultiblockPartBlock(metal()));
+    public static final DeferredItem<BlockItem> ENGINE_CASING_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("engine_casing", ENGINE_CASING);
+
+    /** The steam engine's cylinders: pipe steam into these. */
+    public static final DeferredBlock<SteamCylinderBlock> STEAM_CYLINDER = Epochsmith.BLOCKS.register("steam_cylinder",
+            () -> new SteamCylinderBlock(metal()));
+    public static final DeferredItem<BlockItem> STEAM_CYLINDER_ITEM = Epochsmith.ITEMS.registerSimpleBlockItem("steam_cylinder", STEAM_CYLINDER);
 
     /** The Industrial era's crafting station: steam-powered, turns precision parts. */
     public static final DeferredBlock<LatheBlock> LATHE = Epochsmith.BLOCKS.register("lathe",

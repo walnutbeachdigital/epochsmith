@@ -75,5 +75,16 @@ for ident in sorted(ids):
     if f"item.epochsmith.{ident}" not in lang and f"block.epochsmith.{ident}" not in lang:
         problems.append(f"missing English name for {ident}")
 
+# Model boxes must stay within one block of their own (-16 to 32), or Minecraft refuses the whole model
+for path in sorted(glob.glob(f"{RES}/assets/*/models/**/*.json", recursive=True)):
+    try:
+        data = json.load(open(path))
+    except ValueError:
+        continue
+    for element in data.get("elements", []):
+        for corner in ("from", "to"):
+            if any(v < -16 or v > 32 for v in element.get(corner, [])):
+                problems.append(f"{path}: a box's '{corner}' {element[corner]} is outside -16..32")
+
 print("\n".join(problems) if problems else "No problems found.")
 print(f"({len(ids)} registered ids checked)")

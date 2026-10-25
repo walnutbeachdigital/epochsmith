@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "S": {
+      "item": "epochsmith:steel_ingot"
+    },
+    "R": {
+      "item": "epochsmith:rivets"
+    }
+  },
+  "pattern": [
+    "ISI",
+    "IRI",
+    "ISI"
+  ],
+  "result": {
+    "count": 6,
+    "id": "epochsmith:engine_casing"
+  }
+}

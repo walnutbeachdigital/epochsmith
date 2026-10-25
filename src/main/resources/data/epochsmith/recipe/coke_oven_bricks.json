@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "C": {
+      "item": "minecraft:clay_ball"
+    },
+    "B": {
+      "item": "minecraft:brick"
+    },
+    "S": {
+      "item": "minecraft:sandstone"
+    }
+  },
+  "pattern": [
+    "CBC",
+    "BSB",
+    "CBC"
+  ],
+  "result": {
+    "count": 3,
+    "id": "epochsmith:coke_oven_bricks"
+  }
+}

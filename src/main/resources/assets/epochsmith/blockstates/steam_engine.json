@@ -1,18 +1,58 @@
 {
   "variants": {
-    "axis=x,running=false": {
+    "facing=north,formed=false,running=false": {
+      "model": "epochsmith:block/steam_engine",
+      "y": 270
+    },
+    "facing=north,formed=true,running=false": {
+      "model": "epochsmith:block/steam_engine_hidden"
+    },
+    "facing=north,formed=false,running=true": {
+      "model": "epochsmith:block/steam_engine",
+      "y": 270
+    },
+    "facing=north,formed=true,running=true": {
+      "model": "epochsmith:block/steam_engine_hidden"
+    },
+    "facing=east,formed=false,running=false": {
       "model": "epochsmith:block/steam_engine"
     },
-    "axis=x,running=true": {
+    "facing=east,formed=true,running=false": {
+      "model": "epochsmith:block/steam_engine_hidden"
+    },
+    "facing=east,formed=false,running=true": {
       "model": "epochsmith:block/steam_engine"
     },
-    "axis=z,running=false": {
+    "facing=east,formed=true,running=true": {
+      "model": "epochsmith:block/steam_engine_hidden"
+    },
+    "facing=south,formed=false,running=false": {
       "model": "epochsmith:block/steam_engine",
       "y": 90
     },
-    "axis=z,running=true": {
+    "facing=south,formed=true,running=false": {
+      "model": "epochsmith:block/steam_engine_hidden"
+    },
+    "facing=south,formed=false,running=true": {
       "model": "epochsmith:block/steam_engine",
       "y": 90
+    },
+    "facing=south,formed=true,running=true": {
+      "model": "epochsmith:block/steam_engine_hidden"
+    },
+    "facing=west,formed=false,running=false": {
+      "model": "epochsmith:block/steam_engine",
+      "y": 180
+    },
+    "facing=west,formed=true,running=false": {
+      "model": "epochsmith:block/steam_engine_hidden"
+    },
+    "facing=west,formed=false,running=true": {
+      "model": "epochsmith:block/steam_engine",
+      "y": 180
+    },
+    "facing=west,formed=true,running=true": {
+      "model": "epochsmith:block/steam_engine_hidden"
     }
   }
 }

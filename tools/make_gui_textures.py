@@ -7,6 +7,8 @@ Layout of each 256x256 texture:
   (176, 18) 26x26    the frame around an output slot
   (176, 44) 24x17    an empty progress arrow (vanilla's, with its grey background removed)
   (176, 62) 14x14    an empty flame (likewise)
+  (176, 80) 24x17    the filled progress arrow (the same shape, lit up)
+  (176, 98) 14x14    the burning flame (the same shape, in fire colours)
 """
 import math
 import random
@@ -127,14 +129,43 @@ def furnace_shapes():
 ARROW, FLAME = furnace_shapes()
 
 
+def lit_arrow():
+    """The empty arrow's exact shape, filled bright: light at the top, a touch darker underneath."""
+    rows = [y for y in range(17) if any(p[3] for p in ARROW[y])]
+    top, bottom = min(rows), max(rows)
+    out = blank(24, 17)
+    for y in range(17):
+        for x in range(24):
+            if ARROW[y][x][3]:
+                t = (y - top) / max(1, bottom - top)
+                out[y][x] = (round(255 - 40 * t), round(255 - 40 * t), round(255 - 30 * t), 255)
+    return out
+
+
+def lit_flame():
+    """The empty flame's exact shape in fire colours: white-yellow at the bottom, red at the tips."""
+    fire = [(150, 30, 10), (230, 90, 20), (255, 170, 40), (255, 236, 150)]
+    out = blank(14, 14)
+    for y in range(14):
+        for x in range(14):
+            if FLAME[y][x][3]:
+                out[y][x] = fire[min(3, y * 4 // 14)] + (255,)
+    return out
+
+
+LIT_ARROW, LIT_FLAME = lit_arrow(), lit_flame()
+
+
 def sheet(panel, slot_px, frame_px):
     out = blank(256, 256)
     for y in range(17):
         for x in range(24):
             out[44 + y][176 + x] = ARROW[y][x]
+            out[80 + y][176 + x] = LIT_ARROW[y][x]
     for y in range(14):
         for x in range(14):
             out[62 + y][176 + x] = FLAME[y][x]
+            out[98 + y][176 + x] = LIT_FLAME[y][x]
     for y in range(H):
         for x in range(W):
             out[y][x] = panel[y][x]

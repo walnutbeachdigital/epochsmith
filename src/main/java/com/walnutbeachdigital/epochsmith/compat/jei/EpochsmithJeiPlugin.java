@@ -1,17 +1,25 @@
 package com.walnutbeachdigital.epochsmith.compat.jei;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.function.Supplier;
 
 import com.walnutbeachdigital.epochsmith.Epochsmith;
 import com.walnutbeachdigital.epochsmith.block.ModBlocks;
+import com.walnutbeachdigital.epochsmith.client.MachineScreen;
+import com.walnutbeachdigital.epochsmith.menu.MachineLayout;
+import com.walnutbeachdigital.epochsmith.menu.MachineMenu;
 import com.walnutbeachdigital.epochsmith.electric.ArcFurnaceBlockEntity;
 import com.walnutbeachdigital.epochsmith.future.PlasmaSmelterBlockEntity;
 import com.walnutbeachdigital.epochsmith.item.ModItems;
 
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
+import mezz.jei.api.constants.RecipeTypes;
+import mezz.jei.api.gui.handlers.IGuiClickableArea;
+import mezz.jei.api.gui.handlers.IGuiContainerHandler;
+import mezz.jei.api.registration.IGuiHandlerRegistration;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.RecipeType;
@@ -85,6 +93,52 @@ public class EpochsmithJeiPlugin implements IModPlugin {
             registration.addRecipeCategories(new MachineCategory(page.type(),
                     Component.translatable("jei.epochsmith.category." + id), stack(page.icon().get()), gui));
         }
+    }
+
+    /** Clicking a machine screen's progress arrow (or flame, if it has no arrow) shows that machine's recipes. */
+    @Override
+    public void registerGuiHandlers(IGuiHandlerRegistration registration) {
+        registration.addGuiContainerHandler(MachineScreen.class, new IGuiContainerHandler<MachineScreen>() {
+            @Override
+            public Collection<IGuiClickableArea> getGuiClickableAreas(MachineScreen screen, double mouseX, double mouseY) {
+                RecipeType<?>[] types = recipeTypesFor(screen.getMenu());
+                List<IGuiClickableArea> areas = new ArrayList<>();
+                if (types.length == 0) {
+                    return areas;
+                }
+                MachineLayout layout = screen.getMenu().getLayout();
+                for (MachineLayout.Meter arrow : layout.arrows) {
+                    areas.add(IGuiClickableArea.createBasic(arrow.x(), arrow.y(), 24, 17, types));
+                }
+                if (areas.isEmpty()) {
+                    for (MachineLayout.Meter flame : layout.flames) {
+                        areas.add(IGuiClickableArea.createBasic(flame.x(), flame.y(), 14, 14, types));
+                    }
+                }
+                return areas;
+            }
+        });
+    }
+
+    /** The JEI pages for the machine a screen belongs to (found from the block it was opened on). */
+    private static RecipeType<?>[] recipeTypesFor(MachineMenu menu) {
+        Level level = Minecraft.getInstance().level;
+        if (level == null) {
+            return new RecipeType<?>[0];
+        }
+        Item item = level.getBlockState(menu.getPos()).getBlock().asItem();
+        if (item == ModBlocks.ASSEMBLER_ITEM.get()) {
+            return new RecipeType<?>[] {RecipeTypes.CRAFTING};
+        }
+        List<RecipeType<?>> types = new ArrayList<>();
+        for (Page page : PAGES) {
+            for (Supplier<? extends ItemLike> machine : page.machines()) {
+                if (machine.get().asItem() == item) {
+                    types.add(page.type());
+                }
+            }
+        }
+        return types.toArray(new RecipeType<?>[0]);
     }
 
     @Override
@@ -198,6 +252,10 @@ public class EpochsmithJeiPlugin implements IModPlugin {
         info(registration, ModBlocks.HOVER_PAD_ITEM.get(), "hover_pad");
         info(registration, ModBlocks.SOLAR_PANEL_ITEM.get(), "solar_panel");
         info(registration, ModBlocks.STEAM_ENGINE_ITEM.get(), "steam_engine");
+        info(registration, ModBlocks.COKE_OVEN_ITEM.get(), "coke_oven");
+        info(registration, ModBlocks.COKE_OVEN_BRICKS_ITEM.get(), "coke_oven_bricks");
+        info(registration, ModBlocks.ENGINE_CASING_ITEM.get(), "engine_casing");
+        info(registration, ModBlocks.STEAM_CYLINDER_ITEM.get(), "steam_cylinder");
         info(registration, ModBlocks.DYNAMO_ITEM.get(), "dynamo");
     }
 

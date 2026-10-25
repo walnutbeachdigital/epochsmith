@@ -6,6 +6,8 @@ import com.walnutbeachdigital.epochsmith.menu.MachineGui;
 import com.walnutbeachdigital.epochsmith.menu.MachineItems;
 import com.walnutbeachdigital.epochsmith.menu.MachineLayout;
 
+import com.walnutbeachdigital.epochsmith.multiblock.MultiblockController;
+import com.walnutbeachdigital.epochsmith.multiblock.Multiblocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -57,9 +59,11 @@ public class CokeOvenBlockEntity extends BlockEntity implements MachineGui {
     public static void serverTick(Level level, BlockPos pos, BlockState state, CokeOvenBlockEntity oven) {
         ItemStack coal = oven.items.getStackInSlot(0);
         ItemStack batch = new ItemStack(ModItems.COKE.get(), coal.getCount());
-        boolean baking = !coal.isEmpty() && oven.items.fitsOutput(batch);
+        boolean baking = state.getValue(MultiblockController.FORMED) && !coal.isEmpty() && oven.items.fitsOutput(batch);
         if (state.getValue(BlockStateProperties.LIT) != baking) {
-            level.setBlock(pos, state.setValue(BlockStateProperties.LIT, baking), Block.UPDATE_ALL);
+            BlockState lit = state.setValue(BlockStateProperties.LIT, baking);
+            level.setBlock(pos, lit, Block.UPDATE_ALL);
+            Multiblocks.setActive(level, pos, lit, baking);
         }
         if (!baking) {
             if (oven.progress != 0 && coal.isEmpty()) {

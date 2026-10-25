@@ -1,0 +1,76 @@
+{
+  "variants": {
+    "active=false,facing=north,form=none": {
+      "model": "epochsmith:block/engine_casing"
+    },
+    "active=false,facing=north,form=hidden": {
+      "model": "epochsmith:block/engine_casing_hidden"
+    },
+    "active=false,facing=north,form=core": {
+      "model": "epochsmith:block/engine_casing_hidden"
+    },
+    "active=true,facing=north,form=none": {
+      "model": "epochsmith:block/engine_casing"
+    },
+    "active=true,facing=north,form=hidden": {
+      "model": "epochsmith:block/engine_casing_hidden"
+    },
+    "active=true,facing=north,form=core": {
+      "model": "epochsmith:block/engine_casing_hidden"
+    },
+    "active=false,facing=east,form=none": {
+      "model": "epochsmith:block/engine_casing"
+    },
+    "active=false,facing=east,form=hidden": {
+      "model": "epochsmith:block/engine_casing_hidden"
+    },
+    "active=false,facing=east,form=core": {
+      "model": "epochsmith:block/engine_casing_hidden"
+    },
+    "active=true,facing=east,form=none": {
+      "model": "epochsmith:block/engine_casing"
+    },
+    "active=true,facing=east,form=hidden": {
+      "model": "epochsmith:block/engine_casing_hidden"
+    },
+    "active=true,facing=east,form=core": {
+      "model": "epochsmith:block/engine_casing_hidden"
+    },
+    "active=false,facing=south,form=none": {
+      "model": "epochsmith:block/engine_casing"
+    },
+    "active=false,facing=south,form=hidden": {
+      "model": "epochsmith:block/engine_casing_hidden"
+    },
+    "active=false,facing=south,form=core": {
+      "model": "epochsmith:block/engine_casing_hidden"
+    },
+    "active=true,facing=south,form=none": {
+      "model": "epochsmith:block/engine_casing"
+    },
+    "active=true,facing=south,form=hidden": {
+      "model": "epochsmith:block/engine_casing_hidden"
+    },
+    "active=true,facing=south,form=core": {
+      "model": "epochsmith:block/engine_casing_hidden"
+    },
+    "active=false,facing=west,form=none": {
+      "model": "epochsmith:block/engine_casing"
+    },
+    "active=false,facing=west,form=hidden": {
+      "model": "epochsmith:block/engine_casing_hidden"
+    },
+    "active=false,facing=west,form=core": {
+      "model": "epochsmith:block/engine_casing_hidden"
+    },
+    "active=true,facing=west,form=none": {
+      "model": "epochsmith:block/engine_casing"
+    },
+    "active=true,facing=west,form=hidden": {
+      "model": "epochsmith:block/engine_casing_hidden"
+    },
+    "active=true,facing=west,form=core": {
+      "model": "epochsmith:block/engine_casing_hidden"
+    }
+  }
+}

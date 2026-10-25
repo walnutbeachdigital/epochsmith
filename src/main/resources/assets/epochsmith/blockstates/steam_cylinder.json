@@ -1,0 +1,82 @@
+{
+  "variants": {
+    "active=false,facing=north,form=none": {
+      "model": "epochsmith:block/steam_cylinder"
+    },
+    "active=false,facing=north,form=hidden": {
+      "model": "epochsmith:block/steam_cylinder_hidden"
+    },
+    "active=false,facing=north,form=core": {
+      "model": "epochsmith:block/steam_engine_formed"
+    },
+    "active=true,facing=north,form=none": {
+      "model": "epochsmith:block/steam_cylinder"
+    },
+    "active=true,facing=north,form=hidden": {
+      "model": "epochsmith:block/steam_cylinder_hidden"
+    },
+    "active=true,facing=north,form=core": {
+      "model": "epochsmith:block/steam_engine_formed"
+    },
+    "active=false,facing=east,form=none": {
+      "model": "epochsmith:block/steam_cylinder"
+    },
+    "active=false,facing=east,form=hidden": {
+      "model": "epochsmith:block/steam_cylinder_hidden"
+    },
+    "active=false,facing=east,form=core": {
+      "model": "epochsmith:block/steam_engine_formed",
+      "y": 90
+    },
+    "active=true,facing=east,form=none": {
+      "model": "epochsmith:block/steam_cylinder"
+    },
+    "active=true,facing=east,form=hidden": {
+      "model": "epochsmith:block/steam_cylinder_hidden"
+    },
+    "active=true,facing=east,form=core": {
+      "model": "epochsmith:block/steam_engine_formed",
+      "y": 90
+    },
+    "active=false,facing=south,form=none": {
+      "model": "epochsmith:block/steam_cylinder"
+    },
+    "active=false,facing=south,form=hidden": {
+      "model": "epochsmith:block/steam_cylinder_hidden"
+    },
+    "active=false,facing=south,form=core": {
+      "model": "epochsmith:block/steam_engine_formed",
+      "y": 180
+    },
+    "active=true,facing=south,form=none": {
+      "model": "epochsmith:block/steam_cylinder"
+    },
+    "active=true,facing=south,form=hidden": {
+      "model": "epochsmith:block/steam_cylinder_hidden"
+    },
+    "active=true,facing=south,form=core": {
+      "model": "epochsmith:block/steam_engine_formed",
+      "y": 180
+    },
+    "active=false,facing=west,form=none": {
+      "model": "epochsmith:block/steam_cylinder"
+    },
+    "active=false,facing=west,form=hidden": {
+      "model": "epochsmith:block/steam_cylinder_hidden"
+    },
+    "active=false,facing=west,form=core": {
+      "model": "epochsmith:block/steam_engine_formed",
+      "y": 270
+    },
+    "active=true,facing=west,form=none": {
+      "model": "epochsmith:block/steam_cylinder"
+    },
+    "active=true,facing=west,form=hidden": {
+      "model": "epochsmith:block/steam_cylinder_hidden"
+    },
+    "active=true,facing=west,form=core": {
+      "model": "epochsmith:block/steam_engine_formed",
+      "y": 270
+    }
+  }
+}

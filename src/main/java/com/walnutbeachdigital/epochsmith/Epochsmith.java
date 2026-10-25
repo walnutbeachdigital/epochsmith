@@ -119,10 +119,13 @@ public class Epochsmith {
                 output.accept(ModItems.KNIGHT_LEGGINGS.get());
                 output.accept(ModItems.KNIGHT_BOOTS.get());
                 output.accept(ModBlocks.COKE_OVEN_ITEM.get());
+                output.accept(ModBlocks.COKE_OVEN_BRICKS_ITEM.get());
                 output.accept(ModItems.COKE.get());
                 output.accept(ModBlocks.BOILER_ITEM.get());
                 output.accept(ModBlocks.STEAM_PIPE_ITEM.get());
                 output.accept(ModBlocks.STEAM_ENGINE_ITEM.get());
+                output.accept(ModBlocks.ENGINE_CASING_ITEM.get());
+                output.accept(ModBlocks.STEAM_CYLINDER_ITEM.get());
                 output.accept(ModBlocks.LATHE_ITEM.get());
                 output.accept(ModItems.RIVETS.get());
                 output.accept(ModItems.PRESSURE_GAUGE.get());

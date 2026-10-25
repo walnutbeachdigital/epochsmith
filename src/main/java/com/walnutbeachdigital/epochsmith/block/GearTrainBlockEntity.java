@@ -97,6 +97,7 @@ public class GearTrainBlockEntity extends BlockEntity {
                 Component.translatable("message.epochsmith.gear_train.moon." + MOON_PHASES[phase]),
                 nightsToFull == 0
                         ? Component.translatable("message.epochsmith.gear_train.full_tonight")
+                        : nightsToFull == 1 ? Component.translatable("message.epochsmith.gear_train.full_tomorrow")
                         : Component.translatable("message.epochsmith.gear_train.full_in", nightsToFull)), false);
         player.displayClientMessage(weather(), false);
     }

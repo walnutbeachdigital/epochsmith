@@ -33,6 +33,9 @@
     "epochsmith:quantum_cell",
     "epochsmith:matter_printer",
     "epochsmith:hover_pad",
-    "epochsmith:wireless_node"
+    "epochsmith:wireless_node",
+    "epochsmith:coke_oven_bricks",
+    "epochsmith:engine_casing",
+    "epochsmith:steam_cylinder"
   ]
 }

@@ -48,12 +48,12 @@
     {
       "from": [
         0,
-        0,
+        -0.02,
         0
       ],
       "to": [
         2,
-        16,
+        16.02,
         2
       ],
       "faces": {
@@ -80,12 +80,12 @@
     {
       "from": [
         0,
-        0,
+        -0.02,
         14
       ],
       "to": [
         2,
-        16,
+        16.02,
         16
       ],
       "faces": {
@@ -112,12 +112,12 @@
     {
       "from": [
         14,
-        0,
+        -0.02,
         0
       ],
       "to": [
         16,
-        16,
+        16.02,
         2
       ],
       "faces": {
@@ -144,12 +144,12 @@
     {
       "from": [
         14,
-        0,
+        -0.02,
         14
       ],
       "to": [
         16,
-        16,
+        16.02,
         16
       ],
       "faces": {
@@ -431,14 +431,14 @@
     },
     {
       "from": [
+        -0.02,
         0,
-        0,
-        0
+        -0.02
       ],
       "to": [
+        2.02,
         2,
-        2,
-        2
+        2.02
       ],
       "faces": {
         "north": {
@@ -468,14 +468,14 @@
     },
     {
       "from": [
+        -0.02,
         0,
-        0,
-        14
+        13.98
       ],
       "to": [
+        2.02,
         2,
-        2,
-        16
+        16.02
       ],
       "faces": {
         "north": {
@@ -505,14 +505,88 @@
     },
     {
       "from": [
+        -0.02,
+        14,
+        -0.02
+      ],
+      "to": [
+        2.02,
+        16,
+        2.02
+      ],
+      "faces": {
+        "north": {
+          "texture": "#node"
+        },
+        "south": {
+          "texture": "#node"
+        },
+        "east": {
+          "texture": "#node"
+        },
+        "west": {
+          "texture": "#node"
+        },
+        "up": {
+          "texture": "#node"
+        },
+        "down": {
+          "texture": "#node"
+        }
+      },
+      "neoforge_data": {
+        "block_light": 15,
+        "sky_light": 15
+      },
+      "shade": false
+    },
+    {
+      "from": [
+        -0.02,
+        14,
+        13.98
+      ],
+      "to": [
+        2.02,
+        16,
+        16.02
+      ],
+      "faces": {
+        "north": {
+          "texture": "#node"
+        },
+        "south": {
+          "texture": "#node"
+        },
+        "east": {
+          "texture": "#node"
+        },
+        "west": {
+          "texture": "#node"
+        },
+        "up": {
+          "texture": "#node"
+        },
+        "down": {
+          "texture": "#node"
+        }
+      },
+      "neoforge_data": {
+        "block_light": 15,
+        "sky_light": 15
+      },
+      "shade": false
+    },
+    {
+      "from": [
+        13.98,
         0,
-        14,
-        0
+        -0.02
       ],
       "to": [
+        16.02,
         2,
-        16,
-        2
+        2.02
       ],
       "faces": {
         "north": {
@@ -542,14 +616,14 @@
     },
     {
       "from": [
+        13.98,
         0,
-        14,
-        14
+        13.98
       ],
       "to": [
+        16.02,
         2,
-        16,
-        16
+        16.02
       ],
       "faces": {
         "north": {
@@ -579,14 +653,14 @@
     },
     {
       "from": [
+        13.98,
         14,
-        0,
-        0
+        -0.02
       ],
       "to": [
+        16.02,
         16,
-        2,
-        2
+        2.02
       ],
       "faces": {
         "north": {
@@ -616,88 +690,14 @@
     },
     {
       "from": [
+        13.98,
         14,
-        0,
-        14
+        13.98
       ],
       "to": [
+        16.02,
         16,
-        2,
-        16
-      ],
-      "faces": {
-        "north": {
-          "texture": "#node"
-        },
-        "south": {
-          "texture": "#node"
-        },
-        "east": {
-          "texture": "#node"
-        },
-        "west": {
-          "texture": "#node"
-        },
-        "up": {
-          "texture": "#node"
-        },
-        "down": {
-          "texture": "#node"
-        }
-      },
-      "neoforge_data": {
-        "block_light": 15,
-        "sky_light": 15
-      },
-      "shade": false
-    },
-    {
-      "from": [
-        14,
-        14,
-        0
-      ],
-      "to": [
-        16,
-        16,
-        2
-      ],
-      "faces": {
-        "north": {
-          "texture": "#node"
-        },
-        "south": {
-          "texture": "#node"
-        },
-        "east": {
-          "texture": "#node"
-        },
-        "west": {
-          "texture": "#node"
-        },
-        "up": {
-          "texture": "#node"
-        },
-        "down": {
-          "texture": "#node"
-        }
-      },
-      "neoforge_data": {
-        "block_light": 15,
-        "sky_light": 15
-      },
-      "shade": false
-    },
-    {
-      "from": [
-        14,
-        14,
-        14
-      ],
-      "to": [
-        16,
-        16,
-        16
+        16.02
       ],
       "faces": {
         "north": {
